@@ -4,9 +4,9 @@
 - **Tür / konum / alan**: Müstakil villa; bodrum (boş) + giriş kat + 1. kat; 1. kat üstünde 4 kırma çatı (çatı katı yok); dış ölçü 13.60 × 10.10 m (~137 m²/kat)
 - **Kat yüksekliği**: 3.50 m (villa varsayılanı)
 - **Aşama**: Konsept
-- **Aktif agent'lar**: ÇİZGİ, HACİM (+ DENETÇİ)
+- **Aktif agent'lar**: ÇİZGİ, HACİM, PAFTA, DENETÇİ
 - **Model detay seviyesi**: KÜTLE + CEPHE (varsayılan)
-- **Boyama stili**: (bu aşamada yok)
+- **Boyama stili**: Konsept gri (giriş kat + 1. kat; bodrum boyanmaz)
 - **Teslim formatı**: DXF + PDF (çizim), SKP (model)
 - **Teslim tarihi**: -
 
@@ -37,4 +37,10 @@ Kullanıcının tek çizgi eskiz DXF'inden (00-girdi) konsept kat planları çiz
 | 2026-11-11 | Mutfak-salon arası 10 cm duvar korunur, iki geniş geçiş | Kullanıcı |
 | 2026-11-11 | Asansör ev tipi lift (eskizdeki kuyu ölçüsü kabul); merdiven basamak sayısı yeterli | Kullanıcı |
 
+| 2026-11-11 | Kullanıcı v01 DXF'i düzeltti (tefriş): 00-girdi/DNM01_girdi_kullanici-revizyon_v01r.dxf → onaylı temel | Kullanıcı |
+| 2026-11-11 | Çatı: 4 kırma, saçak 50 cm (kullanıcı '0,5 cm' yazdı → 50 cm yorumlandı, teyit bekleniyor), eğim %15 saçak ucundan, metal kenet, çatı arası mahal değil | Kullanıcı |
+| 2026-11-11 | ÇİZGİ (v02 + çatı planı + kesit), HACİM (model), PAFTA (2 kat boyama) paralel; sonra DENETÇİ (özellikle tefriş) | Kullanıcı |
+
 ## Açık konular
+- Pencere ve kapı yükseklikleri: kullanıcıya soruldu (varsayılanlarla başlandı).
+- Saçak 50 cm teyidi; kesit hattı; bodrumun tamamen gömülü olup olmadığı.
