@@ -34,7 +34,7 @@ Amaç: her mahalde, büyüklüğüne göre olması gereken işlevlerin ve mobily
 | Yemek masası 8 kişilik | 220–260 × 95–110 |
 | Gardırop derinliği | 60 |
 | Mutfak tezgâhı derinliği | 60–65 |
-| Klozet | 37 × 55–60 |
+| Klozet | 36–40 × 53–60 (ofis bloğu IFC_KLOZET 36×53.4) |
 | Lavabo | 50–80 × 45–55 |
 | Araç | 250 × 500 |
 

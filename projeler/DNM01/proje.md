@@ -32,6 +32,8 @@ Kullanıcının tek çizgi eskiz DXF'inden (00-girdi) konsept kat planları çiz
 - Sayfa üstü = kuzey.
 - Pencereler eskizde yok; ÇİZGİ konsept seviyesinde yerleştirir (salon geniş doğrama, mutfak ve yatak odalarına birer pencere, banyolara küçük pencere). Kullanıcı gerekirse değiştirecek.
 
+- (DENETÇİ soruları S1–S10, 5 dk cevapsız → öneriler uygulandı) P1 mutfak parapet 100 / h 200; çatı kotları ÇİZGİ şeması (çatı döşemesi üstü +7.00, saçak alt +7.00 / kaplama üstü +7.20, mahya +8.06), saçak 50; buzdolabı kuzey tezgâh doğu ucu 75×65; salon 3'lü koltuk 240; klozet tablosu 36–40×53–60; yatak 2 ve 3 15 cm güneye; statik konseptte not (kiriş); ıslak hacimlere 30×30 şaft + mekanik havalandırma; salon güney/doğu önüne 3 m teras (dış yemek + oturma, boyamada); toplam kapalı alan bodrum dahil 412.10.
+
 ## Kararlar günlüğü
 | Tarih | Karar | Kim söyledi |
 |---|---|---|
