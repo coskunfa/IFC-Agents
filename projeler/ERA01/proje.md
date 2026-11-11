@@ -35,6 +35,8 @@ Kullanıcının hazır proje DXF'inden (00-girdi/ERA01_girdi_proje.dxf):
 - (HACİM soruları, 5 dk cevapsız → öneriler uygulandı) 1) Cephe kaplaması standart: DXF dış çizgisinin 20 cm dışında. 2) D blok: +3.50 (170.75) 1. kat kuzey terası; kırma çatı saçak +7.00, mahya +7.82. 3) B otopark girişi (kuzey, 167.15): v02'de basit yarma + garaj kapısı boşluğu. 4) A 1. kat "KAT BAHÇESİ" açık avlu (v02). 5) SALON+MUTFAK mahalleri kuru grupta (v02). 6) Arazi yalnız parsel içi.
 - DXF hataları (bilgi): B GR1 görünüşü A blok cephesini gösteriyor (kullanılmadı); A kesitinde -3.30 (169.95) → 169.65 olmalı.
 - DXF'teki "E-F" blokları D bloğun planları; sitede 4 blok (A, B, C, D).
+- (PAFTA soruları, 5 dk cevapsız → öneriler uygulandı) 1) D blok 1. kat +3.50, çatı +7.00 (174.25); DXF'teki çatı kotu yazımı hatalı. 2) A zemin brüt 170.00 (şemadaki 363.96 terası kapsıyor). 3) Brüt poligonu olmayan katlarda şema "KAT BRÜTÜ": A 1. kat 170.00, C bodrum 135.00, C zemin 135.00. 4) D 1. kat brüt: DENETÇİ'nin DXF tespitine göre (129.77 olası). 5) Vaziyette sert zemin şimdilik çim ağırlıklı; kullanıcı poligon verirse yeniden boyanır.
+- Boyama fontu Carlito (sistemde Calibri yok; metrik eşdeğer).
 
 ## Kararlar günlüğü
 | Tarih | Karar | Kim söyledi |
