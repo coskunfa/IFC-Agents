@@ -1,13 +1,14 @@
 # Mimari Ekosistem
 
-Claude Code üzerinde çalışan, 1 koordinatör + 5 uzman agent'tan oluşan mimarlık ofisi sistemi.
+Claude Code üzerinde çalışan, 1 koordinatör + 6 uzman agent'tan oluşan mimarlık ofisi sistemi.
 
 | Agent | Görev |
 |---|---|
 | **ŞEF** | Koordinatör (ana oturum, `CLAUDE.md`) |
 | **ÇİZGİ** | Proje çizim (DXF / AutoCAD / Revit) |
 | **HACİM** | SketchUp modelleme |
-| **PAFTA** | Sunum, diyagram, kat planı boyama, final PPTX/PDF |
+| **PAFTA** | Kat planı ve vaziyet boyama (JPEG / katmanlı PSD) |
+| **SUNUM** | Sunum seti, konsept proje sunumu (PDF / PPTX) |
 | **DETAY** | Uygulama detayı ve malzeme |
 | **DENETÇİ** | Kalite ve tutarlılık kontrolü |
 

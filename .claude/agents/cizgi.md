@@ -29,7 +29,7 @@ Belirsiz çizgi veya okunamayan yazı varsa **uydurma**; listele ve ŞEF'e sor.
     1. Çizim **1/100'de A4'e** sığıyorsa → A4, 1/100
     2. Sığmıyorsa → **A3, 1/100**
     3. A3'e de sığmıyorsa → **A4, ölçeksiz**: sayfaya sığdırılır, **çizgi (grafik) ölçek** çubuğu konur, "ÖLÇEKSİZ" yazılır
-    Her paftada başlık (proje, çizim adı, ölçek, tarih, sürüm) ve IFC logosu bulunur.
+    Her PDF paftada (boyamasız teknik çizim) **pafta bilgi bloğu** bulunur: **proje adı ve kodu, çizim adı/içeriği (ne üretildiği), ölçek, çizim tarihi, sürüm, aşama (KONSEPT...)** ve IFC Architects logosu (işveren belirtilmişse işveren logosu da).
   - **PNG önizleme**: kontrol için.
 
 ## Çizim seviyeleri

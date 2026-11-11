@@ -10,7 +10,8 @@ Bu repoda çalışan ana Claude oturumu **ŞEF**'tir (Koordinatör Agent). Kulla
 | **ŞEF** | bu dosya (ana oturum) | Koordinatör: işi böler, agent'lara dağıtır, sonuçları birleştirir, DENETÇİ'nin bulduğu hataları düzelttirir |
 | **ÇİZGİ** | `.claude/agents/cizgi.md` | Proje çizim: AutoCAD/Revit uyumlu DXF/DWG çizimleri, eskizden çizime |
 | **HACİM** | `.claude/agents/hacim.md` | Modelleme: SketchUp modeli (genelde ÇİZGİ'nin çizimlerinden) |
-| **PAFTA** | `.claude/agents/pafta.md` | Sunum: şematik diyagram, kat planı boyama, anlatım görselleri, final PPTX/PDF set |
+| **PAFTA** | `.claude/agents/pafta.md` | Kat planı ve vaziyet planı **boyama** (JPEG, istenirse katmanlı PSD) |
+| **SUNUM** | `.claude/agents/sunum.md` | Sunum seti: konsept proje sunumu, PowerPoint/PDF düzeni |
 | **DETAY** | `.claude/agents/detay.md` | Uygulama detayı ve malzeme: sistem detayları, malzeme listesi, şartname notları |
 | **DENETÇİ** | `.claude/agents/denetci.md` | Kontrol: tutarlılık, kalite ve ofis standartlarına/referans sunumlara uygunluk |
 
@@ -24,7 +25,7 @@ Bu repoda çalışan ana Claude oturumu **ŞEF**'tir (Koordinatör Agent). Kulla
 ## İş akışı
 
 1. **Brief**: `projeler/<proje>/proje.md` dosyasını oku/doldur (kapsam, girdiler, aktif agent'lar, teslim formatı).
-2. **Plan**: İşi agent'lara böl, sırayı belirle. Tipik zincir: ÇİZGİ → HACİM → DETAY → PAFTA → DENETÇİ.
+2. **Plan**: İşi agent'lara böl, sırayı belirle. Tipik zincir: ÇİZGİ → (kullanıcı onayı) → HACİM / DETAY / PAFTA → SUNUM → DENETÇİ.
    Birbirine bağlı olmayan işleri paralel başlat.
 3. **Görevlendirme**: Her agent'a Agent aracıyla, ilgili agent tipini seçerek görev ver. Mesajda şunlar olsun:
    proje klasörü, girdi dosyaları, beklenen çıktı ve formatı, uyulacak standart dosyaları.
@@ -32,15 +33,15 @@ Bu repoda çalışan ana Claude oturumu **ŞEF**'tir (Koordinatör Agent). Kulla
 4. **Kontrol**: Çıktılar hazır olunca DENETÇİ'yi çalıştır. DENETÇİ rapor yazar (`05-kontrol/`).
 5. **Düzeltme döngüsü**: DENETÇİ'nin "HATA" maddelerini ilgili agent'a geri gönder, düzeltilince DENETÇİ'yi yeniden
    çalıştır. En fazla 3 tur. Çözülemeyen konuları kullanıcıya sor.
-6. **Teslim**: PAFTA final seti üretir. Kullanıcıya kısa özet ver: ne üretildi, nerede, açık konular.
+6. **Teslim**: SUNUM final seti üretir (sunum istendiyse; yoksa ilgili agent'ın ürünü teslim edilir). Kullanıcıya kısa özet ver: ne üretildi, nerede, açık konular.
 
 Agent'lar birbirini doğrudan çağıramaz; tüm iletişim ŞEF üzerinden geçer.
 
-**Soru zaman aşımı (kullanıcı kararı):** Bir agent'ın işi için kullanıcıya soru sorulduğunda (özellikle ÇİZGİ'nin eskiz belirsizlikleri) soruları tek mesajda, numaralı ve her biri için önerilen varsayımla birlikte sor. "5 dakika içinde cevap gelmezse önerilen varsayımlarla devam edeceğim" diye belirt ve 5 dakika sonrasına kendine hatırlatma kur (bulut oturumunda `send_later`, yoksa ScheduleWakeup/CronCreate). Hatırlatma geldiğinde cevap yoksa varsayımlarla devam et ve bunları `proje.md` → Varsayımlar bölümüne yaz. Hatırlatma aracı yoksa cevabı bekle.
+**Soru zaman aşımı (kullanıcı kararı):** Bir agent'ın işi için kullanıcıya soru sorulduğunda (ÇİZGİ'nin eskiz belirsizlikleri, PAFTA'nın pencere soruları gibi) soruları tek mesajda, numaralı ve her biri için önerilen varsayımla birlikte sor. "5 dakika içinde cevap gelmezse önerilen varsayımlarla devam edeceğim" diye belirt ve 5 dakika sonrasına kendine hatırlatma kur (bulut oturumunda `send_later`, yoksa ScheduleWakeup/CronCreate). Hatırlatma geldiğinde cevap yoksa varsayımlarla devam et ve bunları `proje.md` → Varsayımlar bölümüne yaz. Hatırlatma aracı yoksa cevabı bekle.
 
 ## Hazır iş tipleri
 
-- **"Konsept proje sunumu hazırla"** → `ofis-standartlari/konsept-sunum-sablonu.md`. Tipik ekip: ÇİZGİ (vaziyet, kat ve otopark planları, imar hesapları) → HACİM (SketchUp modeli; renderları kullanıcı alır) → PAFTA (A3 yatay set) → DENETÇİ. Karakalem eskizler ve renderlar kullanıcıdan gelir (`00-girdi/eskiz/`, `00-girdi/render/`). Gerekli girdiler: imar durumu/aplikasyon, ada-parsel, tip planları veya eskizler, işveren adı, proje tarihi, konsept metni için anahtar fikirler.
+- **"Konsept proje sunumu hazırla"** → `ofis-standartlari/konsept-sunum-sablonu.md`. Tipik ekip: ÇİZGİ (vaziyet, kat ve otopark planları, imar hesapları) → HACİM (SketchUp modeli; renderları kullanıcı alır) → PAFTA (kat planı ve vaziyet boyamaları) → SUNUM (A3 yatay set) → DENETÇİ. Karakalem eskizler ve renderlar kullanıcıdan gelir (`00-girdi/eskiz/`, `00-girdi/render/`). Gerekli girdiler: imar durumu/aplikasyon, ada-parsel, tip planları veya eskizler, işveren adı, proje tarihi, konsept metni için anahtar fikirler.
 
 ## Klasör düzeni
 
@@ -53,7 +54,8 @@ projeler/<proje>/
   00-girdi/            Kullanıcının verdiği eskiz, DWG, fotoğraf, program
   01-cizim/            ÇİZGİ çıktıları
   02-model/            HACİM çıktıları
-  03-sunum/            PAFTA çıktıları
+  03-boyama/           PAFTA çıktıları (JPEG/PSD)
+  03-sunum/            SUNUM çıktıları
   04-detay/            DETAY çıktıları
   05-kontrol/          DENETÇİ raporları
 araclar/               Ortak Python yardımcıları (DXF, boyama vb.)

@@ -1,6 +1,6 @@
 # Mimari Konsept Proje Sunumu: Şablon
 
-Kullanıcı **"konsept proje sunumu hazırla"** dediğinde PAFTA bu şablonu birebir uygular.
+Kullanıcı **"konsept proje sunumu hazırla"** dediğinde **SUNUM** bu şablonu birebir uygular (boyamalar PAFTA'dan gelir).
 Referans: `referans-sunumlar/ref_konsept-sunum_Yavuzselim-Rebar_A3.pdf`
 (sayfa görüntüleri: `referans-sunumlar/Yavuzselim-sayfalar/s01..s14.jpg`)
 
