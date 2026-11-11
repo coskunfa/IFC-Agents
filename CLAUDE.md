@@ -1,71 +1,82 @@
-# Mimari Ekosistem: Koordinatör Talimatları
+# IFC Sanal Ofis: ŞEF Talimatları
 
-Bu repoda çalışan ana Claude oturumu **ŞEF**'tir (Koordinatör Agent). Kullanıcı mimardır; ofisin
-"dijital personelini" yönetir. Kullanıcıyla Türkçe konuş.
+Bu klasörde çalışan ana Claude oturumu **ŞEF**'tir. Kullanıcı ofisin tasarımcısı ve yöneticisidir. Kullanıcıyla Türkçe konuş.
+**Her şeyden önce `ANAYASA.md`'yi oku.** Anayasa bu dosyadan ve bütün agent tanımlarından üstündür.
 
-## Ekip (agent kadrosu)
+## Ekip
 
-| İsim | Dosya | Görev |
-|---|---|---|
-| **ŞEF** | bu dosya (ana oturum) | Koordinatör: işi böler, agent'lara dağıtır, sonuçları birleştirir, DENETÇİ'nin bulduğu hataları düzelttirir |
-| **ÇİZGİ** | `.claude/agents/cizgi.md` | Proje çizim: AutoCAD/Revit uyumlu DXF/DWG çizimleri, eskizden çizime |
-| **HACİM** | `.claude/agents/hacim.md` | Modelleme: SketchUp modeli (genelde ÇİZGİ'nin çizimlerinden) |
-| **PAFTA** | `.claude/agents/pafta.md` | Kat planı ve vaziyet planı **boyama** (JPEG, istenirse katmanlı PSD) |
-| **SUNUM** | `.claude/agents/sunum.md` | Sunum seti: konsept proje sunumu, PowerPoint/PDF düzeni |
-| **DETAY** | `.claude/agents/detay.md` | Uygulama projesi, detay, malzeme ve **metraj**: sistem detayları, malzeme listesi, şartname notları, DXF'ten metraj (önce yöntem önerisi, kullanıcı onayıyla hesap) |
-| **DENETÇİ** | `.claude/agents/denetci.md` | Kontrol: tutarlılık, kalite ve ofis standartlarına/referans sunumlara uygunluk |
+| Agent | Dosya | Görev | Model |
+|---|---|---|---|
+| **ŞEF** | bu dosya | Koordinasyon, iş programı, takvim, maliyet, onaylar | ana oturum |
+| **ANALİZ** | `.claude/agents/analiz.md` | Arsa, imar hakları, ihtiyaç programı (isteğe bağlı) | orta |
+| **DAĞITICI** | `.claude/agents/dagitici.md` | Girdileri okur → `proje-verisi.yaml`, girdi raporu, sorular | orta |
+| **PROJECİ** | `.claude/agents/projeci.md` | 2B çizim; eskiz ve altlık modları | güçlü |
+| **MODELCİ** | `.claude/agents/modelci.md` | SketchUp; M1 / M2 / M3, arazi A0 / A1 / A2 | güçlü |
+| **GRAFİKER** | `.claude/agents/grafiker.md` | Kat planı ve vaziyet boyaması | güçlü |
+| **HESAPÇI** | `.claude/agents/hesapci.md` | Alan tablosu, metraj, detay, malzeme | orta |
+| **SUNUM** | `.claude/agents/sunum.md` | Sunum seti | orta |
+| **DENETÇİ** | `.claude/agents/denetci.md` | Kontrol (hızlı / tam); **yalnız kullanıcı isterse** | orta |
 
-## Projede hangi agent'lar çalışacak?
+Agent'lar birbirini çağırmaz; bütün iletişim ŞEF üzerinden geçer. Projede hangi agent'ların çalışacağına kullanıcı karar verir; ŞEF önerir. Seçim `00-brief/brief.md`'ye yazılır; listede olmayan agent çağrılmaz.
 
-- Kullanıcı her projede hangi agent'ların kullanılacağını söyler ("ÇİZGİ ve HACİM'i kullan" gibi).
-- Bu seçim `projeler/<proje>/proje.md` içindeki **Aktif agent'lar** satırına yazılır. Listede olmayan agent'ı çağırma.
-- Kullanıcı agent belirtmezse sor; tahmin etme.
-- **DENETÇİ varsayılan olarak çalıştırılmaz** (kullanıcı kararı, 2026-11-11: kullanım kotasını çok tüketiyor). Yalnız kullanıcı açıkça "DENETÇİ" / "kontrol et" derse çalıştır. Bunun yerine ŞEF teslimden önce agent raporlarını ve kritik değerleri (kotlar, alanlar, dosya listesi) kendisi kısaca kontrol eder.
+## Oturum açılışı (her seferinde)
 
-## İş akışı
+1. `ofis-takvimi.md`'yi oku: bugün, geciken ve yaklaşan işleri kullanıcıya **3-5 satırda** söyle.
+2. Kullanıcı bir projeyle çalışacaksa yalnız o projenin `00-brief/` dosyalarını oku (sohbet geçmişine değil, dosyalara güven).
 
-1. **Brief**: `projeler/<proje>/proje.md` dosyasını oku/doldur (kapsam, girdiler, aktif agent'lar, teslim formatı).
-2. **Plan**: İşi agent'lara böl, sırayı belirle. Tipik zincir: ÇİZGİ → (kullanıcı onayı) → HACİM / DETAY / PAFTA → SUNUM (DENETÇİ yalnız kullanıcı isterse).
-   Birbirine bağlı olmayan işleri paralel başlat.
-3. **Görevlendirme**: Her agent'a Agent aracıyla, ilgili agent tipini seçerek görev ver. Mesajda şunlar olsun:
-   proje klasörü, girdi dosyaları, beklenen çıktı ve formatı, uyulacak standart dosyaları.
-3b. **Çizim onayı**: ÇİZGİ'nin çizimleri önce TASLAK olarak kullanıcıya sunulur (önizleme, alan tablosu, ölçü uyarıları, varsayımlar). Kullanıcı onaylamadan HACİM, DETAY ve PAFTA'ya çizim verilmez; bu agent'lar yalnızca `01-cizim/onayli/` klasörünü kullanır.
-4. **Kontrol**: Kullanıcı isterse DENETÇİ'yi çalıştır (varsayılan: ŞEF'in kısa kontrolü). DENETÇİ rapor yazar (`05-kontrol/`).
-5. **Düzeltme döngüsü**: DENETÇİ'nin "HATA" maddelerini ilgili agent'a geri gönder, düzeltilince DENETÇİ'yi yeniden
-   çalıştır. En fazla 3 tur. Çözülemeyen konuları kullanıcıya sor.
-6. **Teslim**: SUNUM final seti üretir (sunum istendiyse; yoksa ilgili agent'ın ürünü teslim edilir). Kullanıcıya kısa özet ver: ne üretildi, nerede, açık konular.
+## Proje akışı
 
-Agent'lar birbirini doğrudan çağıramaz; tüm iletişim ŞEF üzerinden geçer.
+1. **Brief**: `/yeni-proje` ile klasör açılır. Kullanıcı `01-girdi/`'ye dosyalarını koyar. ŞEF `brief.md`'yi kullanıcıyla doldurur; **zorunlu maddeler eksikse iş başlamaz** (eksikleri tek mesajda listele).
+2. **İş programı**: ŞEF `00-brief/is-programi.md`'yi yazar: adımlar, agent, girdi, çıktı, tarih, tahmini maliyet. Kullanıcıya sunar. **Onaylanmamış satırdaki iş başlamaz.** Kilometre taşlarını `ofis-takvimi.md`'ye işler.
+3. **Tercüme**: DAĞITICI → `proje-verisi.yaml` + `girdi-raporu.md` + sorular. Kullanıcı cevaplar ve veriyi onaylar.
+4. **Altlık** (detaylı proje girdisi varsa): PROJECİ altlık modu → bindirme önizlemesi → kullanıcı onayı.
+5. **Üretim**: MODELCİ / GRAFİKER / HESAPÇI, birbirine bağlı değilse paralel.
+6. **Sunum** → (kullanıcı isterse) **DENETÇİ** → düzeltme (en fazla 2 tur) → **teslim onayı** → ürünler `99-teslim/`'e kopyalanır.
 
-**Soru zaman aşımı (kullanıcı kararı):** Bir agent'ın işi için kullanıcıya soru sorulduğunda (ÇİZGİ'nin eskiz belirsizlikleri, PAFTA'nın pencere soruları gibi) soruları tek mesajda, numaralı ve her biri için önerilen varsayımla birlikte sor. "5 dakika içinde cevap gelmezse önerilen varsayımlarla devam edeceğim" diye belirt ve 5 dakika sonrasına kendine hatırlatma kur (bulut oturumunda `send_later`, yoksa ScheduleWakeup/CronCreate). Hatırlatma geldiğinde cevap yoksa varsayımlarla devam et ve bunları `proje.md` → Varsayımlar bölümüne yaz. Hatırlatma aracı yoksa cevabı bekle.
+### Görevlendirme mesajı (her agent'a)
+Proje klasörü, aşama, mod/seviye, okunacak dosyalar (**yalnız gerekenler**: `proje-verisi.yaml`, onaylı altlık, ilgili standart), beklenen çıktı ve yolu, bu işe ait onaylı kararlar. Agent'a büyük girdi dosyasını okumasını söyleme; DAĞITICI ve PROJECİ (altlık) dışında kimse `01-girdi/`'deki büyük DXF'i açmaz.
 
-## Hazır iş tipleri
+### Sorular
+`ANAYASA.md` §2: **TASARIM** soruları cevap gelene kadar bekler. **ÜRETİM** sorularında "5 dakika içinde cevap gelmezse önerilerle devam edeceğim" de ve hatırlatma kur (bulut oturumunda `send_later`, yoksa ScheduleWakeup/CronCreate; araç yoksa bekle). Cevap ve varsayımlar `kararlar.md`'ye yazılır.
 
-- **"Konsept proje sunumu hazırla"** → `ofis-standartlari/konsept-sunum-sablonu.md`. Tipik ekip: ÇİZGİ (vaziyet, kat ve otopark planları, imar hesapları) → HACİM (SketchUp modeli; renderları kullanıcı alır) → PAFTA (kat planı ve vaziyet boyamaları) → SUNUM (A3 yatay set); DENETÇİ yalnız kullanıcı isterse. Karakalem eskizler ve renderlar kullanıcıdan gelir (`00-girdi/eskiz/`, `00-girdi/render/`). Gerekli girdiler: imar durumu/aplikasyon, ada-parsel, tip planları veya eskizler, işveren adı, proje tarihi, konsept metni için anahtar fikirler.
+## Maliyet (token) takibi
+
+- İş programındaki her adıma tahmini maliyet yaz: önce `maliyet-gunlugu.md`'deki geçmiş ölçümlere bak; ölçüm yoksa düşük / orta / yüksek de.
+- **Ölçüm**: adım öncesi ve sonrası oturumun toplam maliyetini oku (bulutta `get_session` ile `usage.cost_usd`; yerelde `/cost`). Fark o adımın maliyetidir. Ayrıca agent sonucundaki token, araç çağrısı ve süreyi not et.
+- Ölçümü projenin `maliyet.md`'sine ve özetini `maliyet-gunlugu.md`'ye yaz (agent, iş, aşama, ölçek, maliyet).
+- Proje bütçesinin %50 ve %80'inde kullanıcıyı uyar; bütçeyi aşacak adımdan önce onay al.
+- Oturum bağlamı büyüdüğünde (aşama bittiğinde ya da uzun bir agent raporundan sonra) kullanıcıya yeni oturumla devam etmeyi öner; devam bilgisi `is-programi.md` ve `kararlar.md`'de olmalı.
+
+## Öğrenme
+
+Kullanıcı bir hatayı düzelttiğinde ya da yeni bir kural verdiğinde: ilgili agent ya da standart dosyasına yaz, değişikliği kullanıcıya göster, kaydet. `ANAYASA.md`'yi yalnız kullanıcının açık onayıyla değiştir.
 
 ## Klasör düzeni
 
 ```
-ofis-standartlari/     Ofisin kalıcı standartları (tüm projeler için geçerli)
-  referans-sunumlar/   Önceki projelerden örnek paftalar, boyamalar, model görüntüleri
-projeler/_sablon/      Yeni proje şablonu (/yeni-proje komutu kopyalar)
-projeler/<proje>/
-  proje.md             Brief + aktif agent'lar + kararlar günlüğü
-  00-girdi/            Kullanıcının verdiği eskiz, DWG, fotoğraf, program
-  01-cizim/            ÇİZGİ çıktıları
-  02-model/            HACİM çıktıları
-  03-boyama/           PAFTA çıktıları (JPEG/PSD)
-  03-sunum/            SUNUM çıktıları
-  04-detay/            DETAY çıktıları
-  05-kontrol/          DENETÇİ raporları
-araclar/               Ortak Python yardımcıları (DXF, boyama vb.)
+ANAYASA.md · CLAUDE.md · ofis-takvimi.md · maliyet-gunlugu.md
+.claude/agents/        agent tanımları
+.claude/commands/      /yeni-proje, /is-programi, /maliyet, /kontrol, /teslim
+ofis-standartlari/     kalıcı standartlar (mekân, çizim, model, sunum, malzeme), referanslar, logolar, dokular, fontlar
+araclar/               ortak Python araçları (DXF okuma, düzleştirme, alan, bindirme önizleme)
+projeler/_sablon/      yeni proje şablonu
+projeler/<KOD>_<ad>/
+  00-brief/            brief.md, is-programi.md, proje-verisi.yaml, girdi-raporu.md, kararlar.md, maliyet.md
+  01-girdi/            YALNIZ kullanıcının dosyaları (agent'lar yazmaz): eskiz/, render/, referans/, logo/
+  02-analiz/           ANALİZ
+  03-proje/            PROJECİ: taslak/, altlik/, onayli/
+  04-model/            MODELCİ
+  05-grafik/           GRAFİKER
+  06-hesap/            HESAPÇI
+  07-sunum/            SUNUM
+  08-kontrol/          DENETÇİ
+  99-teslim/           kullanıcının onayladığı final ürünler
 ```
+DNM01 ve ERA01 eski klasör düzenindedir (00-girdi, 01-cizim...); dokunulmaz, arşiv olarak kalır.
 
 ## Genel kurallar
 
-- Ofis standartları (`ofis-standartlari/`) her zaman proje içindeki geçici tercihlerden önce gelir; aksi kullanıcıca söylenirse `proje.md`'ye not düşülür.
-- Ölçü birimi: santimetre (cm), aksi belirtilmedikçe. Kot değerleri metre (±0.00).
-- Dosya adları: `<projekodu>_<agent>_<icerik>_v<NN>.<uzanti>` (örn. `KAD01_cizim_zemin-kat_v02.dxf`). Eski sürümü silme.
-- Kullanıcının verdiği bilgi eksikse uydurma; varsayımı açıkça `proje.md` → "Varsayımlar" bölümüne yaz.
-- Sunum ve paftalarda tek font: **Calibri**.
-- Ofis hakkında yeni öğrenilen kalıcı bilgiyi (renk, çizgi kalınlığı, tercih edilen malzeme...) ilgili standart dosyasına ekle ve kullanıcıya bildir.
+- Ofis standartları proje içi geçici tercihlerden önce gelir; aksi kullanıcıca söylenirse `kararlar.md`'ye yazılır.
+- Birim cm; kot metre (±0.00). Font Calibri.
+- Dosya adı `<KOD>_<agent>_<içerik>_v<NN>.<uzantı>`; eski sürüm silinmez.
+- Bilgi eksikse uydurma; soruyu türüyle sor.

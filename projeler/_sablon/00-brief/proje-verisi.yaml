@@ -1,0 +1,58 @@
+# Proje verisi: projenin TEK veri kaynağı.
+# DAĞITICI (ve gerekirse ANALİZ) doldurur, kullanıcı onaylar. Diğer agent'lar değerleri buradan alır.
+# Her değerin kaynağı yazılır. Onaylı veri değişecekse yeni sürüm açılır.
+
+surum: v01
+durum: TASLAK            # TASLAK / ONAYLI
+onay_tarihi:
+birim: { uzunluk: cm, kot: m, alan: m2 }
+
+proje:
+  kod: "[KOD]"
+  ad: "[AD]"
+  tip: V                 # V / K / S
+  asama: A1
+
+arsa:                    # ANALİZ (arsa) ya da kullanıcı
+  ada_parsel:
+  alan:
+  kot_araligi: { min: , max: }
+  kaynak:
+
+imar:                    # ANALİZ (imar) ya da kullanıcı
+  taks:
+  kaks:
+  cekmeler: { on: , yan: , arka: }
+  yukseklik:
+  kaynak:
+
+program:                 # ANALİZ (program) ya da kullanıcı
+  tipler: []             # - { ad: Villa A, adet: 4, brut: 250 }
+
+kaynak_onceligi: ""      # brief'ten: örn. "plan DXF, cephe render"
+
+bloklar:
+  - ad: A
+    pm_sifir: 172.95     # ±0.00 mutlak kotu
+    vaziyet: { x: , y: , donme: }   # altlığın vaziyetteki yeri
+    katlar:
+      - ad: ZEMIN
+        kot: +1.20       # ±0.00'a göre
+        kat_yuksekligi: 3.50
+        brut: 170.00
+        net: 150.40
+        acik: 190.00     # teras/balkon/avlu
+        kaynak: "DXF A_ZK BRUT ALAN poligonu"
+        mahaller:
+          - { ad: SALON, alan: 40.50, grup: kuru }     # grup: kuru / islak / servis / acik
+        altlik: { model: "", grafik: "" }
+    cati:
+      tip: kirma         # duz / kirma / ...
+      sacak_kot:
+      mahya_kot:
+      egim:
+      kaynak:
+    dogramalar:
+      - { tip: P-01, gen: 300, yuk: 280, parapet: 0, adet: 2, kat: ZEMIN, kaynak: "DXF etiket" }
+
+celiskiler: []           # - { konu: , degerler: , soru_no: }

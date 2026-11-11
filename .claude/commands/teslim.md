@@ -1,9 +1,10 @@
 ---
-description: Final kontrol + SUNUM ile PPTX/PDF set üretimi
+description: Teslim seti: sunum, (istenirse) kontrol, kullanıcı onayı, 99-teslim
 argument-hint: <proje-kodu>
 ---
 ŞEF olarak `projeler/$ARGUMENTS` için teslim hazırla:
-1. /kontrol döngüsünü uygula (GEÇTİ olana kadar veya 3 tur).
-2. `sunum` agent'ına final seti ürettir (`proje.md`'deki teslim formatında).
-3. DENETÇİ'ye yalnızca final seti kontrol ettir (son sürümler mi, pafta sırası, standart).
-4. Kullanıcıya dosya yollarını ve açık konuları bildir.
+1. Aşamanın ürün listesini (`ANAYASA.md` §4) brief ile karşılaştır; eksik ürünü bildir.
+2. SUNUM aktifse `sunum` agent'ına son onaylı sürümlerle seti ürettir.
+3. Kullanıcı isterse /kontrol (tam mod).
+4. Kullanıcı onaylayınca final ürünleri `99-teslim/` klasörüne kopyala; `ofis-takvimi.md` ve `maliyet-gunlugu.md`'yi güncelle.
+5. Kısa özet: ne üretildi, nerede, toplam maliyet, açık konular.
