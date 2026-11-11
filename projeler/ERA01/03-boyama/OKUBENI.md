@@ -1,78 +1,93 @@
 # ERA01 ERA Evi: Boyama klasörü (PAFTA)
 
-**Stil:** KONSEPT GRİ (sunum-standardi §2-A), DNM01 boyamalarıyla aynı dil · **Çözünürlük:** 600 dpi, sRGB, JPEG q92 4:4:4 · **Font:** Carlito (Calibri'nin metrik eşdeğeri; sistemde Calibri yok)
+**Güncel sürüm: v02** (DENETÇİ raporu `05-kontrol/ERA01_kontrol_raporu_v01.md` düzeltme turu 1). v01 dosyaları arşiv olarak duruyor, silinmedi.
+**Stil:** KONSEPT GRİ (sunum-standardi §2-A), DNM01 ile aynı dil. Başlık "MİMARİ KONSEPT PROJE", aşama KONSEPT.
+**Çıktı:** 600 dpi, sRGB, JPEG q92 4:4:4. Bütün paftalar A3 yatay.
+**Font:** Carlito (Calibri'nin metrik eşdeğeri; sistemde Calibri yok).
 **Girdi:** `00-girdi/ERA01_girdi_proje.dxf`. Bu projede onaylı çizim kabul edildi, ÇİZGİ yok. Birim cm.
 
-## Dosyalar
-| Dosya | Kağıt / ölçek | px/cm | İçerik |
+## Dosyalar (v02)
+| Dosya | Ölçek | px/cm | İçerik |
 |---|---|---|---|
-| `ERA01_boyama_vaziyet_v01.jpg` | A3 yatay, 1/500 | 0.4724 | Tüm site: 4 blok çatı planı, zemin kat izleri, yollar, set/istinat duvarları, şev, rampa, açık otopark, kotlar, girişler, lejant |
-| `ERA01_boyama_A-blok-1-bodrum_v01.jpg` | A3, 1/100 | 2.3622 | A Blok 1. bodrum (-2.80) |
-| `ERA01_boyama_A-blok-zemin-kat_v01.jpg` | A2, 1/100 | 2.3622 | A Blok zemin kat (+1.20) |
-| `ERA01_boyama_A-blok-1-kat_v01.jpg` | A3, 1/100 | 2.3622 | A Blok 1. kat (+4.70) |
-| `ERA01_boyama_A-blok-kat-planlari_v01.jpg` | A3, 1/200 | 1.1811 | A Blok toplu pafta |
-| `ERA01_boyama_B-blok-2-bodrum_v01.jpg` | A2, 1/100 | 2.3622 | B Blok 2. bodrum, kapalı otopark (-7.00) |
-| `ERA01_boyama_B-blok-1-bodrum_v01.jpg` | A2, 1/100 | 2.3622 | B Blok 1. bodrum (-4.00) |
-| `ERA01_boyama_B-blok-zemin-kat_v01.jpg` | A3, 1/100 | 2.3622 | B Blok zemin kat (±0.00) |
-| `ERA01_boyama_B-blok-kat-planlari_v01.jpg` | A3, 1/250 | 0.9449 | B Blok toplu pafta |
-| `ERA01_boyama_C-blok-1-bodrum_v01.jpg` | A3, 1/100 | 2.3622 | C Blok 1. bodrum (-4.00) |
-| `ERA01_boyama_C-blok-zemin-kat_v01.jpg` | A3, 1/100 | 2.3622 | C Blok zemin kat (±0.00) |
-| `ERA01_boyama_C-blok-kat-planlari_v01.jpg` | A3, 1/150 | 1.5748 | C Blok toplu pafta |
-| `ERA01_boyama_D-blok-1-bodrum_v01.jpg` | A3, 1/100 | 2.3622 | D Blok 1. bodrum (-3.00) |
-| `ERA01_boyama_D-blok-zemin-kat_v01.jpg` | A3, 1/100 | 2.3622 | D Blok zemin kat, D1+D2 (±0.00) |
-| `ERA01_boyama_D-blok-1-kat_v01.jpg` | A3, 1/100 | 2.3622 | D Blok 1. kat (+3.50) |
-| `ERA01_boyama_D-blok-kat-planlari_v01.jpg` | A3, 1/200 | 1.1811 | D Blok toplu pafta |
-| `onizleme/*_onizleme.png` | 2000 px | - | Kontrol önizlemeleri |
+| `ERA01_boyama_vaziyet_v02.jpg` | 1/500 | 0.4724 | Site: 4 blok çatı planı, zemin kat izleri, teraslar, yollar, yaya yolları, set/istinat duvarları, şev, rampa, açık otopark, kotlar, girişler, lejant |
+| `ERA01_boyama_A-blok-1-bodrum_v02.jpg` | 1/100 | 2.3622 | A 1. bodrum (-2.80) |
+| `ERA01_boyama_A-blok-zemin-kat_v02.jpg` | 1/100 | 2.3622 | A zemin (+1.20), teras tefrişi, korkuluk, alçak bahçe |
+| `ERA01_boyama_A-blok-1-kat_v02.jpg` | 1/100 | 2.3622 | A 1. kat (+4.70) |
+| `ERA01_boyama_A-blok-kat-planlari_v02.jpg` | 1/200 | 1.1811 | A toplu pafta, toplam kapalı alan 702.00 m² |
+| `ERA01_boyama_B-blok-2-bodrum_v02.jpg` | 1/150 | 1.5748 | B 2. bodrum, otopark (-7.00) |
+| `ERA01_boyama_B-blok-1-bodrum_v02.jpg` | 1/150 | 1.5748 | B 1. bodrum (-4.00) |
+| `ERA01_boyama_B-blok-zemin-kat_v02.jpg` | 1/100 | 2.3622 | B zemin (±0.00) |
+| `ERA01_boyama_B-blok-kat-planlari_v02.jpg` | 1/250 | 0.9449 | B toplu pafta, toplam kapalı alan 954.12 m² |
+| `ERA01_boyama_C-blok-1-bodrum_v02.jpg` | 1/100 | 2.3622 | C 1. bodrum (-4.00) |
+| `ERA01_boyama_C-blok-zemin-kat_v02.jpg` | 1/100 | 2.3622 | C zemin (±0.00) |
+| `ERA01_boyama_C-blok-kat-planlari_v02.jpg` | 1/150 | 1.5748 | C toplu pafta, toplam kapalı alan 270.00 m² |
+| `ERA01_boyama_D-blok-1-bodrum_v02.jpg` | 1/100 | 2.3622 | D 1. bodrum (-3.00) |
+| `ERA01_boyama_D-blok-zemin-kat_v02.jpg` | 1/100 | 2.3622 | D zemin, D1+D2 (±0.00) |
+| `ERA01_boyama_D-blok-1-kat_v02.jpg` | 1/100 | 2.3622 | D 1. kat (+3.50), teras tefrişi |
+| `ERA01_boyama_D-blok-kat-planlari_v02.jpg` | 1/150 | 1.5748 | D toplu pafta, toplam kapalı alan 460.02 m² |
+| `onizleme/*_v02_onizleme.png` | 2000 px | - | Kontrol önizlemeleri |
 
-PSD istenmediği için üretilmedi.
+Kat paftalarında A3'e 1/100 sığmayanlar (B 2. ve 1. bodrum) 1/150'de. A zemin, 1/100'de kalsın diye peyzaj bandı kenarda kırpıldı.
 
 ## Kaynak (kaynak/)
-`python3 era01_dxf_duzlestir.py` (DXF'teki bütün INSERT'leri açar ve `era01_geo.pkl` önbelleğini yazar, yaklaşık 12 sn. Önbellek repoda tutulmuyor.) → `python3 era01_vaziyet_donusum.py` (isteğe bağlı) → `python3 era01_boyama.py [vaziyet] [katlar] [bloklar] [blok=ABCD]`.
-- `era01_katlar.py`: hangi pafta çerçevesi ve hangi INSERT'lerin hangi kata ait olduğu
-- `era01_plan.py`: kat planı motoru · `era01_vaziyet.py`: vaziyet motoru · `era01_ortak.py`: palet ve pafta düzeni
-- `era01_ozet.json`: kat bazında mahal alanları, net/brüt değerleri ve dosya-ölçek kayıtları
+`python3 era01_dxf_duzlestir.py` (DXF önbelleği `era01_geo.pkl`, yaklaşık 12 sn; repoda tutulmuyor) → `python3 era01_boyama.py [vaziyet] [katlar] [bloklar]`. `era01_vaziyet_donusum.py` plandan vaziyete dönüşümü üretir.
+- `era01_katlar.py`: pafta çerçeveleri ve kat-INSERT eşleşmesi
+- `era01_plan.py`: kat planı motoru · `era01_vaziyet.py`: vaziyet motoru · `era01_ortak.py`: palet, pafta düzeni, sürüm
+- `era01_ozet.json`: kat bazında mahaller, net, açık alan, brüt (kaynağıyla), dosya ve ölçek, numaralanan mahaller, eklenen tefriş, blok toplam kapalı alanları
 
 Gereken Python paketleri: ezdxf, pycairo, Pillow, numpy, scipy, shapely.
 
 ## Yöntem
-- Duvar, kolon/perde (`1_IFC_Concrete_Section`, `0_IFC_Hatch_Structure`), mahal poligonu (`0_IFC_Area`), brüt poligon, kapı, pencere (`3_IFC_Window`), merdiven, şaft ve mobilya DXF'ten birebir alındı. Geometri kaydırılmadı.
-- Duvar poşesi şöyle çıkarıldı: mahal poligonları ile duvar ve kolon çizgileri arasındaki kapalı bölgeler raster bileşen analiziyle bulundu. Kapı açıklıkları (kapı bloğu sınırı ve kanat yayı), pencereler (pencere bloğu sınırı) ve asansör kuyusu gibi boşluklar ayrı sınıflandı.
-- Mahal adı ve alanı: ad DXF'teki mahal yazısından, alan `0_IFC_Area` poligonundan hesaplandı (0.10 m² hassasiyet). Bir katta tek bir mahal adı bile sığmazsa o katın bütün mahalleri numaralandı ve plan yanına liste kondu (D zemin kat 1/100, toplu paftalarda bazı katlar).
-- Mobilya: DXF tefrişi kullanıldı (beyaz dolgu, ince gri kontur, yumuşak gölge). Ekleme yapılmadı.
-- Vaziyet: zemin kat izi ve giriş okları, plan ve vaziyetteki köşe kotu sembolleri eşleştirilerek yerleştirildi (ölçek 0.25 sabit; A ve B 0°, C 90°, D 66.35°; B'de kalan sapma ±30 cm). Çatı planları ayrı paftada durduğu için saçak poligonu zemin kat brüt izine ortalanarak konuldu.
+- Duvar, kolon/perde, mahal (`0_IFC_Area`), brüt, kapı, pencere (`3_IFC_Window`), merdiven, şaft ve mobilya DXF'ten birebir alındı. Geometri kaydırılmadı.
+- Duvar poşesi: mahal poligonları ile duvar ve kolon çizgileri arasındaki kapalı bölgeler raster bileşen analiziyle bulundu. Kapı açıklıkları, pencereler ve asansör boşlukları ayrı sınıflandı.
+- **Mahal yazıları (v02):** Bütün paftalarda tek tip yazı boyu ve kalınlığı var: ad kalın, alan normal. Yazı kutusu mahal sınırından en az 8 cm içeride duruyor ve giriş üçgeninin 75 cm çevresine girmiyor. Ad tek satıra sığmazsa iki satıra bölünüyor. Hiçbir biçimde sığmayan mahal (çoğunlukla dar merdiven, koridor ve WC) yalnız kendisi numaralanıyor ve plan yanındaki listede yer alıyor. Diğer bütün mahallerde ad doğrudan mahalin içinde.
+- Mahal adları tek yazımda: "E.BANYO" → "E. BANYO".
+- Alanlar `0_IFC_Area` poligonlarından hesaplandı (0.10 m² hassasiyet).
+- **Brüt alan (v02 kuralı):** Terassız kapalı kat alanı, dıştan dışa. Teras, balkon ve kat bahçesi "AÇIK ALAN" satırında ayrı gösteriliyor.
+- Vaziyette blok izleri, köşe kotu sembolleri eşleştirilerek konuldu (ölçek 0.25 sabit; A ve B 0°, C 90°, D 66.35°).
+  - A, B ve C çatıları zemin kat brüt izine ortalandı.
+  - **D (v02):** Çatı planı bütün olarak (17.70 m iz, teras dahil) zemin kat iziyle çakıştırıldı. Kırma çatı böylece güney ucuna yaslandı; kuzeydeki 7.15 m'lik 1. kat terası "zemin kat izi / teras" tonunda görünüyor.
 
-## Alanlar (net = kapalı mahaller; teras/balkon/kat bahçesi ayrı)
-| Kat | Net toplam | Açık alan | Brüt | Brüt kaynağı |
+## Alanlar (m²)
+| Kat | Net | Açık alan | Brüt (terassız) | Brüt kaynağı |
 |---|---|---|---|---|
 | A 1. bodrum | 327.40 | - | 362.00 | DXF brüt poligonu |
-| A zemin | 150.40 | 190.00 (teras) | 170.00 | DXF brüt poligonu |
-| A 1. kat | 122.80 | 25.00 (kat bahçesi) | 170.00 | DXF şema "KAT BRÜTÜ" |
+| A zemin | 150.40 | 190.00 teras | 170.00 | DXF brüt poligonu |
+| A 1. kat | 122.80 | 25.00 kat bahçesi | 170.00 | DXF şema KAT BRÜTÜ |
 | B 2. bodrum | 376.00 | - | 409.00 | DXF brüt poligonu |
 | B 1. bodrum | 258.50 | - | 301.68 | DXF brüt poligonu |
 | B zemin | 217.20 | - | 243.44 | DXF brüt poligonu |
-| C 1. bodrum | 117.80 | - | 135.00 | DXF şema "KAT BRÜTÜ" |
-| C zemin | 107.10 | 13.60 (balkon) | 135.00 | DXF şema "KAT BRÜTÜ" |
+| C 1. bodrum | 117.80 | - | 135.00 | DXF şema KAT BRÜTÜ |
+| C zemin | 107.10 | 13.60 balkon | 135.00 | DXF şema KAT BRÜTÜ |
 | D 1. bodrum | 97.20 | - | 112.54 | DXF brüt poligonu |
-| D zemin | 191.40 | - | 217.71 | DXF kat brüt poligonu (daire brütleri 107.93 + 109.78) |
-| D 1. kat | 114.20 | 82.70 (teras) | 217.71 | DXF brüt poligonu (bkz. Soru 4) |
+| D zemin | 191.40 | - | 217.71 | DXF kat brüt poligonu (daireler 107.93 + 109.78) |
+| D 1. kat | 114.20 | 82.70 teras | **129.77** | DXF şema KAT BRÜTÜ (`D_CK_SEMA`). Plan poligonu 217.71 terası da kapsıyor, kullanılmadı |
 
-Net toplam, yuvarlanmış mahal alanlarının toplamıdır.
+**Toplam kapalı alan:** A 702.00 · B 954.12 · C 270.00 · D 460.02 m².
+
+## v02'de yapılan düzeltmeler
+| Madde | Yapılan |
+|---|---|
+| H1 | D 1. kat brüt alanı 129.77 m², teras 82.70 m² ayrı. D 1. kat ve D toplu paftası, özet ve OKUBENI buna göre güncellendi |
+| H2 | Vaziyette D çatısı güney ucuna yaslandı, kuzey terası görünür |
+| U1 | A zemin terasına (190 m²) ve D 1. kat terasına (82.70 m²) dış oturma grubu (3'lü 220×85, 2 tekli 80×80, sehpa 100×60), 6 kişilik dış yemek masası (180×90) ve saksılar (Ø60) eklendi. Saksılar mevcut DXF öğeleriyle çakışıyorsa konmadı. Tefriş kuralına göre teras/bahçe |
+| U2 | Yazılar tek tip; duvara ve giriş üçgenine binmiyor |
+| U3 / Soru 2 | Numara ve liste yalnız adı sığmayan mahalde |
+| U4 / Soru 3 | Başlık "MİMARİ KONSEPT PROJE", aşama KONSEPT |
+| U5 / Soru 4 | Bütün paftalar A3 |
+| U6 | Toplu paftalarda sağ altta TOPLAM KAPALI ALAN |
+| U7 | Vaziyette DXF'teki "YAYA YOLU" şeritleri sert zemin tonunda (#DDD6C9); lejanta eklendi |
+| U8 | A zemin teras kenarına çift çizgi korkuluk eklendi; teras çevresindeki alçak zemin ayrı tonda ve "ALÇAK BAHÇE -2.80 (170.15)" kotuyla gösterildi |
+| U9 | "E. BANYO" tek yazım |
 
 ## Varsayımlar ve notlar
-1. **Blok sayısı:** Vaziyette 4 blok var: A, B, C, D. DXF'teki "E-F_..." blokları D Blok'a ait (D Blok ikiz konut D1/D2). Ayrı bir E ya da F bloğu yok.
-2. **Kat listesi:** A Blok'ta tek bodrum var (-2.80). "-7.00 (167.15)" kotu B Blok 2. bodrumuna (kapalı otopark) ait; proje.md'deki "A 2. bodrum" ifadesi düzeltilmeli. Çatı planları ayrı kat paftası yapılmadı, vaziyette çatı görünümü olarak kullanıldı.
-3. **Pencere ve doğrama** DXF planlarından (`*_DOGRAMA` blokları) birebir alındı. Tahmini pencere eklenmedi.
-4. **Plan yönü:** C ve D planları DXF paftasındaki yönleriyle verildi (C 270° döndürülmüş). Kuzey oku her paftada DXF'teki kuzey sembolünün dönüşüne göre konuldu: A ve B 21.29°, C 291.29°, D 314.94°, vaziyet 21.29°.
-5. **Peyzaj bandı:** Zemin katlarda bina çevresinde 2.5 m çim bandı, giriş yolu ve suluboya ağaçlar var. Bodrumlarda 1.1 m orta gri toprak bandı, üst katlar beyaz zeminde.
-6. **Mahal poligonu olmayan alanlar** (asansör kuyuları, A 1. bodrum güneydoğu köşesi, A 1. kat asansör önü) asansör grisi ya da boş bırakıldı. Bunlar alan toplamına girmez.
-7. **Vaziyet zemin sınıfları:** DXF'te yaya yolu ve sert zemin için kapalı poligon yok. Bölgeler çizgilerden ve etiketlerden çıkarıldı. Etiketi olmayan parsel içi alanlar çim, ince şeritler şev taşı kabul edildi. Bu yüzden blok önlerindeki yaya yollarının bir kısmı çim tonunda kalmış olabilir.
-8. **A zemin kat "TERAS 190.00 m²"** havuz salonunun üstündeki teras olarak taş tonunda boyandı. Net toplama girmedi.
-9. **Alan karşılaştırması:** DXF mahal yazılarındaki alanlar (örn. 20.07) poligonlardan hesaplanan değerlerle uyumlu. Paftalarda 0.10 m²'ye yuvarlanmış değerler var (20.10).
-10. Tefriş DXF'teki gibi bırakıldı. Gözle yapılan kontrolde mahal işlevlerinde belirgin eksik görülmedi, ama ayrıntılı tefriş-kuralları denetimi yapılmadı.
-
-## Açık sorular (önerilen varsayımla)
-1. D Blok 1. kat ve çatı paftası başlıklarında ikisi de "+3.50 (170.75)" yazıyor; çatı kotunun +7.00 (174.25) olması bekleniyor. Öneri: 1. kat +3.50 doğru, çatı kotu DXF'te düzeltilsin.
-2. A zemin kat şemasında "KAT BRÜTÜ 363.96", plan brüt poligonunda "170.00" yazıyor. Öneri: paftada plan poligonu (170.00) kullanıldı; şema terası da kapsıyor olabilir.
-3. A 1. kat, C 1. bodrum ve C zemin planlarında brüt poligon yok. Öneri: şema "KAT BRÜTÜ" değerleri kullanıldı (170.00 / 135.00 / 135.00).
-4. D 1. kat brüt poligonu 217.71 m² (zemin katla aynı), D çatı katı şeması ise 129.77 m² veriyor. Kat 82.70 m² teras içeriyor. Öneri: 217.71 gösterildi; doğru değer ÇİZGİ/kullanıcı tarafından teyit edilsin.
-5. Vaziyette yaya yolu ve sert zemin sınırları DXF'te kapalı poligon olarak yok. Öneri: şimdilik çim ağırlıklı bırakıldı. İstenirse sert zemin poligonları DXF'e eklenince yeniden boyanır.
+1. **Blok sayısı:** 4 blok var: A, B, C, D. DXF'teki "E-F_..." blokları D'nin planları. A'nın tek bodrumu var; -7.00 kotu B'nin 2. bodrumuna (otopark) ait.
+2. **Pencere ve doğrama** DXF planlarından birebir alındı. Tahmini pencere eklenmedi.
+3. **Kuzey okları** DXF kuzey sembolüne göre konuldu: A, B ve vaziyet 21.29°, C 291.29°, D 314.94°. C ve D planları DXF paftasındaki yönleriyle verildi.
+4. **Zemin bantları:** Zemin katlarda 2.5 m peyzaj bandı var. Bodrumlarda gri toprak bandı var. Üst katlar beyaz zeminde.
+5. **Mahal poligonu olmayan alanlar** (asansör kuyuları vb.) gri ya da boş bırakıldı; alan toplamına girmedi.
+6. **Vaziyet zemin sınıfları:** DXF'te kapalı sert zemin poligonu yok. Bölgeler çizgilerden ve etiketlerden çıkarıldı. Etiketsiz alanlar çim, ince şeritler şev taşı kabul edildi.
+7. **DXF'teki tutarsızlıklar** (kullanıcının bilgisine):
+   - D 1. kat ve çatı başlıklarında ikisi de +3.50 yazıyor (kesitlere göre saçak +7.00).
+   - `D_K1 BRUT ALAN` poligonu 217.71 m² ve terası da içeriyor.
+   - A zemin şemasındaki 363.96 m² blok konturu, terası da kapsıyor.

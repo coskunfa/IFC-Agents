@@ -81,6 +81,16 @@ def sheet_floor(k):
         pw, ph = plan_mm(r)
         if pw <= aw and ph <= ah:
             break
+        if olcek == 100:
+            # peyzaj/toprak bandını kenarda kırparak 1/100'ü korumayı dene (en az 60 cm bant kalsın)
+            pad = k["_pad"]
+            need = max((ph - ah) * 10 / 2, (pw - aw) * 10 / 2) + 2
+            if pad - need >= 60:
+                del r
+                r = PL.render_plan(k, olcek, txt, pad=pad - need)
+                pw, ph = plan_mm(r)
+                if pw <= aw and ph <= ah:
+                    break
     s, c = new_sheet(Wm, Hm)
     header(c, Wm, BLOK_ADI[k["blok"]] + " · " + k["ad"], "KOT %s (%s)" % (k["kot"], k["mutlak"]))
     px_, py_ = 15 + (aw - pw) / 2, 30 + (ah - ph) / 2
@@ -159,7 +169,7 @@ def sheet_vaziyet():
     y = 78
     stext(c, x0, y, "LEJANT", 8, bold=True, track_mm=0.6); y += 5
     items = [("Yapı (çatı planı)", hx("#BDBDBA"), "fill"), ("Zemin kat izi / teras", hx("#E8E6E1"), "fill"),
-             ("Çim / doğal eğim", C["grass"], "fill"), ("Araç yolu / rampa / açık otopark", hx("#D6D4CF"), "fill"),
+             ("Çim / doğal eğim", C["grass"], "fill"), ("Yaya yolu / sert zemin", hx("#DDD6C9"), "fill"), ("Araç yolu / rampa / açık otopark", hx("#D6D4CF"), "fill"),
              ("Şev taşı / kademeli set", hx("#DCD8CF"), "fill"), ("Yol / kaldırım (parsel dışı)", hx("#E3E2DE"), "fill"),
              ("Set / istinat / bahçe duvarı", hx("#55575A"), "line"), ("Parsel sınırı", hx("#6E8A6C"), "dash"),
              ("Bina girişi", C["red"], "tri"), ("Kot (m)", C["text2"], "kot")]

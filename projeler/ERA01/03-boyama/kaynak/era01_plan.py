@@ -176,7 +176,7 @@ def rooms_from(d, k):
 
 
 # ------------------------------------------------------------------ ana çizim
-def render_plan(k, olcek=100, txt=1.0, seed=11, band=True):
+def render_plan(k, olcek=100, txt=1.0, seed=11, band=True, pad=None):
     rnd = random.Random(seed)
     S = PXMM * 100.0 / olcek / 10.0        # px / cm
     d = collect(k)
@@ -186,7 +186,9 @@ def render_plan(k, olcek=100, txt=1.0, seed=11, band=True):
     pts_all = [p for pts in d["areas"] for p in pts] + [p for w, _ in d["walls"] for p in w] + \
               [p for pts in d["cols"] for p in pts] + [p for pts in d["brut"] for p in pts]
     xs, ys = [p[0] for p in pts_all], [p[1] for p in pts_all]
-    pad = 275 if (k["tip"] == "zemin" and band) else (135 if k["tip"] == "bodrum" and band else 80)
+    if pad is None:
+        pad = 275 if (k["tip"] == "zemin" and band) else (135 if k["tip"] == "bodrum" and band else 80)
+    k["_pad"] = pad
     X0, Y0, X1, Y1 = min(xs) - pad, min(ys) - pad, max(xs) + pad, max(ys) + pad
     W, H = int(math.ceil((X1 - X0) * S)), int(math.ceil((Y1 - Y0) * S))
     mat = cairo.Matrix(S, 0, 0, -S, -X0 * S, Y1 * S)
@@ -564,7 +566,7 @@ def render_plan(k, olcek=100, txt=1.0, seed=11, band=True):
         kv = m.group(1)
         if not kv.startswith(("+", "-", "±")):
             kv = "+" + kv
-        c.move_to(kx, ky); c.line_to(kx - 12 * txt, ky + 18 * txt); c.line_to(kx + 12 * txt, ky + 18 * txt); c.close_path()
+        c.new_path(); c.move_to(kx, ky); c.line_to(kx - 12 * txt, ky + 18 * txt); c.line_to(kx + 12 * txt, ky + 18 * txt); c.close_path()
         setc(c, C["white"]); c.fill_preserve(); c.set_line_width(1.0 * txt); setc(c, C["text"]); c.stroke()
         c.move_to(kx, ky + 18 * txt); c.line_to(kx + 75 * txt, ky + 18 * txt); c.stroke()
         wtext(c, kx + 16 * txt, ky + 30 * txt, kv, 15 * txt, anchor="l", color=C["text"])
@@ -656,7 +658,7 @@ def layout_labels(c, rooms, txt, entr_pts=()):
         r["no"] = i
         pg = r["poly"] if r["poly"].geom_type == "Polygon" else max(r["poly"].geoms, key=lambda p: p.area)
         q = polylabel(pg, 2.0)
-        c.arc(q.x, q.y, 15 * txt, 0, 2 * math.pi); setc(c, C["white"], 0.9); c.fill_preserve()
+        c.new_path(); c.arc(q.x, q.y, 15 * txt, 0, 2 * math.pi); setc(c, C["white"], 0.9); c.fill_preserve()
         c.set_line_width(0.8 * txt); setc(c, C["text2"]); c.stroke()
         wtext(c, q.x, q.y, str(i), 17 * txt, bold=True)
     return numbered
