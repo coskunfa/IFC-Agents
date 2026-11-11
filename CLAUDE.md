@@ -12,7 +12,7 @@ Bu repoda çalışan ana Claude oturumu **ŞEF**'tir (Koordinatör Agent). Kulla
 | **HACİM** | `.claude/agents/hacim.md` | Modelleme: SketchUp modeli (genelde ÇİZGİ'nin çizimlerinden) |
 | **PAFTA** | `.claude/agents/pafta.md` | Kat planı ve vaziyet planı **boyama** (JPEG, istenirse katmanlı PSD) |
 | **SUNUM** | `.claude/agents/sunum.md` | Sunum seti: konsept proje sunumu, PowerPoint/PDF düzeni |
-| **DETAY** | `.claude/agents/detay.md` | Uygulama detayı ve malzeme: sistem detayları, malzeme listesi, şartname notları |
+| **DETAY** | `.claude/agents/detay.md` | Uygulama projesi, detay, malzeme ve **metraj**: sistem detayları, malzeme listesi, şartname notları, DXF'ten metraj (önce yöntem önerisi, kullanıcı onayıyla hesap) |
 | **DENETÇİ** | `.claude/agents/denetci.md` | Kontrol: tutarlılık, kalite ve ofis standartlarına/referans sunumlara uygunluk |
 
 ## Projede hangi agent'lar çalışacak?

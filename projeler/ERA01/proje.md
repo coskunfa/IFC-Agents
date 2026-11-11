@@ -3,7 +3,7 @@
 - **Proje kodu**: ERA01
 - **Tür / konum / alan**: Çok bloklu konut sitesi (A, B, C, D bloklar + DXF'te E-F tanımları), Beykoz antetli uygulama/ruhsat seti; eğimli arazi (kotlar ~164–181 m)
 - **Aşama**: Ruhsat/uygulama seti mevcut → sunum amaçlı model + boyama
-- **Aktif agent'lar**: HACİM, PAFTA, SUNUM (DENETÇİ yalnız kullanıcı isterse)
+- **Aktif agent'lar**: HACİM, PAFTA, SUNUM, DETAY (metraj) (DENETÇİ yalnız kullanıcı isterse)
 - **Model detay seviyesi**: KÜTLE + CEPHE (varsayılan); olabildiğince az çizgi/yüz, hafif model
 - **Boyama stili**: Konsept gri, DNM01'de yapılan tarzda (ofis referansları)
 - **Teslim formatı**: SKP (model + görüntüler), JPEG (boyamalar)
