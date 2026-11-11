@@ -1,0 +1,41 @@
+# -*- coding: utf-8 -*-
+"""ERA01 kat tanımları: her plan için pafta çerçevesi (DXF model alanı) ve o bloğa ait üst düzey INSERT adları."""
+EXCL_ANY = ("OLCU", "AKS", "KESIT", "KAPI POZU", "SEMA", "SABLON", "ARAC NO", "KOSE KOTLARI")
+
+KATLAR = [
+    dict(kod="A-blok-1-bodrum", blok="A", ad="1. BODRUM KAT PLANI", kot="-2.80", mutlak="170.15", tip="bodrum",
+         frame=(94439, 25038, 98508, 27958),
+         ins=["A B1 PLAN", "A B1 BRUT ALAN", "A B1 DOGRAMA", "A B1 ST", "A_B1_ALAN", "A B1 SAFTLAR"]),
+    dict(kod="A-blok-zemin-kat", blok="A", ad="ZEMİN KAT PLANI", kot="+1.20", mutlak="174.15", tip="zemin", alcak="-2.80 (170.15)",
+         frame=(98508, 25038, 102584, 27958),
+         ins=["A ZK PLAN", "A NK ST", "A ZK DOGRAMA", "A_NK_ALAN", "A_ZK_BRUT ALAN", "A ZK SAFTLAR", "A ZK GIRIS MERD", "OK"]),
+    dict(kod="A-blok-1-kat", blok="A", ad="1. KAT PLANI", kot="+4.70", mutlak="177.65", tip="normal",
+         frame=(102584, 25038, 105498, 27958),
+         ins=["A K1 PLAN", "A NK ST", "A K1 DOGRAMA", "A_K1_ALAN", "A K1 SAFT"]),
+    dict(kod="B-blok-2-bodrum", blok="B", ad="2. BODRUM KAT PLANI", kot="-7.00", mutlak="167.15", tip="bodrum",
+         frame=(94439, 20594, 98402, 23514),
+         ins=["B BK2 STR", "D BLOK_B2_BRUT ALAN", "B_BK2_PLAN", "B_BK2_NET ALAN", "B_BK2_ARAC NO"]),
+    dict(kod="B-blok-1-bodrum", blok="B", ad="1. BODRUM KAT PLANI", kot="-4.00", mutlak="170.15", tip="bodrum",
+         frame=(98402, 20594, 102698, 23514),
+         ins=["D BLOK_B1_BRUT ALAN", "B B1 ST", "B_B1 PLAN", "A_B1_NET ALAN", "B B1 SAFTLAR"]),
+    dict(kod="B-blok-zemin-kat", blok="B", ad="ZEMİN KAT PLANI", kot="±0.00", mutlak="174.15", tip="zemin",
+         frame=(102698, 20594, 105611, 23514),
+         ins=["B ZK PLAN", "B NK ST", "B_ZK_BRUT ALAN", "B ZK DOGRAMA", "B_ZK_NET ALAN", "B ZK_SAFTLAR", "OK"]),
+    dict(kod="C-blok-1-bodrum", blok="C", ad="1. BODRUM KAT PLANI", kot="-4.00", mutlak="170.36", tip="bodrum",
+         frame=(94439, 16149, 97065, 19069),
+         ins=["C B1 ST", "C_B1_PLAN", "C_B1_NET ALAN", "C_B1_DOGRAMA", "C BLOK_ZK SAFT"]),
+    dict(kod="C-blok-zemin-kat", blok="C", ad="ZEMİN KAT PLANI", kot="±0.00", mutlak="174.36", tip="zemin",
+         frame=(97065, 16149, 99691, 19069),
+         ins=["C_ZK_PLAN", "C ZK ST", "C_ZK_NET ALAN", "C_ZK_DOGRAMA", "C BLOK_ZK SAFT", "OK"]),
+    dict(kod="D-blok-1-bodrum", blok="D", ad="1. BODRUM KAT PLANI", kot="-3.00", mutlak="164.25", tip="bodrum",
+         frame=(94439, 11706, 96479, 14626),
+         ins=["D BLOK ST", "F_BK_PLAN", "D_BRUT ALAN", "D B1 DOGRAMA", "D_BK_ALAN", "E-F_BK_SAFT", "OK", "*U2000"]),
+    dict(kod="D-blok-zemin-kat", blok="D", ad="ZEMİN KAT PLANI", kot="±0.00", mutlak="167.25", tip="zemin",
+         frame=(96479, 11706, 98779, 14626),
+         ins=["E-F_STR", "D ZK D1", "D ZK D2", "D ZK BRUT ALAN", "D ZK DOGRAMA", "D_ZK_ALAN", "E-F_ZK_SAFT", "OK", "*U2000"]),
+    dict(kod="D-blok-1-kat", blok="D", ad="1. KAT PLANI", kot="+3.50", mutlak="170.75", tip="normal",
+         frame=(98779, 11706, 101079, 14626),
+         ins=["E-F_STR", "E_K1_PLAN", "D_K1 BRUT ALAN", "D_K1_DOGRAMA", "E_K1_ALAN", "E-F_K1_SAFT", "OK", "*U2000"]),
+]
+CATI = dict(A=(105498, 25038, 108398, 27958, ["A_CATI PLANI"]), B=(105611, 20594, 108525, 23514, ["D_CATI PLANI"]),
+            C=(99691, 16149, 102191, 19069, ["C_CATI PLANI"]), D=(101079, 11706, 103529, 14626, ["E-F_CATI PLANI"]))
