@@ -27,8 +27,8 @@ Her kat ayrı bir üst grup (`KAT_B1`, `KAT_00`, `KAT_01`...). İçinde her elem
 | `TASIYICI` | Kolon, perde, kiriş (varsa) | Aynı kesitli kolonlar **tek bileşen** (`KOLON_30x60` gibi) |
 | `DIS_DUVAR` | Dış duvarlar | Kalınlık çizimden (konsept: 20 cm) |
 | `IC_DUVAR` | İç bölme duvarları | Kalınlık çizimden (konsept: 10 cm) |
-| `CEPHE_KAPLAMA` | Cephe kaplaması | **Standart 20 cm**, dış duvarın dış yüzüne bitişik, doğrama boşlukları açık |
-| `DOSEME` | Taşıyıcı döşeme | **Standart 50 cm** |
+| `CEPHE_KAPLAMA` | Cephe kaplaması | **Standart 20 cm**, çizimdeki dış duvar çizgisinin **dışına** eklenir (bina her cephede 20 cm büyür; dış duvar 20 + kaplama 20 = 40 cm). Doğrama boşlukları açık |
+| `DOSEME` | Taşıyıcı döşeme | **30 cm** (toplam 50 cm'lik döşeme paketinin taşıyıcı kısmı) |
 | `DOSEME_KAPLAMA` | Döşeme üstü kaplama | **10 cm**, **her mahal ayrı alt grup** (`DK_SALON`, `DK_BANYO_1`...). Islak hacimler (banyo, WC, mutfak, çamaşır) `DOSEME_KAPLAMA_ISLAK`, diğerleri `DOSEME_KAPLAMA_KURU` grubunda toplanır |
 | `TAVAN` | Döşeme altı tavan | **10 cm**, döşemenin altında |
 | `DOGRAMA` | Pencere, kapı, cephe doğraması | Bileşen; bkz. doğrama kuralları |
@@ -43,7 +43,7 @@ Kullanıcı mahal bazında malzeme atayabilmelidir: döşeme kaplaması mahal ma
 |---|---|
 | Kat yüksekliği, villa tipi (≤2-3 katlı müstakil) | **3.50 m** (döşeme üstünden döşeme üstüne) |
 | Kat yüksekliği, apartman tipi | **3.00 m** |
-| Döşeme / döşeme kaplaması / tavan | **50 / 10 / 10 cm** |
+| Döşeme paketi (toplam **50 cm**) | taşıyıcı döşeme **30** + döşeme kaplaması **10** (üstte) + tavan **10** (altta). Net iç yükseklik: villa 3.00 m, apartman 2.50 m |
 | Cephe kaplaması | **20 cm** |
 | Detay seviyesi | KÜTLE + CEPHE |
 
@@ -58,9 +58,8 @@ Kullanıcı mahal bazında malzeme atayabilmelidir: döşeme kaplaması mahal ma
 ## Arazi kuralları
 - İstendiğinde arazi modellenir; **olabildiğince az çizgi ve yüzey**.
 - İki yöntem:
-  - **Kademeli**: eş yükselti eğrilerinden düz teraslar.
-  - **Düzenli eğimli yüzey**: az üçgenli yüzey, kenarları soften/smooth ile yumuşatılmış.
-- Kullanıcı yöntem belirtmezse ŞEF'e sor.
+  - **Kademeli** (VARSAYILAN): eş yükselti eğrilerinden düz teraslar. En hafif model.
+  - **Düzenli eğimli yüzey**: yalnızca kullanıcı isterse. Az üçgenli yüzey, kenarları soften/smooth ile yumuşatılmış.
 - Halihazır eğrileri sadeleştirilir (nokta azaltma). Model şişirilmez.
 
 ## Malzeme ve renkler

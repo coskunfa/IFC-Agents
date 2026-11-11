@@ -7,9 +7,9 @@ Ayrıntılı kurallar HACİM agent tanımındadır: `.claude/agents/hacim.md`. B
 - **Hiyerarşi**: `KAT_xx` → `TASIYICI`, `DIS_DUVAR`, `IC_DUVAR`, `CEPHE_KAPLAMA`, `DOSEME`, `DOSEME_KAPLAMA` (her mahal ayrı; `_ISLAK` / `_KURU`), `TAVAN`, `DOGRAMA`, `MERDIVEN`, `CATI`; ayrıca `ARAZI`.
 - **Varsayılan ölçüler**:
   - Villa kat yüksekliği 3.50 m, apartman 3.00 m
-  - Döşeme 50 cm, döşeme kaplaması 10 cm, tavan 10 cm
-  - Cephe kaplaması 20 cm
+  - Döşeme paketi toplam 50 cm: taşıyıcı 30 + kaplama 10 + tavan 10 (villada net yükseklik 3.00 m)
+  - Cephe kaplaması 20 cm, dış duvar çizgisinin dışına
 - **Doğrama**: kutu doğrama, bölme genişliği ≥ 1.00 m, yüksek doğramada kayıt aralığı geniş (3.00 m → 1.50 m), eşit modüler bölme.
-- **Arazi**: kademeli ya da az üçgenli yumuşatılmış yüzey; model şişirilmez.
+- **Arazi**: varsayılan kademeli teraslar; yumuşatılmış yüzey yalnızca istenirse. Model şişirilmez.
 - **Renk**: yalnızca gri ve beyaz tonları; her eleman türü farklı ton (palet hacim.md içinde).
 - **Detay seviyesi**: varsayılan KÜTLE + CEPHE.
