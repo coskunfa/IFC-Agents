@@ -1,8 +1,15 @@
-# Model Standardı (SketchUp)  [DOLDURULACAK]
+# Model Standardı (SketchUp)
 
-- Birim: cm. Orijin çizim orijiniyle aynı.
-- Hiyerarşi: `KAT_00`, `KAT_01` ... ayrı gruplar; tekrar eden elemanlar (pencere, kapı, mobilya) bileşen.
-- Tag'ler: `M-DUVAR`, `M-DOSEME`, `M-DOGRAMA`, `M-CATI`, `M-MERDIVEN`, `M-PEYZAJ`, `M-CEVRE`, `M-MOBILYA`.
-- Detay seviyesi: proje bazında `proje.md`'de belirtilir. **Varsayılan: KÜTLE + CEPHE** (duvar, döşeme, çatı, doğrama boşlukları, cephe malzemeleri; render almaya hazır). Diğer seçenekler: KÜTLE, DETAYLI (LOD300).
-- Malzeme isimleri `malzeme-kutuphanesi.md` ile aynı kodları kullanır.
-- Standart sahneler: `01-Perspektif`, `02-Aksonometrik`, `03-KusBakisi`, `04-Cephe-Kuzey`... [DOLDURULACAK: ofisin render/görünüş tercihleri]
+Ayrıntılı kurallar HACİM agent tanımındadır: `.claude/agents/hacim.md`. Bu dosya özetidir.
+
+- **İlke**: az çizgi, az yüzey, az eleman; kutu mantığı; tekrar eden eleman = bileşen.
+- **Birim**: cm. Orijin çizim orijiniyle aynı.
+- **Hiyerarşi**: `KAT_xx` → `TASIYICI`, `DIS_DUVAR`, `IC_DUVAR`, `CEPHE_KAPLAMA`, `DOSEME`, `DOSEME_KAPLAMA` (her mahal ayrı; `_ISLAK` / `_KURU`), `TAVAN`, `DOGRAMA`, `MERDIVEN`, `CATI`; ayrıca `ARAZI`.
+- **Varsayılan ölçüler**:
+  - Villa kat yüksekliği 3.50 m, apartman 3.00 m
+  - Döşeme 50 cm, döşeme kaplaması 10 cm, tavan 10 cm
+  - Cephe kaplaması 20 cm
+- **Doğrama**: kutu doğrama, bölme genişliği ≥ 1.00 m, yüksek doğramada kayıt aralığı geniş (3.00 m → 1.50 m), eşit modüler bölme.
+- **Arazi**: kademeli ya da az üçgenli yumuşatılmış yüzey; model şişirilmez.
+- **Renk**: yalnızca gri ve beyaz tonları; her eleman türü farklı ton (palet hacim.md içinde).
+- **Detay seviyesi**: varsayılan KÜTLE + CEPHE.
