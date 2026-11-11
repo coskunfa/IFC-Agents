@@ -9,6 +9,8 @@ Bu klasör ofisin **kalıcı hafızası**dır. Tüm agent'lar işe başlamadan �
 | `model-standardi.md` | HACİM, DENETÇİ |
 | `sunum-standardi.md` | PAFTA, DENETÇİ |
 | `malzeme-kutuphanesi.md` | DETAY, HACİM, PAFTA |
+| `logolar/` | PAFTA (IFC logosu) |
+| `dokular/` | PAFTA (boyama dokuları, üstten mobilya/bitki/araç) |
 | `referans-sunumlar/` | PAFTA, DENETÇİ (önceki projelerden örnek boyama, diyagram, pafta, model görüntüsü) |
 
 **Referans dosyası eklerken**, dosya adına ne olduğunu yazın: `ref_kat-plani-boyama_ProjeX.pdf`, `ref_diyagram_sirkulasyon.png` gibi.
