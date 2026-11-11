@@ -1,0 +1,8 @@
+[
+ {"file":"perspektif.png","name":"Perspektif GD","eye":[3400,-2300,750],"target":[680,505,300],"persp":true,"fov":35,"title":"DNM01 - Perspektif (guneydogu)"},
+ {"file":"aksonometrik.png","name":"Aksonometrik KB","eye":[-2700,3700,3200],"target":[680,505,250],"persp":false,"title":"DNM01 - Aksonometrik (kuzeybati, giris cephesi)"},
+ {"file":"kus-bakisi.png","name":"Kus bakisi","eye":[-1500,-3600,4200],"target":[680,505,200],"persp":true,"fov":35,"title":"DNM01 - Kus bakisi (guneybati)"},
+ {"file":"kat-b1.png","name":"KAT_B1 ustten","eye":[680,505,5000],"target":[680,505,-400],"up":[0,1,0],"persp":false,"hide":["KAT_00","KAT_01","CATI","TAVAN","ARAZI"],"title":"Bodrum kat (-3.50) ustten","w":14,"h":11},
+ {"file":"kat-00.png","name":"KAT_00 ustten","eye":[680,505,5000],"target":[680,505,0],"up":[0,1,0],"persp":false,"hide":["KAT_01","CATI","TAVAN"],"title":"Giris kat (+-0.00) ustten","w":14,"h":11,"clip":[-120,1480,-120,1130]},
+ {"file":"kat-01.png","name":"KAT_01 ustten","eye":[680,505,5000],"target":[680,505,350],"up":[0,1,0],"persp":false,"hide":["CATI","TAVAN"],"title":"1. kat (+3.50) ustten","w":14,"h":11,"clip":[-120,1480,-120,1130]}
+]
