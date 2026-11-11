@@ -39,7 +39,22 @@ Ad kuralı: `<grup no>_IFC_<Eleman>`. Grup numarası elemanın türünü göster
 | `6_IFC_Car` | 253 | Araçlar |
 | `7_IFC_Tree` | 88 | Ağaç / peyzaj |
 
-- Çizgi kalınlıkları katmanda **Default**; baskı kalınlığı renk üzerinden **plot style (CTB)** ile verilir.  [DOLDURULACAK: ofis .ctb dosyası]
+- Çizgi kalınlıkları katmanda **Default**; baskı kalınlığı renk üzerinden **plot style** ile verilir: `ofis-standartlari/cad/IFC_CTB.ctb`.
+- CTB'de tüm renkler **nesne rengiyle** basılır (siyaha zorlanmaz), screen %100, çizgi tipi nesneden alınır.
+- Yeni katman ya da renk seçerken çizgi kalınlığı aşağıdaki CTB eşlemesine göre seçilir:
+
+| ACI | Baskı kalınlığı | Kullanıldığı katman |
+|---|---|---|
+| 50 | **0.40** | `1_IFC_Concrete_Section` (kesilen betonarme) |
+| 130 | **0.30** | `2_IFC_Wall` |
+| 251 | 0.18 | `0_IFC_Hatch_Structure` |
+| 210, 221 | 0.15 | `1_IFC_Stair`, `0_IFC_Stair_Text` |
+| 12, 60, 83, 88, 136, 231, 250, 253 | 0.10 | mahal yazısı, doğrama yazısı, kapı, ağaç, pencere, açıklama, tarama, araç |
+| 35, 64, 181 | 0.09 | mobilya, vitrifiye, korkuluk |
+| 100, 252 | 0.05 | alan poligonu, kot / gizli merdiven |
+| 1, 3–7 | 0 (en ince) | genel |
+
+Diğer kalın renkler: 0.30 → 22, 23, 30, 42, 54, 61, 75, 80, 89, 92, 110, 120, 133, 137, 140, 142, 150, 165, 173, 192, 193, 214, 232, 236, 244; 0.25 → 10; 0.20 → 41.
 - Bloklar katman `0` üzerinde eklenir; blok içindeki elemanlar kendi IFC katmanlarındadır.
 
 ## Yazı ve ölçü stilleri

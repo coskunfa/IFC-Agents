@@ -14,7 +14,7 @@ Kaynak: `referans-sunumlar/` klasöründeki örnekler. Yeni örnek geldikçe gü
 - Sağ üst köşede logo bloğu; solunda sayfa kenar boşluğundan logoya kadar uzanan **ince yatay çizgi** (koyu gri, ~1 pt).
 - Hangi logo kullanılacak:
   - Projenin bir işvereni/markası varsa → **işveren logosu** (veya işveren + IFC birlikte).
-  - Yoksa → **IFC logosu**: `ofis-standartlari/logolar/IFC_Architects_logo_gecici.png` (sunumdan kırpıldı; vektör/yüksek çözünürlüklü asıl dosya [DOLDURULACAK]).
+  - Yoksa → **IFC logosu**: `ofis-standartlari/logolar/IFC_Architects_logo_koyu.png` (sunumdan kırpıldı; vektör/yüksek çözünürlüklü asıl dosya [DOLDURULACAK]).
 - **Konsept proje sunumlarında** (IFC'nin kendi sunumu) düzen farklıdır: IFC logosu sol altta, işveren adı sol üstte yazı olarak. Bkz. `konsept-sunum-sablonu.md`.
 - Referans dosyalardaki **Salt Hayat logosu yalnızca o projeye aittir**; başka projede asla kullanılmaz.
   Referansı stil örneği olarak kullan, logoyu ve proje adını taşıma.
@@ -43,6 +43,11 @@ Kural (kullanıcı onaylı): konsept sunumda **A**, satış/pazarlama işinde **
 | Otopark | Gri gerçekçi üstten araçlar |
 | Giriş | **Kırmızı dolu üçgen** |
 | Plan altı | Sağa yaslı `ZEMİN PLANI` / `BRÜT ALAN : 124.50 m²`; sayfa sağ altında `TOPLAM KAPALI ALAN` |
+
+### Boyama yöntemi (ofis pratiği)
+- Ofis boyamaları **PowerPoint üzerinde** yapıyor: mahal dolgularında **gradyan dolgu**, yumuşak gölge, saydamlık ve doku dolguları.
+- PAFTA da aynı etkiyi verir: düz dolgu yerine hafif gradyan (aynı rengin %5–10 açık/koyu tonları arasında), objelerin altında yumuşak gölge (bulanık, %20–30 opak, hafif aşağı-sağa kayık), saydam doku katmanları.
+- Çıktı PPTX olacaksa boyama nesneleri mümkün olduğunca **düzenlenebilir PowerPoint şekli** olarak kalır (gradyan dolgulu şekiller); tümüyle tek bir resme gömülmez. Böylece ofis üzerinde düzeltme yapabilir.
 
 ### 2-B. Dokulu / pazarlama stili
 
