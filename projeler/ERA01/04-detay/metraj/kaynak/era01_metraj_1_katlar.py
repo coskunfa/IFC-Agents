@@ -472,6 +472,8 @@ def run():
             bd = min([g_.exterior.distance(Point(w["hedef"])) for g_ in getattr(Fc_poly, "geoms", [Fc_poly])] +
                      [r["poly"].distance(Point(w["hedef"])) for r in rooms if r["dis"]] + [1e9])
             w.update(duvar_kal=kal, duvar_mal=mal, dis=bd <= 120, dis_uzaklik=round(bd), mahal_i=ri)
+        def bdist(pt):  # kapalı iz dış sınırına uzaklık (cm); dış kapı kasası ≤ ~22 cm, iç kapılar ≥ 30 cm
+            return min(g_.exterior.distance(Point(pt)) for g_ in getattr(Fc_poly, "geoms", [Fc_poly]))
         used = set()
         for d_ in dt:
             # en yakın kapı bloğu (eşleşme: 160 cm içinde)
@@ -492,7 +494,7 @@ def run():
             kal, dis_, mal = sample(ref, 20)
             rr = near_rooms(ref, 40, 2)
             d_.update(duvar_kal=kal, duvar_mal=mal, mahal_i=[i for i in rr if not rooms[i]["dis"]],
-                      dis=bool(dis_ or any(rooms[i]["dis"] for i in rr) or len(rr) < 2), ref=ref)
+                      dis=bool(any(rooms[i]["dis"] for i in rr) or len([i for i in rr if not rooms[i]["dis"]]) < 2 or bdist(ref) <= 25), ref=ref)
         extra = []
         for j, x in enumerate(di):
             if j in used: continue
@@ -509,7 +511,7 @@ def run():
                 break
             extra.append(dict(blok=x["ad"], poz=x["poz"], duvar_kal=kal, duvar_mal=mal, el=ar[0]["hand"] if ar else None,
                               gen_tahmin=(round(sum(Rs) / 5) * 5 if Rs else None), pencere_icinde=inwin,
-                              mahal_i=[i for i in rr if not rooms[i]["dis"]], dis=bool(dis_ or any(rooms[i]["dis"] for i in rr) or len(rr) < 2)))
+                              mahal_i=[i for i in rr if not rooms[i]["dis"]], dis=bool(any(rooms[i]["dis"] for i in rr) or len([i for i in rr if not rooms[i]["dis"]]) < 2 or bdist(x["poz"]) <= 25)))
         fx = fixtures(K, anc, rooms)
         st = stairs(E, anc)
         # korkuluk çizgileri (plan)
