@@ -18,7 +18,7 @@ DPI = 600
 PXMM = DPI / 25.4
 FONT = "Carlito"  # Calibri metrik eşdeğeri (sistemde Calibri yok)
 TARIH = "11.11.2026"
-SURUM = "v01"
+SURUM = "v02"
 PROJE_ADI = "ERA01 ERA EVİ"
 
 
@@ -289,7 +289,7 @@ def logo(ctx, x, y_bottom, w):
 
 def info_block(ctx, x_right, y, cizim, olcek):
     items = [("PROJE", PROJE_ADI), ("ÇİZİM", cizim), ("ÖLÇEK", olcek),
-             ("TARİH", TARIH), ("SÜRÜM", SURUM), ("AŞAMA", "SUNUM")]
+             ("TARİH", TARIH), ("SÜRÜM", SURUM), ("AŞAMA", "KONSEPT")]
     ctx.select_font_face(FONT, 0, 1); ctx.set_font_size(ptx(7.5))
     widths = [max(text_width(ctx, v), 1) / PXMM for _, v in items]
     gap = 6
@@ -314,7 +314,7 @@ def new_sheet(w_mm, h_mm):
 def header(ctx, w_mm, sub, sub2=None):
     stext(ctx, 15, 17, "ERA01", 13, bold=True)
     stext(ctx, 15, 23.5, "ERA EVİ", 11, track_mm=1.6, color=C["text2"])
-    stext(ctx, w_mm - 15, 17, "MİMARİ SUNUM PROJESİ", 12, track_mm=2.2, anchor="r")
+    stext(ctx, w_mm - 15, 17, "MİMARİ KONSEPT PROJE", 12, track_mm=2.2, anchor="r")
     stext(ctx, w_mm - 15, 23.5, sub, 10, bold=True, anchor="r")
     if sub2:
         stext(ctx, w_mm - 15, 28.5, sub2, 7.5, anchor="r", color=C["text2"])

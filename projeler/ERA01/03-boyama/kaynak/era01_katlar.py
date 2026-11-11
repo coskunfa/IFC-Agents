@@ -6,7 +6,7 @@ KATLAR = [
     dict(kod="A-blok-1-bodrum", blok="A", ad="1. BODRUM KAT PLANI", kot="-2.80", mutlak="170.15", tip="bodrum",
          frame=(94439, 25038, 98508, 27958),
          ins=["A B1 PLAN", "A B1 BRUT ALAN", "A B1 DOGRAMA", "A B1 ST", "A_B1_ALAN", "A B1 SAFTLAR"]),
-    dict(kod="A-blok-zemin-kat", blok="A", ad="ZEMİN KAT PLANI", kot="+1.20", mutlak="174.15", tip="zemin",
+    dict(kod="A-blok-zemin-kat", blok="A", ad="ZEMİN KAT PLANI", kot="+1.20", mutlak="174.15", tip="zemin", alcak="-2.80 (170.15)",
          frame=(98508, 25038, 102584, 27958),
          ins=["A ZK PLAN", "A NK ST", "A ZK DOGRAMA", "A_NK_ALAN", "A_ZK_BRUT ALAN", "A ZK SAFTLAR", "A ZK GIRIS MERD", "OK"]),
     dict(kod="A-blok-1-kat", blok="A", ad="1. KAT PLANI", kot="+4.70", mutlak="177.65", tip="normal",

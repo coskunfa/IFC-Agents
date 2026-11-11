@@ -209,7 +209,7 @@ def render(olcek=500, seed=5):
     def paint_alpha(alpha, rgb):
         c.save(); c.identity_matrix(); c.set_source_surface(alpha_surf(alpha, rgb), 0, 0); c.paint(); c.restore()
 
-    COLS = {0: hx("#F1F0EC"), 1: C["grass"], 2: hx("#E4E1DA"), 3: hx("#D6D4CF"), 4: hx("#DCD8CF"), 5: hx("#E3E2DE"),
+    COLS = {0: hx("#F1F0EC"), 1: C["grass"], 2: hx("#DDD6C9"), 3: hx("#D6D4CF"), 4: hx("#DCD8CF"), 5: hx("#E3E2DE"),
             6: hx("#E3EAE1"), 7: hx("#F1F0EC")}
     c.save(); c.identity_matrix(); setc(c, COLS[0]); c.paint(); c.restore()
     grow = ndimage.grey_dilation(cmap, size=(5, 5))   # bariyer piksellerini komşu sınıfla kapat
@@ -244,6 +244,13 @@ def render(olcek=500, seed=5):
             core = fo
             ar = [r for r in KATLAR if r["blok"] == b and r["tip"] == "zemin"]
             fb = CORES[b].bounds; bb = big.bounds
+            if b == "D":
+                # D: çatı yalnız 1. katın güneydeki kapalı kısmında; çatı planı BÜTÜN olarak (17.70 m iz, teras dahil)
+                # zemin kat iziyle çakıştırılır, kırma çatı böylece güney ucuna yaslanır.
+                allp = [p for pts, cl, lay in rg if not lay.startswith(("0_IFC_Text", "0_IFC_Notation", "0_IFC_Dimension", "0_IFC_Grid"))
+                        for p in pts]
+                xs_ = [p[0] for p in allp]; ys_ = [p[1] for p in allp]
+                bb = (min(xs_), min(ys_), max(xs_), max(ys_))
             dx = (fb[0] + fb[2]) / 2 - (bb[0] + bb[2]) / 2
             dy = (fb[1] + fb[3]) / 2 - (bb[1] + bb[3]) / 2
             ROOF_SHIFT[b] = (dx, dy)

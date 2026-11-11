@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ERA01 ERA Evi - boyama paftaları üretimi (PAFTA, v01).
+"""ERA01 ERA Evi - boyama paftaları üretimi (PAFTA, v02).
 
 Kullanım:  python3 era01_dxf_duzlestir.py   (bir kez; DXF -> era01_geo.pkl)
            python3 era01_boyama.py [vaziyet] [katlar] [bloklar]   (argümansız: hepsi)
@@ -17,7 +17,13 @@ BLOK_ADI = dict(A="A BLOK", B="B BLOK", C="C BLOK", D="D BLOK")
 OZET = {}
 
 
+BRUT_OVERRIDE = {"D-blok-1-kat": (129.77, "DXF şema 'KAT BRÜTÜ' (D_CK_SEMA); plan poligonu 217.71 terası da kapsıyor")}
+
+
 def brut_of(k, r):
+    """Brüt alan = terassız kapalı kat alanı (dıştan dışa)."""
+    if k["kod"] in BRUT_OVERRIDE:
+        return BRUT_OVERRIDE[k["kod"]]
     if r["brut"] is not None:
         return r["brut"], "DXF brüt alan poligonu (0_IFC_Brüt_Alan)"
     return BRUT_SEMA[k["kod"]], "DXF şema 'KAT BRÜTÜ' (plan üzerinde brüt poligonu yok)"
@@ -59,36 +65,40 @@ def rec(k, r, olcek, fname):
     b, src = brut_of(k, r)
     OZET.setdefault(k["kod"], dict(blok=k["blok"], kat=k["ad"], kot=k["kot"], mutlak=k["mutlak"],
                                    net=float(r["net"]), acik=float(r["ext_area"]), brut=round(b, 2), brut_kaynak=src,
-                                   iz_alani_kontrol=round(r["foot_area"], 2), numarali=r["numbered"],
+                                   iz_alani_kontrol=round(r["foot_area"], 2),
+                                   numarali={}, eklenen_tefris=k.get("_added", []),
                                    mahaller=[(q["name"], fmt_area(q["area"]), q["kind"]) for q in r["rooms"]],
                                    dosyalar=[]))
     OZET[k["kod"]]["dosyalar"].append(dict(dosya=fname, olcek="1/%d" % olcek, px_cm=round(r["S"], 4)))
+    OZET[k["kod"]]["numarali"][fname] = [q["name"] for q in r["numbered"]]
 
 
 def sheet_floor(k):
-    r = PL.render_plan(k, 100, 1.0)
-    pw, ph = plan_mm(r)
-    for (Wm, Hm, kag) in ((420, 297, "A3"), (594, 420, "A2")):
-        aw, ah = Wm - 30 - 78, Hm - 34 - 30
+    Wm, Hm, kag = 420, 297, "A3"
+    aw, ah = Wm - 30 - 78, Hm - 30 - 28
+    for olcek, txt in ((100, 1.0), (150, 1.25), (200, 1.6)):
+        r = PL.render_plan(k, olcek, txt)
+        pw, ph = plan_mm(r)
         if pw <= aw and ph <= ah:
             break
     s, c = new_sheet(Wm, Hm)
     header(c, Wm, BLOK_ADI[k["blok"]] + " · " + k["ad"], "KOT %s (%s)" % (k["kot"], k["mutlak"]))
-    px_, py_ = 15 + (aw - pw) / 2, 34 + (ah - ph) / 2
+    px_, py_ = 15 + (aw - pw) / 2, 30 + (ah - ph) / 2
     paste(c, r["surf"], px_, py_)
     xr = Wm - 15
     north_arrow(c, xr - 9, 52, 7, r["north"])
     ycap = Hm - 30 - 34
     if r["numbered"]:
-        room_list(c, xr - 66, 75, r["rooms"])
-    scale_bar(c, xr - 60, ycap - 16, 100, 5, 1)
+        room_list(c, xr - 66, 75, r["numbered"])
+    scale_bar(c, xr - 60, ycap - 16, olcek, 5 if olcek == 100 else 10, 1 if olcek == 100 else 2)
     caption(c, xr, ycap, k, r)
-    footer(c, Wm, Hm, BLOK_ADI[k["blok"]] + " " + k["ad"], "1/100 (%s)" % kag)
-    fname = "ERA01_boyama_%s_v01.jpg" % k["kod"]
+    footer(c, Wm, Hm, BLOK_ADI[k["blok"]] + " " + k["ad"], "1/%d (%s)" % (olcek, kag))
+    fname = "ERA01_boyama_%s_v02.jpg" % k["kod"]
     size = save_jpg(s, os.path.join(OUT, fname))
-    rec(k, r, 100, fname)
-    print(fname, kag, size, "%.1fs" % (time.time() - T0), flush=True)
-    return r
+    rec(k, r, olcek, fname)
+    print(fname, "1/%d" % olcek, size, "%.1fs" % (time.time() - T0), flush=True)
+    del r, s, c
+    import gc; gc.collect()
 
 
 def sheet_block(blok):
@@ -106,21 +116,25 @@ def sheet_block(blok):
     header(c, Wm, BLOK_ADI[blok] + " · KAT PLANLARI")
     x = 15 + (390 - tw) / 2
     top = 36 + (297 - 36 - 30 - 26 - th) / 2
+    fname = "ERA01_boyama_%s-blok-kat-planlari_v02.jpg" % blok
+    toplam = 0.0
     for k, r, (w, h) in zip(ks, rs, sizes):
         paste(c, r["surf"], x, top + (th - h))
         caption(c, x + w, top + th + 6, k, r, big=False)
         if r["numbered"]:
-            room_list(c, x, top + th + 26, r["rooms"], w=min(60, w))
+            room_list(c, x + w - min(62, w), top + th + 28, r["numbered"], w=min(62, w))
         x += w + gap
-        rec(k, r, olcek, "ERA01_boyama_%s-blok-kat-planlari_v01.jpg" % blok)
+        rec(k, r, olcek, fname)
+        toplam += round(brut_of(k, r)[0], 2)
     north_arrow(c, Wm - 24, 52, 7, rs[0]["north"])
     scale_bar(c, Wm - 15 - 62, 78, olcek, {150: 5, 200: 10, 250: 10}.get(olcek, 15), {150: 1, 200: 2, 250: 2}.get(olcek, 3))
+    stext(c, Wm - 15, Hm - 30 - 6, "TOPLAM KAPALI ALAN : %.2f m²" % toplam, 9, bold=True, anchor="r")
+    OZET.setdefault("toplam_kapali_alan", {})[blok] = round(toplam, 2)
     footer(c, Wm, Hm, BLOK_ADI[blok] + " KAT PLANLARI", "1/%d (A3)" % olcek)
-    fname = "ERA01_boyama_%s-blok-kat-planlari_v01.jpg" % blok
     size = save_jpg(s, os.path.join(OUT, fname))
     del rs, s, c
     import gc; gc.collect()
-    print(fname, "1/%d" % olcek, size, "%.1fs" % (time.time() - T0), flush=True)
+    print(fname, "1/%d" % olcek, size, "toplam %.2f" % toplam, "%.1fs" % (time.time() - T0), flush=True)
 
 
 def sheet_vaziyet():
@@ -177,7 +191,7 @@ def sheet_vaziyet():
     scale_bar(c, xr - 62, Hm - 30 - 22, 500, 25, 5)
     stext(c, xr, Hm - 30 - 6, "VAZİYET PLANI", 10, bold=True, anchor="r")
     footer(c, Wm, Hm, "VAZİYET PLANI", "1/500 (A3)")
-    fname = "ERA01_boyama_vaziyet_v01.jpg"
+    fname = "ERA01_boyama_vaziyet_v02.jpg"
     size = save_jpg(s, os.path.join(OUT, fname))
     OZET["vaziyet"] = dict(dosya=fname, olcek="1/500", px_cm=round(r["S"], 4), cati_kaydirma=VZ.ROOF_SHIFT)
     print(fname, size, "%.1fs" % (time.time() - T0), flush=True)

@@ -170,6 +170,7 @@ def rooms_from(d, k):
             pg = poly if poly.geom_type == "Polygon" else max(poly.geoms, key=lambda p: p.area)
             lp = polylabel(pg, 2.0)
         a = poly.area / 1e4
+        s = re.sub(r"^E\.(?=\S)", "E. ", s.strip())
         rooms.append(dict(name=s.upper(), area=a, area_r=area_dec(a), poly=poly, lp=(lp.x, lp.y), kind=room_kind(s)))
     return rooms
 
@@ -180,11 +181,12 @@ def render_plan(k, olcek=100, txt=1.0, seed=11, band=True):
     S = PXMM * 100.0 / olcek / 10.0        # px / cm
     d = collect(k)
     rooms = rooms_from(d, k)
+    k["_added"] = terrace_furniture(rooms, d)
     # sınırlar
     pts_all = [p for pts in d["areas"] for p in pts] + [p for w, _ in d["walls"] for p in w] + \
               [p for pts in d["cols"] for p in pts] + [p for pts in d["brut"] for p in pts]
     xs, ys = [p[0] for p in pts_all], [p[1] for p in pts_all]
-    pad = 330 if (k["tip"] == "zemin" and band) else (170 if k["tip"] == "bodrum" and band else 80)
+    pad = 275 if (k["tip"] == "zemin" and band) else (135 if k["tip"] == "bodrum" and band else 80)
     X0, Y0, X1, Y1 = min(xs) - pad, min(ys) - pad, max(xs) + pad, max(ys) + pad
     W, H = int(math.ceil((X1 - X0) * S)), int(math.ceil((Y1 - Y0) * S))
     mat = cairo.Matrix(S, 0, 0, -S, -X0 * S, Y1 * S)
@@ -384,6 +386,21 @@ def render_plan(k, olcek=100, txt=1.0, seed=11, band=True):
             paint_mask(bandm, C["grass"])
             g2 = bandm & (dist_f > px(170))
             paint_alpha(blur_alpha(g2, px(40), strength=0.35), C["grass2"][:3])
+            terr_polys = [list(r["poly"].exterior.coords) for r in rooms
+                          if "TERAS" in r["name"] and r["poly"].geom_type == "Polygon"]
+            low = None
+            if terr_polys and k.get("alcak"):
+                terr_m = ctx_mask(W, H, mat, fill_polys(terr_polys))
+                core_m = foot & ~terr_m
+                d_core = ndimage.distance_transform_edt(~core_m)
+                d_terr = ndimage.distance_transform_edt(~terr_m)
+                low = bandm & (d_terr < d_core - px(20))
+                paint_mask(low, hx("#C9D1C5"))
+                paint_alpha(blur_alpha(low & (dist_f < px(60)), px(25), strength=0.30), (0.35, 0.38, 0.33))
+                yy_, xx_ = np.nonzero(low & (dist_f > px(150)))
+                if len(yy_):
+                    j = np.argmin(yy_)
+                    k["_lowlabel"] = (X0 + xx_[j] / S, Y1 - yy_[j] / S - 60)
             paint_alpha(blur_alpha(foot, px(18), px(10), px(10), 0.30) * bandm, (0, 0, 0))
             # giriş yolu
             for (ex, ey, ang) in entr:
@@ -502,6 +519,25 @@ def render_plan(k, olcek=100, txt=1.0, seed=11, band=True):
                 setc(c, C["white"]); c.fill_preserve()
             c.set_line_width(max(0.6, 1.1 / S)); setc(c, hx("#5E5E5C")); c.stroke()
 
+    # zemin teras korkuluğu (teras kenarı, bina dışında kalan kenarlar)
+    if k["tip"] == "zemin":
+        core = unary_union([r["poly"] for r in rooms if "TERAS" not in r["name"]]).buffer(45)
+        for r in rooms:
+            if "TERAS" in r["name"] and r["poly"].geom_type == "Polygon":
+                for off, lw in ((0, 2.2), (-9, 1.0)):
+                    ring = r["poly"].buffer(off).exterior if off else r["poly"].exterior
+                    ln = ring.difference(core)
+                    segs = [ln] if ln.geom_type == "LineString" else list(getattr(ln, "geoms", []))
+                    c.set_line_width(max(lw * 1.0, (1.6 if off == 0 else 0.8) / S)); setc(c, hx("#4A4A4A"))
+                    for sg in segs:
+                        if sg.geom_type == "LineString" and len(sg.coords) > 1:
+                            path_pts(c, list(sg.coords), False); c.stroke()
+    if k.get("_lowlabel"):
+        lx, ly = k["_lowlabel"]
+        lab_ = "ALÇAK BAHÇE  " + k["alcak"]
+        c.move_to(lx, ly); c.line_to(lx - 12 * txt, ly + 18 * txt); c.line_to(lx + 12 * txt, ly + 18 * txt); c.close_path()
+        setc(c, C["white"]); c.fill_preserve(); c.set_line_width(1.0 * txt); setc(c, C["text"]); c.stroke()
+        wtext(c, lx + 16 * txt, ly + 30 * txt, lab_, 15 * txt, anchor="l", color=C["text"])
     # giriş üçgeni
     tri = 55 * txt
     for (ex, ey, ang) in entr:
@@ -510,7 +546,7 @@ def render_plan(k, olcek=100, txt=1.0, seed=11, band=True):
         setc(c, C["red"]); c.fill(); c.restore()
 
     # mahal yazıları
-    numbered = layout_labels(c, rooms, txt)
+    numbered = layout_labels(c, rooms, txt, [(e[0], e[1]) for e in entr])
     # kotlar
     seen = []
     for g in d["levels"]:
@@ -571,48 +607,128 @@ def _hspan(poly, x, y):
     return 0
 
 
-def layout_labels(c, rooms, txt):
+def layout_labels(c, rooms, txt, entr_pts=()):
+    """Mahal adı + alanı mahal içine (tek tip yazı boyu). Ad hiçbir biçimde sığmazsa yalnız o mahal
+    numaralanır ve paftadaki listeye girer. Yazı kutusu duvardan >= 8 cm içeride, giriş üçgenine binmez."""
     fs_n, fs_a = 24 * txt, 18 * txt
-    plans = []
-    ok_all = True
+    lh = fs_n * 1.12
+    obst = unary_union([Point(x, y).buffer(75 * txt) for x, y in entr_pts]) if entr_pts else None
+    numbered = []
+    def box(x, y, lines):
+        w = max(max(wtext_width(c, l, fs_n, True) for l in lines), wtext_width(c, "000.00 m²", fs_a))
+        h = len(lines) * lh + fs_a * 1.3
+        return Polygon([(x - w / 2, y - h / 2), (x + w / 2, y - h / 2), (x + w / 2, y + h / 2), (x - w / 2, y + h / 2)]), h
     for r in rooms:
-        x, y = r["lp"]
         pg = r["poly"] if r["poly"].geom_type == "Polygon" else max(r["poly"].geoms, key=lambda p: p.area)
-        span = min(_hspan(pg, x, y + fs_n * 0.6), _hspan(pg, x, y - fs_n * 1.6)) * 0.92
-        name = r["name"]
-        lines = [name]
-        f = 1.0
-        def wmax(ls, f):
-            return max(wtext_width(c, l, fs_n * f, True) for l in ls)
-        if wmax(lines, f) > span and " " in name:
-            parts = name.split(" ")
-            best = None
-            for i in range(1, len(parts)):
-                ls = [" ".join(parts[:i]), " ".join(parts[i:])]
-                w = wmax(ls, 1.0)
-                if best is None or w < best[0]:
-                    best = (w, ls)
-            lines = best[1]
-        while wmax(lines, f) > span and f > 0.62:
-            f -= 0.04
-        fits = wmax(lines, f) <= span
-        ok_all &= fits
-        plans.append((r, lines, f))
-    if not ok_all:
-        # kural: bir mahal bile sığmazsa tüm mahaller numaralanır, liste paftada
-        for i, r in enumerate(sorted(rooms, key=lambda r: (-r["lp"][1], r["lp"][0])), 1):
-            r["no"] = i
-            x, y = r["lp"]
-            c.arc(x, y, 17 * txt, 0, 2 * math.pi); setc(c, C["white"], 0.85); c.fill()
-            wtext(c, x, y, str(i), 18 * txt, bold=True)
-        return True
-    for r, lines, f in plans:
-        x, y = r["lp"]
-        lh = fs_n * f * 1.12
-        y0 = y + (len(lines) - 1) * lh / 2 + fs_n * 0.15
-        halo = (shade(C[r["kind"]] if r["kind"] in C else C["dry"], 1.0), 4 * txt)
-        for i, l in enumerate(lines):
-            wtext(c, x, y0 - i * lh, l, fs_n * f, bold=True, halo=halo)
-        wtext(c, x, y0 - (len(lines) - 1) * lh - fs_a * 1.25, "%s m²" % fmt_area(r["area"]), fs_a * max(f, 0.8), halo=halo,
-              color=C["text2"])
-    return False
+        safe = pg.buffer(-8 * txt)
+        if obst is not None:
+            safe = safe.difference(obst)
+        if safe.is_empty:
+            safe = None
+        variants = [[r["name"]]]
+        parts = r["name"].split(" ")
+        for i in range(1, len(parts)):
+            variants.append([" ".join(parts[:i]), " ".join(parts[i:])])
+        cands = [r["lp"]]
+        try:
+            big = safe if (safe is None or safe.geom_type == "Polygon") else max(safe.geoms, key=lambda p: p.area)
+            if big is not None:
+                q = polylabel(big, 2.0); cands.append((q.x, q.y))
+        except Exception:
+            pass
+        done = None
+        for ls in variants:
+            for (x, y) in cands:
+                b, h = box(x, y, ls)
+                if safe is not None and safe.contains(b):
+                    done = (x, y, ls, h); break
+            if done:
+                break
+        if done:
+            x, y, ls, h = done
+            ytop = y + h / 2 - fs_n * 0.55
+            for i, l in enumerate(ls):
+                wtext(c, x, ytop - i * lh, l, fs_n, bold=True)
+            wtext(c, x, ytop - (len(ls) - 1) * lh - fs_a * 1.3, "%s m²" % fmt_area(r["area"]), fs_a, color=C["text2"])
+        else:
+            numbered.append(r)
+    for i, r in enumerate(sorted(numbered, key=lambda r: (-r["lp"][1], r["lp"][0])), 1):
+        r["no"] = i
+        pg = r["poly"] if r["poly"].geom_type == "Polygon" else max(r["poly"].geoms, key=lambda p: p.area)
+        q = polylabel(pg, 2.0)
+        c.arc(q.x, q.y, 15 * txt, 0, 2 * math.pi); setc(c, C["white"], 0.9); c.fill_preserve()
+        c.set_line_width(0.8 * txt); setc(c, C["text2"]); c.stroke()
+        wtext(c, q.x, q.y, str(i), 17 * txt, bold=True)
+    return numbered
+
+
+def _rect(cx, cy, w, h, ax):
+    """ax='x': w yatay; ax='y': w düşey (90° döndürülmüş)."""
+    if ax == "y":
+        w, h = h, w
+    return [(cx - w / 2, cy - h / 2), (cx + w / 2, cy - h / 2), (cx + w / 2, cy + h / 2), (cx - w / 2, cy + h / 2), (cx - w / 2, cy - h / 2)]
+
+
+def _circle(cx, cy, r, n=28):
+    return [(cx + r * math.cos(2 * math.pi * i / n), cy + r * math.sin(2 * math.pi * i / n)) for i in range(n + 1)]
+
+
+def terrace_furniture(rooms, d):
+    """Tefriş kuralı (Teras/bahçe): dış oturma grubu + 6 kişilik dış yemek masası + saksılar.
+    Mobilya gerçek ölçüde (3'lü 220x85, tekli 80x80, sehpa 100x60, masa 180x90, sandalye 48x48, saksı Ø60)."""
+    added = []
+    for r in rooms:
+        if "TERAS" not in r["name"] or r["poly"].geom_type != "Polygon" or r["area"] < 20:
+            continue
+        P = r["poly"]
+        inner = P.buffer(-90)
+        if inner.is_empty:
+            continue
+        bx0, by0, bx1, by1 = P.bounds
+        ax = "x" if (bx1 - bx0) >= (by1 - by0) else "y"
+        L0, L1 = (bx0, bx1) if ax == "x" else (by0, by1)
+        T0, T1 = (by0, by1) if ax == "x" else (bx0, bx1)
+        tm = (T0 + T1) / 2
+        def at(u, v):
+            return (u, v) if ax == "x" else (v, u)
+        items = []
+        # oturma grubu (uzun eksenin %28'i)
+        u = L0 + (L1 - L0) * 0.28
+        grp = []
+        sx, sy = at(u, tm + 105)
+        grp += [_rect(sx, sy, 220, 85, ax), _rect(*at(u, tm + 105 + 32), 220, 20, ax)]
+        for du in (-150, 150):
+            ax2 = "y" if ax == "x" else "x"
+            cx_, cy_ = at(u + du, tm)
+            grp += [_rect(cx_, cy_, 80, 80, ax), _rect(*at(u + du + (32 if du > 0 else -32), tm), 80, 16, ax2)]
+        grp.append(_rect(*at(u, tm), 100, 60, ax))
+        items.append(grp)
+        # yemek grubu (%72)
+        u = L0 + (L1 - L0) * 0.72
+        grp = [_rect(*at(u, tm), 180, 90, ax)]
+        for du in (-55, 0, 55):
+            for dv in (-72, 72):
+                grp.append(_rect(*at(u + du, tm + dv), 48, 48, ax))
+        grp.append(_circle(*at(u, tm), 12))
+        items.append(grp)
+        # saksılar (iç köşeler)
+        inb = inner.bounds
+        for (px_, py_) in ((inb[0], inb[1]), (inb[2], inb[1]), (inb[0], inb[3]), (inb[2], inb[3])):
+            items.append([_circle(px_, py_, 30), _circle(px_, py_, 22)])
+        exist = []
+        for pts, cl in d["furn"]:
+            if cl and len(pts) > 3:
+                try:
+                    q = Polygon(pts).buffer(0)
+                    if q.intersects(P):
+                        exist.append(q)
+                except Exception:
+                    pass
+        for grp in items:
+            ok = all(inner.contains(Polygon(g)) or P.buffer(-30).contains(Polygon(g)) for g in grp)
+            ok = ok and not any(Polygon(g).buffer(15).intersects(q) for g in grp for q in exist)
+            if ok:
+                for g in grp:
+                    d["furn"].append((g, True))
+                added.append(len(grp))
+    return added

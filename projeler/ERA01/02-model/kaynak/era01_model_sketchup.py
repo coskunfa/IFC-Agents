@@ -1,6 +1,6 @@
 # ERA01 SketchUp kurulum kodu (Trimble SketchUp MCP build_model icinde calisir; import yok).
-# Veri: era01_data.png (kucuk PNG + sonuna eklenmis era01_model_pack.py metni), session_files ile okunur.
-raw = session_files.read_bytes("era01_data.png")
+# Veri (v02): era01_data_v02.png (kucuk PNG + sonuna eklenmis era01_model_pack.py metni), session_files ile okunur.
+raw = session_files.read_bytes("era01_data_v02.png")
 a = raw.find(b"\nERA01DATA\n"); b = raw.find(b"\nERA01END\n")
 lines = raw[a + 11:b].decode("utf-8").split("\n")
 IN = 1.0 / 2.54

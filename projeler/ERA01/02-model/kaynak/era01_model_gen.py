@@ -1,4 +1,4 @@
-# ERA01 site model spec generator (HACIM).
+# ERA01 site model spec generator (HACIM). v02: DENETCI tur 1 duzeltmeleri (H3-H7, U10-U13).
 # Input : floors.pkl (era01_model_dxfoku.py ciktisi: kat bazinda brut alan, mahal, kolon, dograma, kapi verisi,
 #         blok yerel aks koordinatlari), terrain points (vaziyet plani kotlari).
 # Output: spec JSON (solids + component defs + instances, cm, site coords) + rapor JSON.
@@ -21,13 +21,18 @@ ROOF_T = 20.0
 PARAPET_H = 100.0          # teras korkulugu (dolu parapet), dosemeden
 FRAME_B, FRAME_D = 5.0, 6.0
 OUTDOOR = ("TERAS",)
+AVLU = ("BAHCE",)          # acik avlu (kat bahcesi): brut alanda delik
+RAIL_H = 110.0             # teras korkulugu (cam panel)
+RAIL_T = 4.0
+SKIP_TERR = {("B", "B1")}  # toprak altinda kalan cati-teras (B2 kuzey kismi)
+NORTH_ANGLE = 360.0 - 21.29  # SketchUp North Angle (vaziyet +Y den saat yonunde); gercek kuzey +Y nin 21.29 bati
 ISLAK = ("BANYO", "WC", "MUTFAK", "CAMASIR", "HAMAM", "SAUNA", "DUS", "HAVUZ", "LAVABO")
 # Blok kat tablosu (DXF kesitlerinden, m). ceil = tavan alt kotu (asma tavan) ; None -> L+2.90
 BLOCKS = {
-    "A": dict(ort=172.95, floors=[("B1", 170.15, None), ("ZK", 174.15, 177.05), ("K1", 177.65, 180.55)],
+    "A": dict(ort=172.95, floors=[("B1", 170.15, 173.05), ("ZK", 174.15, 177.05), ("K1", 177.65, 180.55)],
               sacak=181.15, mahya=181.88, parapet=None,
               roof_rect=(-110, -860, 2110, 110), rot=0.0, t=(2138.0, 3365.0)),
-    "B": dict(ort=174.15, floors=[("B2", 167.15, None), ("B1", 170.15, None), ("ZK", 174.15, 177.05)],
+    "B": dict(ort=174.15, floors=[("B2", 167.15, 169.55), ("B1", 170.15, None), ("ZK", 174.15, 177.05)],
               sacak=177.65, mahya=179.17, parapet=None,
               roof_rect=(-110, -1340, 2110, 110), rot=0.0, t=(4738.0, 3185.0)),
     "C": dict(ort=174.36, floors=[("B1", 170.36, 173.26), ("ZK", 174.36, 177.26)],
@@ -35,7 +40,7 @@ BLOCKS = {
               roof_rect=(-110, -860, 1910, 110), rot=90.0, t=(7338.0, 1955.0)),
     "D": dict(ort=167.25, floors=[("B1", 164.25, 166.65), ("ZK", 167.25, 169.65), ("K1", 170.75, 173.65)],
               sacak=174.25, mahya=175.07, parapet=174.75,
-              roof_rect=None, rot=None, t=None),
+              roof_rect=None, roof_size=(965, 1140), rot=None, t=None),
 }
 KAT_TAG = {"B2": "KAT_B2", "B1": "KAT_B1", "ZK": "KAT_00", "K1": "KAT_01"}
 
@@ -124,8 +129,8 @@ def window_def(w, h, wtag=None, htag=None):
     defs[name] = {"solids": [sol], "glass": glass, "info": {"w": w, "h": h, "bolme": n, "kayit": rows - 1}}
     return name
 
-def door_def(w, h):
-    name = f"DGR_KAPI_{int(round(w))}x{int(round(h))}"
+def door_def(w, h, pre="DGR_KAPI"):
+    name = f"{pre}_{int(round(w))}x{int(round(h))}"
     if name in defs: return name
     frame = box(0, 0, w, h).difference(box(FRAME_B, 0, w - FRAME_B, h - FRAME_B))
     sol = prism(frame, FRAME_D, (0, 0, 0), (1, 0, 0), (0, 0, 1), (0, 1, 0)); sol["m"] = "M_DOGRAMA_KASA"
@@ -142,9 +147,11 @@ def col_def(w, d, h):
 
 # ---------------- kenar seridi (dis duvar / cephe) ----------------
 def edges_of(poly):
-    c = list(orient(poly, 1.0).exterior.coords)[:-1]
+    po = orient(poly, 1.0)
     out = []
-    for i in range(len(c)):
+    for ring in [po.exterior] + list(po.interiors):
+      c = list(ring.coords)[:-1]
+      for i in range(len(c)):
         a, b = np.array(c[i]), np.array(c[(i+1) % len(c)])
         L = float(np.linalg.norm(b - a))
         if L < 1: continue
@@ -172,10 +179,18 @@ def strips(poly, inward, depth):
         ext = 0 if inward else depth
         if o: rects.append(edge_rect(e, -ext, e["L"] + ext, w0, w1).intersection(band))
         else: rects.append(edge_rect(e, 0, e["L"], w0, w1).intersection(band))
-    owned = unary_union([r for r, o in zip(rects, own) if o])
+    # sahip seritler sirayla (dis halka once), cakisma birakmadan
+    acc = Polygon(); gs = []
+    for r, o in zip(rects, own):
+        if o:
+            g = r.difference(acc); acc = unary_union([acc, g]); gs.append(g)
+        else:
+            gs.append(None)
+    for i, (r, o) in enumerate(zip(rects, own)):
+        if not o:
+            g = r.difference(acc); acc = unary_union([acc, g]); gs[i] = g
     out = []
-    for e, o, r in zip(es, own, rects):
-        g = r if o else r.difference(owned)
+    for e, o, r, g in zip(es, own, rects, gs):
         for p in parts(g):
             if p.area < 50: continue
             us = [to_edge(e, c)[0] for c in p.exterior.coords]
@@ -247,6 +262,15 @@ def stair_mass(path, name, room, z0, z1):
 
 # ---------------- blok kurulum ----------------
 def brut_of(blk, fl, d):
+    b = brut_core(blk, fl, d)
+    for nm, r in d["rooms"]:
+        if any(k in asc(nm) for k in AVLU):
+            b = b.difference(r.buffer(0.5, join_style=2).buffer(-0.5, join_style=2))
+    b = max(parts(b.buffer(0)), key=lambda p: p.area)
+    b = Polygon(b.exterior, [i for i in b.interiors]).simplify(1.0)
+    return orient(b, 1.0)
+
+def brut_core(blk, fl, d):
     if blk == "A" and fl == "K1":
         return max(D["A"]["ZK"]["brut"], key=lambda p: p.area)
     if d["brut"]:
@@ -267,8 +291,7 @@ def brut_of(blk, fl, d):
             ox0, oy0, ox1, oy1 = out.bounds
             bx0, by0, bx1, by1 = b.bounds
             if ox0 > x0 and ox0 < bx1: b = b.intersection(box(bx0 - 1, by0 - 1, ox0 - 0.0 + 0, by1 + 1))
-    b = Polygon(b.exterior).simplify(1.0)
-    return orient(b, 1.0)
+    return b
 
 def win_tags(d, r, maxd=120):
     near = sorted([(t[2].distance(r), t[0], t[1]) for t in d["wtags"]])
@@ -278,6 +301,7 @@ def win_tags(d, r, maxd=120):
     return tip, w, h
 
 lift = {}
+TERR_FOOT = []
 for blk, B in BLOCKS.items():
     fls = [f for f in B["floors"]]
     brut = {fl: brut_of(blk, fl, D[blk][fl]) for fl, _, _ in fls}
@@ -290,7 +314,7 @@ for blk, B in BLOCKS.items():
         t = np.array([8050.0, 4778.0]) - R @ np.array([-855.0, 0.0])
         B["t"] = (float(t[0]), float(t[1]))
     levels = [L for _, L, _ in fls]
-    top_slab_top = zc(B["sacak"])
+    top_slab_top = zc(B["sacak"]) - (ROOF_T if B["parapet"] else 13.0)
     # ---- dogramalar (blok bazinda, katlar arasi tekrar ayiklanir)
     openings_all = []   # (plan_rect, z0, z1, kind, comp, fl)
     for i, (fl, L, ceil) in enumerate(fls):
@@ -308,6 +332,9 @@ for blk, B in BLOCKS.items():
                 continue
             if wt and Lw < 0.6 * wt:
                 brep["uyari"].append(f"{fl}: {tip} etiket genisligi {wt:.0f}, cizim {Lw:.0f}: atlandi"); continue
+            if ht is None and thin < 20 and dist < 40 and Lw >= 100:
+                ht = 280.0; tip = "P-ETIKETSIZ"
+                brep["uyari"].append(f"{fl}: etiketsiz dograma 280 kabul edildi {[round(v) for v in w]}")
             if ht is None:
                 brep["uyari"].append(f"{fl}: etiketsiz dograma atlandi {[round(v) for v in w]}"); continue
             # ayni yerde alt kattan gelen yuksek dograma varsa atla
@@ -334,6 +361,10 @@ for blk, B in BLOCKS.items():
                 # pencereyle cakisiyorsa atla
                 if any(pr.buffer(10).intersects(gi) for (pr, _, _, _, _, ofl) in openings_all if ofl == fl): continue
                 openings_all.append((box(*gi.bounds), Lc, top, "D", None, fl))
+    # ---- B otopark girisi (H6): kuzey cephede garaj kapisi boslugu
+    if blk == "B":
+        Lc2 = zc(167.15)
+        openings_all.append((box(800, 805, 1200, 825), Lc2, Lc2 + 230.0, "G", None, "B2"))
     # ---- katlar
     for i, (fl, L, ceil) in enumerate(fls):
         d = D[blk][fl]
@@ -347,7 +378,7 @@ for blk, B in BLOCKS.items():
         wall_z1 = (Lnext - KAPLAMA - DOSEME) if not last else top_slab_top - DOSEME
         bp = brut[fl]
         rooms = [(nm, r) for nm, r in d["rooms"]]
-        indoor = [(nm, r.intersection(bp)) for nm, r in rooms if not any(k in asc(nm) for k in OUTDOOR) and r.intersection(bp).area > 0.5 * r.area]
+        indoor = [(nm, r.intersection(bp)) for nm, r in rooms if not any(k in asc(nm) for k in OUTDOOR + AVLU) and r.intersection(bp).area > 0.5 * r.area]
         # --- dis duvar seritleri
         ops_here = [(pr, z0, z1, kind) for (pr, z0, z1, kind, comp, ofl) in openings_all if min(z1, wall_z1) - max(z0, wall_z0) > 1]
         nwall = 0
@@ -361,6 +392,9 @@ for blk, B in BLOCKS.items():
                         ops.append((min(us), max(us), z0, z1))
             nwall += elev_panel(f"{root}/DIS_DUVAR", f"DD_{blk}_{fl}_{k_+1:02d}", "M_DIS_DUVAR", e, ua, ub, 0.0, T_EXT, wall_z0, wall_z1, ops)
         # --- parapet (D cati)
+        if blk == "B" and fl == "B2":   # otopark rampasi yan istinat duvarlari (DXF B2 plani)
+            for k_, (xa, xb) in enumerate([(770, 800), (1200, 1230)]):
+                add(f"{root}/DIS_DUVAR", f"ISTINAT_RAMPA_B_{k_+1}", "M_DIS_DUVAR", plan_prism(box(xa, 835, xb, 1046), wall_z0, Lnext - KAPLAMA))
         # --- cephe kaplamasi
         ck_z0 = (Lc - KAPLAMA - DOSEME) if i == 0 else Lc - KAPLAMA
         ck_z1 = (Lnext - KAPLAMA) if not last else (zc(B["parapet"]) if B["parapet"] else top_slab_top)
@@ -420,12 +454,13 @@ for blk, B in BLOCKS.items():
         # --- teras parapeti (alt katin cikintisi)
         terr = slab.difference(bp.buffer(0.5, join_style=2))
         terr = unary_union([p for p in parts(terr) if p.area > 2e4]) if terr.area > 2e4 else Polygon()
-        if not terr.is_empty:
-            edge_band = slab.difference(slab.buffer(-T_EXT, join_style=2))
-            par = edge_band.intersection(terr).difference(bp.buffer(T_EXT + 1, join_style=2).difference(bp.buffer(0.5)).intersection(Polygon()))
-            par = unary_union([p for p in parts(par) if p.area > 500])
-            add_poly(f"{root}/DIS_DUVAR", f"PARAPET_{blk}_{fl}", "M_DIS_DUVAR", par, Lc - KAPLAMA, Lc + PARAPET_H, minarea=500)
+        if not terr.is_empty and (blk, fl) not in SKIP_TERR:
+            edge_band = slab.difference(slab.buffer(-RAIL_T, join_style=2))
+            par = edge_band.intersection(terr)
+            par = unary_union([p for p in parts(par) if p.area > 100])
+            add_poly(f"{root}/DOGRAMA", f"KORKULUK_{blk}_{fl}", "M_DOGRAMA_CAM", par, Lc - KAPLAMA, Lc + RAIL_H, minarea=100)
             terr_fin = terr.difference(par)
+            TERR_FOOT.append((blk, terr, Lc - KAPLAMA - DOSEME, Lc + RAIL_H))
             add_poly(f"{root}/DOSEME_KAPLAMA/DOSEME_KAPLAMA_KURU", f"DK_TERAS_{blk}_{fl}", "M_DOSEME_KAPLAMA_KURU", terr_fin, Lc - KAPLAMA, Lc, minarea=1000)
         # --- dograma bilesenleri
         for (pr, z0, z1, kind, comp, ofl) in openings_all:
@@ -444,6 +479,8 @@ for blk, B in BLOCKS.items():
             if kind == "W":
                 tip, wt, ht, Lw = comp
                 dn = window_def(w, h, wt if (wt and abs(wt - w) < 15) else None, ht if (ht and abs(ht - h) < 10) else None)
+            elif kind == "G":
+                tip = "GARAJ"; dn = door_def(w, h, "DGR_GARAJ")
             else:
                 tip = "KAPI"; dn = door_def(w, h)
             dep = (T_EXT - FRAME_D) / 2.0
@@ -460,7 +497,7 @@ for blk, B in BLOCKS.items():
             if key in ("ASANSOR",): continue
             used[key] = used.get(key, 0) + 1
             kk = key if used[key] == 1 else f"{key}_{used[key]}"
-            isl = any(k in key for k in ISLAK)
+            isl = any(k in key for k in ISLAK) and "SALON" not in key
             sub = "DOSEME_KAPLAMA_ISLAK" if isl else "DOSEME_KAPLAMA_KURU"
             mat = "M_" + sub
             fp = r.intersection(inner).buffer(0)
@@ -488,35 +525,61 @@ for blk, B in BLOCKS.items():
         rr = (x0 + T_EXT, y0 + T_EXT, x1 - T_EXT, y1 - T_EXT)
         par = bp.difference(box(*rr))
         add_poly(f"{root}/CATI", f"PARAPET_CATI_{blk}", "M_DIS_DUVAR", par, top_slab_top, zc(B["parapet"]))
-        X0, Y0, X1, Y1 = rr
+        cx, cy = (rr[0] + rr[2]) / 2.0, (rr[1] + rr[3]) / 2.0
+        sw, sh = B["roof_size"]
+        X0, Y0, X1, Y1 = cx - sw/2.0, cy - sh/2.0, cx + sw/2.0, cy + sh/2.0
     else:
         X0, Y0, X1, Y1 = B["roof_rect"]
-    ze = top_slab_top
+    # H3: ust yuz sacak ucunda sacak kotunda, mahyada mahya kotunda; paket 20 cm (duseyde)
+    zt_e = zc(B["sacak"]); zr = zc(B["mahya"])
     W_, Hh = X1 - X0, Y1 - Y0
     half = min(W_, Hh) / 2.0
-    ztop_ridge = zc(B["mahya"])
-    rise = ztop_ridge - ROOF_T - ze
-    slope = rise / half
+    slope = (zr - zt_e) / half
     if W_ >= Hh:
         r1, r2 = (X0 + half, Y0 + half), (X1 - half, Y0 + half)
+        planes = [(Polygon([(X0, Y0), (X1, Y0), r2, r1]), ("y", Y0, 1)), (Polygon([(X1, Y0), (X1, Y1), r2]), ("x", X1, -1)),
+                  (Polygon([(X1, Y1), (X0, Y1), r1, r2]), ("y", Y1, -1)), (Polygon([(X0, Y1), (X0, Y0), r1]), ("x", X0, 1))]
     else:
         r1, r2 = (X0 + half, Y0 + half), (X0 + half, Y1 - half)
-    zt_e = ze + ROOF_T
-    zr = ztop_ridge
-    top = [[X0, Y0, zt_e], [X1, Y0, zt_e], [X1, Y1, zt_e], [X0, Y1, zt_e], [r1[0], r1[1], zr], [r2[0], r2[1], zr]]
-    bot = [[a, b, c - ROOF_T] for a, b, c in top]
-    v = top + bot
-    A_, B_, C_, D_, R1, R2 = range(6)
-    if W_ >= Hh:
-        f = [[[A_, B_, R2, R1]], [[B_, C_, R2]], [[C_, D_, R1, R2]], [[D_, A_, R1]]]
-    else:
-        f = [[[A_, B_, R1]], [[B_, C_, R2, R1]], [[C_, D_, R2]], [[D_, A_, R1, R2]]]
-    if abs(r1[0] - r2[0]) < 0.5 and abs(r1[1] - r2[1]) < 0.5:
-        pass
-    f += [[[6 + i for i in reversed(l[0])]] for l in f]
-    for (p, q) in [(A_, B_), (B_, C_), (C_, D_), (D_, A_)]:
-        f.append([[p + 6, q + 6, q, p]])
-    add(f"{root}/CATI", f"CATI_KIRMA_{blk}", "M_CATI", {"v": [[rnd(c) for c in p] for p in v], "f": f})
+        planes = [(Polygon([(X0, Y0), (X1, Y0), r1]), ("y", Y0, 1)), (Polygon([(X1, Y0), (X1, Y1), r2, r1]), ("x", X1, -1)),
+                  (Polygon([(X1, Y1), (X0, Y1), r2]), ("y", Y1, -1)), (Polygon([(X0, Y1), (X0, Y0), r1, r2]), ("x", X0, 1))]
+    # avlu bosluklari (cephe kaplamasi dis yuzune kadar)
+    roof_hole = Polygon()
+    if len(bp.interiors):
+        roof_hole = unary_union([Polygon(r).buffer(-CEPHE, join_style=2) for r in bp.interiors])
+    VV, VI, FF = [], {}, []
+    def vid(x, y, z):
+        k = (round(x, 1), round(y, 1), round(z, 1))
+        if k not in VI: VI[k] = len(VV); VV.append([rnd(x), rnd(y), rnd(z)])
+        return VI[k]
+    def ztop(pl, x, y):
+        ax, v0, sg = pl
+        dist = (y - v0) * sg if ax == "y" else (x - v0) * sg
+        return zt_e + slope * dist
+    pieces = []
+    for poly, pl in planes:
+        for q in parts(poly.difference(roof_hole)):
+            if q.area > 10: pieces.append((orient(q, 1.0), pl))
+    edge_use = {}
+    for q, pl in pieces:
+        rings = [list(q.exterior.coords)[:-1]] + [list(r.coords)[:-1] for r in q.interiors]
+        for ring in rings:
+            for i in range(len(ring)):
+                a2, b2 = ring[i], ring[(i+1) % len(ring)]
+                k = tuple(sorted([(round(a2[0], 1), round(a2[1], 1)), (round(b2[0], 1), round(b2[1], 1))]))
+                edge_use[k] = edge_use.get(k, 0) + 1
+    for q, pl in pieces:
+        rings = [list(q.exterior.coords)[:-1]] + [list(r.coords)[:-1] for r in q.interiors]
+        FF.append([[vid(x, y, ztop(pl, x, y)) for x, y in ring] for ring in rings])
+        FF.append([[vid(x, y, ztop(pl, x, y) - ROOF_T) for x, y in reversed(ring)] for ring in rings])
+        for ring in rings:
+            for i in range(len(ring)):
+                a2, b2 = ring[i], ring[(i+1) % len(ring)]
+                k = tuple(sorted([(round(a2[0], 1), round(a2[1], 1)), (round(b2[0], 1), round(b2[1], 1))]))
+                if edge_use[k] > 1: continue
+                za, zb = ztop(pl, *a2), ztop(pl, *b2)
+                FF.append([[vid(a2[0], a2[1], za - ROOF_T), vid(b2[0], b2[1], zb - ROOF_T), vid(b2[0], b2[1], zb), vid(a2[0], a2[1], za)]])
+    add(f"{root}/CATI", f"CATI_KIRMA_{blk}", "M_CATI", {"v": VV, "f": FF})
     brep["cati"] = {"tip": "kirma (4 yon)", "sacak_ucu_kotu": B["sacak"], "mahya_kotu": B["mahya"], "egim_yuzde": round(slope*100, 1),
                     "sacak_izdusumu_cm": [round(W_), round(Hh)], "parapet_kotu": B["parapet"]}
     brep["ort"] = B["ort"]; brep["rot"] = round(B["rot"], 2); brep["t"] = [round(c, 1) for c in B["t"]]
@@ -536,6 +599,11 @@ FOOT = []
 for blk, fd in lift.items():
     for fl, (bp, z0, z1) in fd.items():
         FOOT.append((site_xf(blk, bp.buffer(CEPHE, join_style=2)), z0 - DOSEME, z1))
+for blk, terr, z0, z1 in TERR_FOOT:
+    FOOT.append((site_xf(blk, terr), z0, z1))
+# H6: B otopark girisi onunde yarma (167.25 kademesinin ustu bosaltilir)
+YARMA = site_xf("B", box(770, 815, 1230, 2300))
+FOOT.append((YARMA, zc(167.25) + 1.0, 1e6))
 FOOT = [f for f in FOOT if f]
 # kontrol noktalari: vaziyet kotlari + blok cevresinde tesviye kotlari
 pts = [(x, y, z) for x, y, z in PTS]
@@ -594,7 +662,7 @@ for L in lv:
         m = ndimage.binary_closing(m, st, iterations=2)
         m = ndimage.binary_opening(m, st, iterations=2)
         reg = mask_poly(m)
-        reg = reg.buffer(-60, join_style=2).buffer(60, join_style=2).simplify(60)
+        reg = reg.buffer(150, join_style=2).buffer(-300, join_style=2).buffer(150, join_style=2).simplify(150)
         reg = reg.intersection(prev_reg).intersection(PARCEL)
         reg = unary_union([p for p in parts(reg.buffer(-80, join_style=2).buffer(80, join_style=2)) if p.area > 3e4]).intersection(prev_reg)
         reg = reg.buffer(0)
@@ -611,7 +679,7 @@ for L in lv:
 report["arazi"] = {"kademeler_m": lv, "taban_m": base, "nokta": len(pts), "tesviye_halka_noktasi": len(ring_pts),
                    "grid_cm": GS, "z_min": round(zmin, 2), "z_max": round(zmax, 2), "kademe_cismi": nter}
 spec = {"solids": solids, "defs": defs, "insts": insts,
-        "blocks": {b: {"rot": BLOCKS[b]["rot"], "t": BLOCKS[b]["t"]} for b in BLOCKS}, "z0_m": Z0}
+        "blocks": {b: {"rot": BLOCKS[b]["rot"], "t": BLOCKS[b]["t"]} for b in BLOCKS}, "z0_m": Z0, "north_angle": NORTH_ANGLE}
 json.dump(spec, open(OUT, "w"), ensure_ascii=False)
 json.dump(report, open(OUT.replace(".json", "_rapor.json"), "w"), ensure_ascii=False, indent=1, default=str)
 nf = sum(len(s["f"]) for s in solids)
