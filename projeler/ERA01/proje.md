@@ -44,7 +44,9 @@ Kullanıcının hazır proje DXF'inden (00-girdi/ERA01_girdi_proje.dxf):
 |---|---|---|
 | 2026-11-11 | Proje ERA01 – ERA Evi; aktif: HACİM + PAFTA, sonra DENETÇİ | Kullanıcı |
 | 2026-11-11 | Model kesit/görünüşlere göre (kat yükseklikleri, pencereler, çatı, cephe); arazi kademeli olabilir, az çizgi | Kullanıcı |
+| 2026-11-11 | DENETÇİ bundan sonra varsayılan olarak kullanılmayacak (kota tüketimi); tur 3 raporu tamamlanmıştı: TESLİME HAZIR | Kullanıcı |
 | 2026-11-11 | Boyama: vaziyet planı + her blok ayrı ayrı tüm katlar, DNM01 tarzı | Kullanıcı |
 
 ## Açık konular
-- HACİM v02 düzeltmeleri (avlu, otopark yarması, kuru grup) DENETÇİ turundan sonraki düzeltme turunda yapılacak.
+- Teslim: model v03; boyamalar A 1. kat / A toplu / D toplu v03, diğer 13 pafta v02.
+- Açık: font Carlito; A avlusu batı 375'lik doğrama h=280 varsayımı; B rampası düz yarma (Y rampa eğimi yok); B bodrumları 1/150.

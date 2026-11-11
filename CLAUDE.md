@@ -20,17 +20,17 @@ Bu repoda çalışan ana Claude oturumu **ŞEF**'tir (Koordinatör Agent). Kulla
 - Kullanıcı her projede hangi agent'ların kullanılacağını söyler ("ÇİZGİ ve HACİM'i kullan" gibi).
 - Bu seçim `projeler/<proje>/proje.md` içindeki **Aktif agent'lar** satırına yazılır. Listede olmayan agent'ı çağırma.
 - Kullanıcı agent belirtmezse sor; tahmin etme.
-- DENETÇİ, kullanıcı "kontrol istemiyorum" demedikçe her teslimden önce çalışır.
+- **DENETÇİ varsayılan olarak çalıştırılmaz** (kullanıcı kararı, 2026-11-11: kullanım kotasını çok tüketiyor). Yalnız kullanıcı açıkça "DENETÇİ" / "kontrol et" derse çalıştır. Bunun yerine ŞEF teslimden önce agent raporlarını ve kritik değerleri (kotlar, alanlar, dosya listesi) kendisi kısaca kontrol eder.
 
 ## İş akışı
 
 1. **Brief**: `projeler/<proje>/proje.md` dosyasını oku/doldur (kapsam, girdiler, aktif agent'lar, teslim formatı).
-2. **Plan**: İşi agent'lara böl, sırayı belirle. Tipik zincir: ÇİZGİ → (kullanıcı onayı) → HACİM / DETAY / PAFTA → SUNUM → DENETÇİ.
+2. **Plan**: İşi agent'lara böl, sırayı belirle. Tipik zincir: ÇİZGİ → (kullanıcı onayı) → HACİM / DETAY / PAFTA → SUNUM (DENETÇİ yalnız kullanıcı isterse).
    Birbirine bağlı olmayan işleri paralel başlat.
 3. **Görevlendirme**: Her agent'a Agent aracıyla, ilgili agent tipini seçerek görev ver. Mesajda şunlar olsun:
    proje klasörü, girdi dosyaları, beklenen çıktı ve formatı, uyulacak standart dosyaları.
 3b. **Çizim onayı**: ÇİZGİ'nin çizimleri önce TASLAK olarak kullanıcıya sunulur (önizleme, alan tablosu, ölçü uyarıları, varsayımlar). Kullanıcı onaylamadan HACİM, DETAY ve PAFTA'ya çizim verilmez; bu agent'lar yalnızca `01-cizim/onayli/` klasörünü kullanır.
-4. **Kontrol**: Çıktılar hazır olunca DENETÇİ'yi çalıştır. DENETÇİ rapor yazar (`05-kontrol/`).
+4. **Kontrol**: Kullanıcı isterse DENETÇİ'yi çalıştır (varsayılan: ŞEF'in kısa kontrolü). DENETÇİ rapor yazar (`05-kontrol/`).
 5. **Düzeltme döngüsü**: DENETÇİ'nin "HATA" maddelerini ilgili agent'a geri gönder, düzeltilince DENETÇİ'yi yeniden
    çalıştır. En fazla 3 tur. Çözülemeyen konuları kullanıcıya sor.
 6. **Teslim**: SUNUM final seti üretir (sunum istendiyse; yoksa ilgili agent'ın ürünü teslim edilir). Kullanıcıya kısa özet ver: ne üretildi, nerede, açık konular.
@@ -41,7 +41,7 @@ Agent'lar birbirini doğrudan çağıramaz; tüm iletişim ŞEF üzerinden geçe
 
 ## Hazır iş tipleri
 
-- **"Konsept proje sunumu hazırla"** → `ofis-standartlari/konsept-sunum-sablonu.md`. Tipik ekip: ÇİZGİ (vaziyet, kat ve otopark planları, imar hesapları) → HACİM (SketchUp modeli; renderları kullanıcı alır) → PAFTA (kat planı ve vaziyet boyamaları) → SUNUM (A3 yatay set) → DENETÇİ. Karakalem eskizler ve renderlar kullanıcıdan gelir (`00-girdi/eskiz/`, `00-girdi/render/`). Gerekli girdiler: imar durumu/aplikasyon, ada-parsel, tip planları veya eskizler, işveren adı, proje tarihi, konsept metni için anahtar fikirler.
+- **"Konsept proje sunumu hazırla"** → `ofis-standartlari/konsept-sunum-sablonu.md`. Tipik ekip: ÇİZGİ (vaziyet, kat ve otopark planları, imar hesapları) → HACİM (SketchUp modeli; renderları kullanıcı alır) → PAFTA (kat planı ve vaziyet boyamaları) → SUNUM (A3 yatay set); DENETÇİ yalnız kullanıcı isterse. Karakalem eskizler ve renderlar kullanıcıdan gelir (`00-girdi/eskiz/`, `00-girdi/render/`). Gerekli girdiler: imar durumu/aplikasyon, ada-parsel, tip planları veya eskizler, işveren adı, proje tarihi, konsept metni için anahtar fikirler.
 
 ## Klasör düzeni
 
