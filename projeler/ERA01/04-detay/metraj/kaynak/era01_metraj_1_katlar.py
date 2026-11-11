@@ -214,6 +214,42 @@ def door_tags(KP, anc):
         out.append(dict(kod=k["txt"].strip(), gen=g, yuk=y, poz=p))
     return out
 
+
+def circumcenter(a, b, c):
+    ax, ay = a; bx, by = b; cx, cy = c
+    d = 2 * (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by))
+    if abs(d) < 1e-9: return None
+    ux = ((ax * ax + ay * ay) * (by - cy) + (bx * bx + by * by) * (cy - ay) + (cx * cx + cy * cy) * (ay - by)) / d
+    uy = ((ax * ax + ay * ay) * (cx - bx) + (bx * bx + by * by) * (ax - cx) + (cx * cx + cy * cy) * (bx - ax)) / d
+    return (ux, uy)
+
+def door_arcs(E, anc):
+    """1_IFC_Door yayları: menteşe (merkez), kapalı/açık uç, kanat genişliği, DIN el (açıldığı taraftan bakınca menteşe)."""
+    arcs = []
+    leaves = [[local(q, anc) for q in e["pts"]] for e in E if e["lay"] in ("1_IFC_Door", "2_IFC_Door") and e["t"] in "LP" and e.get("ty") != "ARC"]
+    for e in E:
+        if e["lay"] not in ("1_IFC_Door", "2_IFC_Door") or e.get("ty") != "ARC" or len(e["pts"]) < 3: continue
+        P = [local(q, anc) for q in e["pts"]]
+        c = circumcenter(P[0], P[len(P) // 2], P[-1])
+        if c is None: continue
+        R = math.hypot(P[0][0] - c[0], P[0][1] - c[1])
+        if not (40 <= R <= 140): continue
+        e1, e2 = P[0], P[-1]
+        opn = None
+        for L in leaves:
+            for a, b in ((L[0], L[-1]), (L[-1], L[0])):
+                if math.hypot(a[0] - c[0], a[1] - c[1]) < 6:
+                    if math.hypot(b[0] - e1[0], b[1] - e1[1]) < 8: opn = 1
+                    elif math.hypot(b[0] - e2[0], b[1] - e2[1]) < 8: opn = 2
+            if opn: break
+        hand = None
+        if opn:
+            cl, op = (e2, e1) if opn == 1 else (e1, e2)
+            cr = (cl[0] - c[0]) * (op[1] - c[1]) - (cl[1] - c[1]) * (op[0] - c[0])
+            hand = "DIN sağ" if cr > 0 else "DIN sol"
+        arcs.append(dict(c=c, R=R, hand=hand))
+    return arcs
+
 def door_inserts(K, anc):
     fr = K["frame"]; ins = set(K["ins"])
     out = []
@@ -404,7 +440,76 @@ def run():
                 cevre.append(dict(uzunluk=Ltot / 100, dagilim={"%s|%s" % k: v / 100 for k, v in cnt.items()}))
         wt = window_tags(E, anc)
         dt = door_tags(KP, anc)
-        di = door_inserts(K, anc)
+        di = [d_ for d_ in door_inserts(K, anc) if "DUS" not in d_["ad"]]
+        arcs = door_arcs(E, anc)
+        # --- doğrama/kapı konum bilgisi: mahal(ler), dış/iç, duvar sınıfı ---
+        def sample(pt, r=25):
+            ix, iy = int(round(pt[0] - X0)), int(round(Ht - 1 - (pt[1] - Y0)))
+            sl = (slice(max(0, iy - r), iy + r + 1), slice(max(0, ix - r), ix + r + 1))
+            km = kag2[sl]; cm = cls[sl]
+            if km.sum() >= 20:
+                c_ = np.bincount(cm[km]).argmax(); kal = SINIF[c_]
+                dis_ = bool((dext[sl][km] <= kal + 3).mean() > 0.5)
+                return kal, dis_, "kagir"
+            if concW[sl].sum() >= 20:
+                return None, bool(ext[sl].any() or out_m[sl].any()), "betonarme"
+            return None, bool(ext[sl].any() or out_m[sl].any()), "belirsiz"
+        def near_rooms(pt, maxd=45, n=2):
+            dd = sorted(((r["poly"].distance(Point(pt)), i) for i, r in enumerate(rooms)), key=lambda a: a[0])
+            return [i for d0, i in dd[:n] if d0 <= maxd]
+        for w in wt:
+            # pencere etiketlerinin lider ucu duvarın dış yüzünde/dışında kalabiliyor: 60 cm içindeki dış bant kagirine bak
+            ix, iy = int(round(w["hedef"][0] - X0)), int(round(Ht - 1 - (w["hedef"][1] - Y0)))
+            sl = (slice(max(0, iy - 60), iy + 61), slice(max(0, ix - 60), ix + 61))
+            km = kag2[sl] & (dext[sl] <= 33)
+            if km.sum() >= 20:
+                kal = SINIF[np.bincount(cls[sl][km]).argmax()]; mal = "kagir"
+            elif (concW[sl] & (dext[sl] <= 40)).sum() >= 20:
+                kal, mal = None, "betonarme"
+            else:
+                kal, mal = None, "belirsiz"
+            ri = [i for i in near_rooms(w["hedef"], 250, 4) if not rooms[i]["dis"]][:1]
+            bd = min([g_.exterior.distance(Point(w["hedef"])) for g_ in getattr(Fc_poly, "geoms", [Fc_poly])] +
+                     [r["poly"].distance(Point(w["hedef"])) for r in rooms if r["dis"]] + [1e9])
+            w.update(duvar_kal=kal, duvar_mal=mal, dis=bd <= 120, dis_uzaklik=round(bd), mahal_i=ri)
+        used = set()
+        for d_ in dt:
+            # en yakın kapı bloğu (eşleşme: 160 cm içinde)
+            best = None
+            for j, x in enumerate(di):
+                if j in used: continue
+                dd = math.hypot(x["poz"][0] - d_["poz"][0], x["poz"][1] - d_["poz"][1])
+                if dd < 160 and (best is None or dd < best[0]): best = (dd, j)
+            ref = d_["poz"]
+            if best:
+                used.add(best[1]); x = di[best[1]]; d_["blok"] = x["ad"]; ref = x["poz"]
+            else:
+                d_["blok"] = None
+            ar = sorted(arcs, key=lambda a: math.hypot(a["c"][0] - ref[0], a["c"][1] - ref[1]))
+            ar = [a for a in ar if math.hypot(a["c"][0] - ref[0], a["c"][1] - ref[1]) < 130]
+            d_["el"] = ar[0]["hand"] if ar else None
+            d_["yay_sayisi"] = len([a for a in ar if math.hypot(a["c"][0] - ref[0], a["c"][1] - ref[1]) < (d_["gen"] or 100) + 20])
+            kal, dis_, mal = sample(ref, 20)
+            rr = near_rooms(ref, 40, 2)
+            d_.update(duvar_kal=kal, duvar_mal=mal, mahal_i=[i for i in rr if not rooms[i]["dis"]],
+                      dis=bool(dis_ or any(rooms[i]["dis"] for i in rr) or len(rr) < 2), ref=ref)
+        extra = []
+        for j, x in enumerate(di):
+            if j in used: continue
+            kal, dis_, mal = sample(x["poz"], 20)
+            rr = near_rooms(x["poz"], 40, 2)
+            ar = sorted(arcs, key=lambda a: math.hypot(a["c"][0] - x["poz"][0], a["c"][1] - x["poz"][1]))
+            ar = [a for a in ar if math.hypot(a["c"][0] - x["poz"][0], a["c"][1] - x["poz"][1]) < 130]
+            Rs = [a["R"] for a in ar if math.hypot(a["c"][0] - x["poz"][0], a["c"][1] - x["poz"][1]) < 120][:2]
+            # bir pencerenin açıklığı içinde mi (kapı-pencere kanadı)?
+            inwin = None
+            for w in sorted(wt, key=lambda w: math.hypot(w["hedef"][0] - x["poz"][0], w["hedef"][1] - x["poz"][1])):
+                if w["gen"] and math.hypot(w["hedef"][0] - x["poz"][0], w["hedef"][1] - x["poz"][1]) <= w["gen"] / 2 + 40:
+                    inwin = w["tip"]
+                break
+            extra.append(dict(blok=x["ad"], poz=x["poz"], duvar_kal=kal, duvar_mal=mal, el=ar[0]["hand"] if ar else None,
+                              gen_tahmin=(round(sum(Rs) / 5) * 5 if Rs else None), pencere_icinde=inwin,
+                              mahal_i=[i for i in rr if not rooms[i]["dis"]], dis=bool(dis_ or any(rooms[i]["dis"] for i in rr) or len(rr) < 2)))
         fx = fixtures(K, anc, rooms)
         st = stairs(E, anc)
         # korkuluk çizgileri (plan)
@@ -421,7 +526,7 @@ def run():
                         Fc_poly=Fc_poly, F_poly=F_poly, brut_pol=[p.area / 1e4 for p in brut_pol],
                         brut_poly=brut_pol, W_m2=W.sum() / 1e4, conc_m2=concW.sum() / 1e4, kagir_m2=kag2.sum() / 1e4,
                         blob_m2=blob.sum() / 1e4, parapet_m2=par.sum() / 1e4,
-                        parapet_m=(par.sum() / 1e4) / 0.20 if par.any() else 0.0, shaft_m2=shaft_a, cevre=cevre, wins=wt, doors=dt, door_ins=di,
+                        parapet_m=(par.sum() / 1e4) / 0.20 if par.any() else 0.0, shaft_m2=shaft_a, cevre=cevre, wins=wt, doors=dt, door_ins=di, doors_extra=extra,
                         fix=fx, stairs=st, handrail=hr)
         # önizleme
         img = np.full((Ht, Wd, 3), 255, np.uint8)
