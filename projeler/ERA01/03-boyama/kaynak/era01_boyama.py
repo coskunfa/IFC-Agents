@@ -17,7 +17,9 @@ BLOK_ADI = dict(A="A BLOK", B="B BLOK", C="C BLOK", D="D BLOK")
 OZET = {}
 
 
-BRUT_OVERRIDE = {"D-blok-1-kat": (129.77, "DXF şema 'KAT BRÜTÜ' (D_CK_SEMA); plan poligonu 217.71 terası da kapsıyor")}
+SURUM_ = "v02"
+BRUT_OVERRIDE = {"A-blok-1-kat": (145.04, "DXF şema KAT BRÜTÜ 170.00 − KAT BAHÇESİ 24.96 (açık avlu, AÇIK ALAN satırında)"),
+                 "D-blok-1-kat": (129.77, "DXF şema 'KAT BRÜTÜ' (D_CK_SEMA); plan poligonu 217.71 terası da kapsıyor")}
 
 
 def brut_of(k, r):
@@ -103,7 +105,7 @@ def sheet_floor(k):
     scale_bar(c, xr - 60, ycap - 16, olcek, 5 if olcek == 100 else 10, 1 if olcek == 100 else 2)
     caption(c, xr, ycap, k, r)
     footer(c, Wm, Hm, BLOK_ADI[k["blok"]] + " " + k["ad"], "1/%d (%s)" % (olcek, kag))
-    fname = "ERA01_boyama_%s_v02.jpg" % k["kod"]
+    fname = "ERA01_boyama_%s_%s.jpg" % (k["kod"], SURUM_)
     size = save_jpg(s, os.path.join(OUT, fname))
     rec(k, r, olcek, fname)
     print(fname, "1/%d" % olcek, size, "%.1fs" % (time.time() - T0), flush=True)
@@ -126,7 +128,7 @@ def sheet_block(blok):
     header(c, Wm, BLOK_ADI[blok] + " · KAT PLANLARI")
     x = 15 + (390 - tw) / 2
     top = 36 + (297 - 36 - 30 - 26 - th) / 2
-    fname = "ERA01_boyama_%s-blok-kat-planlari_v02.jpg" % blok
+    fname = "ERA01_boyama_%s-blok-kat-planlari_%s.jpg" % (blok, SURUM_)
     toplam = 0.0
     for k, r, (w, h) in zip(ks, rs, sizes):
         paste(c, r["surf"], x, top + (th - h))
@@ -201,7 +203,7 @@ def sheet_vaziyet():
     scale_bar(c, xr - 62, Hm - 30 - 22, 500, 25, 5)
     stext(c, xr, Hm - 30 - 6, "VAZİYET PLANI", 10, bold=True, anchor="r")
     footer(c, Wm, Hm, "VAZİYET PLANI", "1/500 (A3)")
-    fname = "ERA01_boyama_vaziyet_v02.jpg"
+    fname = "ERA01_boyama_vaziyet_%s.jpg" % SURUM_
     size = save_jpg(s, os.path.join(OUT, fname))
     OZET["vaziyet"] = dict(dosya=fname, olcek="1/500", px_cm=round(r["S"], 4), cati_kaydirma=VZ.ROOF_SHIFT)
     print(fname, size, "%.1fs" % (time.time() - T0), flush=True)

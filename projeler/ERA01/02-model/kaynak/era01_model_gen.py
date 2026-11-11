@@ -1,4 +1,4 @@
-# ERA01 site model spec generator (HACIM). v02: DENETCI tur 1 duzeltmeleri (H3-H7, U10-U13).
+# ERA01 site model spec generator (HACIM). v03: otopark yarmasi tabani 167.15 (U-v2-1). v02: DENETCI tur 1 duzeltmeleri (H3-H7, U10-U13).
 # Input : floors.pkl (era01_model_dxfoku.py ciktisi: kat bazinda brut alan, mahal, kolon, dograma, kapi verisi,
 #         blok yerel aks koordinatlari), terrain points (vaziyet plani kotlari).
 # Output: spec JSON (solids + component defs + instances, cm, site coords) + rapor JSON.
@@ -603,7 +603,7 @@ for blk, terr, z0, z1 in TERR_FOOT:
     FOOT.append((site_xf(blk, terr), z0, z1))
 # H6: B otopark girisi onunde yarma (167.25 kademesinin ustu bosaltilir)
 YARMA = site_xf("B", box(770, 815, 1230, 2300))
-FOOT.append((YARMA, zc(167.25) + 1.0, 1e6))
+FOOT.append((YARMA, zc(166.00) + 1.0, 1e6))   # v03: 166 ustu bosaltilir, taban asagida 167.15'e doldurulur
 FOOT = [f for f in FOOT if f]
 # kontrol noktalari: vaziyet kotlari + blok cevresinde tesviye kotlari
 pts = [(x, y, z) for x, y, z in PTS]
@@ -676,6 +676,8 @@ for L in lv:
         add("ARAZI", f"ARAZI_KADEME_{L:.2f}_{nter:02d}", "M_ARAZI", plan_prism(p, zc(prev), zc(L)))
     prev_reg = reg if not reg.is_empty else prev_reg
     prev = L
+yt = YARMA.intersection(PARCEL)
+add("ARAZI", "ARAZI_YARMA_TABAN_167.15", "M_ARAZI", plan_prism(yt, zc(166.00), zc(167.15)))
 report["arazi"] = {"kademeler_m": lv, "taban_m": base, "nokta": len(pts), "tesviye_halka_noktasi": len(ring_pts),
                    "grid_cm": GS, "z_min": round(zmin, 2), "z_max": round(zmax, 2), "kademe_cismi": nter}
 spec = {"solids": solids, "defs": defs, "insts": insts,

@@ -31,10 +31,10 @@
   "acik": 0.0,
   "brut": 362.0,
   "brut_kaynak": "DXF brüt alan poligonu (0_IFC_Brüt_Alan)",
-  "iz_alani_kontrol": 360.11,
+  "iz_alani_kontrol": 360.31,
   "numarali": {
    "ERA01_boyama_A-blok-1-bodrum_v02.jpg": [],
-   "ERA01_boyama_A-blok-kat-planlari_v02.jpg": [
+   "ERA01_boyama_A-blok-kat-planlari_v03.jpg": [
     "ŞOK DUŞ",
     "KORİDOR",
     "BANYO"
@@ -105,7 +105,7 @@
     "px_cm": 2.3622
    },
    {
-    "dosya": "ERA01_boyama_A-blok-kat-planlari_v02.jpg",
+    "dosya": "ERA01_boyama_A-blok-kat-planlari_v03.jpg",
     "olcek": "1/200",
     "px_cm": 1.1811
    }
@@ -120,10 +120,10 @@
   "acik": 190.0,
   "brut": 170.0,
   "brut_kaynak": "DXF brüt alan poligonu (0_IFC_Brüt_Alan)",
-  "iz_alani_kontrol": 364.22,
+  "iz_alani_kontrol": 364.21,
   "numarali": {
    "ERA01_boyama_A-blok-zemin-kat_v02.jpg": [],
-   "ERA01_boyama_A-blok-kat-planlari_v02.jpg": [
+   "ERA01_boyama_A-blok-kat-planlari_v03.jpg": [
     "TEMİZLİK ODASI",
     "MERDİVEN"
    ]
@@ -230,7 +230,7 @@
     "px_cm": 2.3622
    },
    {
-    "dosya": "ERA01_boyama_A-blok-kat-planlari_v02.jpg",
+    "dosya": "ERA01_boyama_A-blok-kat-planlari_v03.jpg",
     "olcek": "1/200",
     "px_cm": 1.1811
    }
@@ -243,12 +243,12 @@
   "mutlak": "177.65",
   "net": 122.8,
   "acik": 25.0,
-  "brut": 170.0,
-  "brut_kaynak": "DXF şema 'KAT BRÜTÜ' (plan üzerinde brüt poligonu yok)",
+  "brut": 145.04,
+  "brut_kaynak": "DXF şema KAT BRÜTÜ 170.00 − KAT BAHÇESİ 24.96 (açık avlu, AÇIK ALAN satırında)",
   "iz_alani_kontrol": 167.48,
   "numarali": {
-   "ERA01_boyama_A-blok-1-kat_v02.jpg": [],
-   "ERA01_boyama_A-blok-kat-planlari_v02.jpg": []
+   "ERA01_boyama_A-blok-1-kat_v03.jpg": [],
+   "ERA01_boyama_A-blok-kat-planlari_v03.jpg": []
   },
   "eklenen_tefris": [],
   "mahaller": [
@@ -310,12 +310,12 @@
   ],
   "dosyalar": [
    {
-    "dosya": "ERA01_boyama_A-blok-1-kat_v02.jpg",
+    "dosya": "ERA01_boyama_A-blok-1-kat_v03.jpg",
     "olcek": "1/100",
     "px_cm": 2.3622
    },
    {
-    "dosya": "ERA01_boyama_A-blok-kat-planlari_v02.jpg",
+    "dosya": "ERA01_boyama_A-blok-kat-planlari_v03.jpg",
     "olcek": "1/200",
     "px_cm": 1.1811
    }
@@ -670,10 +670,10 @@
   "acik": 0.0,
   "brut": 112.54,
   "brut_kaynak": "DXF brüt alan poligonu (0_IFC_Brüt_Alan)",
-  "iz_alani_kontrol": 112.52,
+  "iz_alani_kontrol": 112.56,
   "numarali": {
    "ERA01_boyama_D-blok-1-bodrum_v02.jpg": [],
-   "ERA01_boyama_D-blok-kat-planlari_v02.jpg": []
+   "ERA01_boyama_D-blok-kat-planlari_v03.jpg": []
   },
   "eklenen_tefris": [],
   "mahaller": [
@@ -730,7 +730,7 @@
     "px_cm": 2.3622
    },
    {
-    "dosya": "ERA01_boyama_D-blok-kat-planlari_v02.jpg",
+    "dosya": "ERA01_boyama_D-blok-kat-planlari_v03.jpg",
     "olcek": "1/150",
     "px_cm": 1.5748
    }
@@ -745,10 +745,10 @@
   "acik": 0.0,
   "brut": 217.71,
   "brut_kaynak": "DXF brüt alan poligonu (0_IFC_Brüt_Alan)",
-  "iz_alani_kontrol": 208.41,
+  "iz_alani_kontrol": 208.51,
   "numarali": {
    "ERA01_boyama_D-blok-zemin-kat_v02.jpg": [],
-   "ERA01_boyama_D-blok-kat-planlari_v02.jpg": []
+   "ERA01_boyama_D-blok-kat-planlari_v03.jpg": []
   },
   "eklenen_tefris": [],
   "mahaller": [
@@ -850,7 +850,7 @@
     "px_cm": 2.3622
    },
    {
-    "dosya": "ERA01_boyama_D-blok-kat-planlari_v02.jpg",
+    "dosya": "ERA01_boyama_D-blok-kat-planlari_v03.jpg",
     "olcek": "1/150",
     "px_cm": 1.5748
    }
@@ -865,10 +865,10 @@
   "acik": 82.7,
   "brut": 129.77,
   "brut_kaynak": "DXF şema 'KAT BRÜTÜ' (D_CK_SEMA); plan poligonu 217.71 terası da kapsıyor",
-  "iz_alani_kontrol": 206.97,
+  "iz_alani_kontrol": 207.06,
   "numarali": {
    "ERA01_boyama_D-blok-1-kat_v02.jpg": [],
-   "ERA01_boyama_D-blok-kat-planlari_v02.jpg": [
+   "ERA01_boyama_D-blok-kat-planlari_v03.jpg": [
     "KORİDOR"
    ]
   },
@@ -933,16 +933,17 @@
     "px_cm": 2.3622
    },
    {
-    "dosya": "ERA01_boyama_D-blok-kat-planlari_v02.jpg",
+    "dosya": "ERA01_boyama_D-blok-kat-planlari_v03.jpg",
     "olcek": "1/150",
     "px_cm": 1.5748
    }
   ]
  },
  "toplam_kapali_alan": {
-  "A": 702.0,
+  "A": 677.04,
   "B": 954.12,
   "C": 270.0,
   "D": 460.02
- }
+ },
+ "surum_notu": "v03: A-blok-1-kat, A-blok-kat-planlari, D-blok-kat-planlari; diğerleri v02"
 }

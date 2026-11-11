@@ -560,9 +560,19 @@ def render_plan(k, olcek=100, txt=1.0, seed=11, band=True, pad=None):
             continue
         seen.append((g["x"], g["y"]))
         kx, ky = g["x"], g["y"]
-        for r in rooms:
-            if abs(r["lp"][0] - kx) < 110 * txt and abs(r["lp"][1] - ky) < 70 * txt:
-                ky = r["lp"][1] - 85 * txt
+        obstacles = list(LBOX) + [Point(e[0], e[1]).buffer(75 * txt) for e in entr]
+        def kbox(x, y):
+            return Polygon([(x - 14 * txt, y), (x + 80 * txt, y), (x + 80 * txt, y + 36 * txt), (x - 14 * txt, y + 36 * txt)])
+        best = None
+        for dy in (0, -45, 45, -90, 90, -135, 135):
+            for dx in (0, -60, 60, -120, 120):
+                bx = kbox(kx + dx * txt, ky + dy * txt)
+                if not any(bx.intersects(o) for o in obstacles):
+                    best = (kx + dx * txt, ky + dy * txt); break
+            if best:
+                break
+        if best:
+            kx, ky = best
         kv = m.group(1)
         if not kv.startswith(("+", "-", "±")):
             kv = "+" + kv
@@ -609,6 +619,9 @@ def _hspan(poly, x, y):
     return 0
 
 
+LBOX = []
+
+
 def layout_labels(c, rooms, txt, entr_pts=()):
     """Mahal adı + alanı mahal içine (tek tip yazı boyu). Ad hiçbir biçimde sığmazsa yalnız o mahal
     numaralanır ve paftadaki listeye girer. Yazı kutusu duvardan >= 8 cm içeride, giriş üçgenine binmez."""
@@ -616,6 +629,7 @@ def layout_labels(c, rooms, txt, entr_pts=()):
     lh = fs_n * 1.12
     obst = unary_union([Point(x, y).buffer(75 * txt) for x, y in entr_pts]) if entr_pts else None
     numbered = []
+    LBOX.clear()
     def box(x, y, lines):
         w = max(max(wtext_width(c, l, fs_n, True) for l in lines), wtext_width(c, "000.00 m²", fs_a))
         h = len(lines) * lh + fs_a * 1.3
@@ -648,6 +662,7 @@ def layout_labels(c, rooms, txt, entr_pts=()):
                 break
         if done:
             x, y, ls, h = done
+            LBOX.append(box(x, y, ls)[0])
             ytop = y + h / 2 - fs_n * 0.55
             for i, l in enumerate(ls):
                 wtext(c, x, ytop - i * lh, l, fs_n, bold=True)
@@ -657,7 +672,12 @@ def layout_labels(c, rooms, txt, entr_pts=()):
     for i, r in enumerate(sorted(numbered, key=lambda r: (-r["lp"][1], r["lp"][0])), 1):
         r["no"] = i
         pg = r["poly"] if r["poly"].geom_type == "Polygon" else max(r["poly"].geoms, key=lambda p: p.area)
-        q = polylabel(pg, 2.0)
+        zone = pg.difference(obst) if obst is not None else pg
+        if zone.is_empty:
+            zone = pg
+        zone = zone if zone.geom_type == "Polygon" else max(zone.geoms, key=lambda p: p.area)
+        q = polylabel(zone, 2.0)
+        LBOX.append(q.buffer(16 * txt))
         c.new_path(); c.arc(q.x, q.y, 15 * txt, 0, 2 * math.pi); setc(c, C["white"], 0.9); c.fill_preserve()
         c.set_line_width(0.8 * txt); setc(c, C["text2"]); c.stroke()
         wtext(c, q.x, q.y, str(i), 17 * txt, bold=True)
