@@ -1,6 +1,6 @@
 # ERA01 ERA Evi: Model klasörü (HACİM)
 
-**Güncel sürüm: v02** (DENETÇİ tur 1 düzeltmeleri, `05-kontrol/ERA01_kontrol_raporu_v01.md`). v01 dosyaları klasörde duruyor.
+**Güncel sürüm: v03** (v02 = DENETÇİ tur 1 düzeltmeleri; v03 = tur 2: otopark yarması tabanı 167.15, belge düzeltmeleri). v01 ve v02 dosyaları klasörde duruyor.
 
 **Seviye:** KÜTLE + CEPHE · **Birim:** cm (kotlar m) · **Kapsam:** A, B, C, D blokları + arazi, tek site modeli
 
@@ -11,24 +11,32 @@ Her blok kendi grubunda (`BLOK_A` ... `BLOK_D`) yerel aks koordinatlarıyla kuru
 ## Dosyalar
 | Dosya | Açıklama |
 |---|---|
-| `ERA01_model_site_v02.skp` | **Güncel** SketchUp modeli (611.8 KB). 4 blok + arazi, 7 kayıtlı sahne, North Angle 338.71° |
+| `ERA01_model_site_v03.skp` | **Güncel** SketchUp modeli (613.8 KB). 4 blok + arazi, 7 kayıtlı sahne, North Angle 338.71° |
+| `ERA01_model_sketchup-onizleme_v03.png`, `ERA01_model_kus-bakisi_v03.png`, `ERA01_model_aksonometrik_v03.png`, `ERA01_model_perspektif_v03.png` | v03 görselleri (kat üstten görünüşleri v02 ile aynı, değişiklik yalnız arazide) |
+| `ERA01_model_site_v02.skp` | v02 modeli (611.8 KB) |
 | `ERA01_model_sketchup-onizleme_v02.png` | SketchUp'ın kendi küçük resmi (model kamerası = "Perspektif K") |
 | `ERA01_model_kus-bakisi_v02.png` | Kontrol görseli: kuş bakışı, güneydoğudan |
 | `ERA01_model_aksonometrik_v02.png` | Kontrol görseli: kuzeybatıdan (alçak taraf, bodrumlar görünür) |
 | `ERA01_model_perspektif_v02.png` | Kontrol görseli: kuzeyden, göz yüksekliğine yakın |
 | `ERA01_model_kat-b2_v02.png`, `..._kat-b1_v02.png`, `..._kat-00_v02.png`, `..._kat-01_v02.png` | Kat üstten görünüşleri (üst katlar, çatı, tavan ve arazi gizli) |
-| `*_v01.*` | Önceki sürüm (DENETÇİ tur 1'de kontrol edilen), değiştirilmedi |
+| `*_v01.*`, `*_v02.*` | Önceki sürümler, değiştirilmedi |
 | `kaynak/era01_model_dxfoku_1_inserts.py` | DXF okuma: model alanındaki blokları iç içe açar, attribute dahil (kot etiketleri) |
 | `kaynak/era01_model_dxfoku_2_katlar.py` | Kat verisi: brüt alan, mahal, kolon, doğrama ve kapı çizgileri; aks etiketine göre blok yerel koordinatı |
 | `kaynak/era01_model_dxfoku_3_gorunus.py` | Görünüşlerden pencere kasaları ve kotları (kontrol) |
 | `kaynak/era01_model_dxfoku_4_kesit-kotlari.py` | Kesitlerdeki kot etiketlerini listeler |
-| `kaynak/era01_model_gen.py` | Model üretici (v02): kat tablosu, kalınlıklar, çatı, arazi parametreleri dosya başında. v01 hali `era01_model_gen_v01.py` |
+| `kaynak/era01_model_gen.py` | Model üretici (v03): kat tablosu, kalınlıklar, çatı, arazi parametreleri dosya başında. Önceki halleri `era01_model_gen_v01.py`, `era01_model_gen_v02.py` |
 | `kaynak/era01_arazi_noktalari.txt` | Arazi kontrol noktaları (vaziyet planı kotları; `TES` = tesviye kotu) |
 | `kaynak/era01_model_pack.py`, `era01_model_png.py`, `era01_model_sketchup.py` | Veriyi SketchUp bulut oturumuna taşıma ve SketchUp kurulum kodu |
 | `kaynak/era01_model_render.py`, `era01_model_kameralar.json` | Kontrol görselleri (modelle aynı geometri verisi, aynı sahne kameraları) |
-| `kaynak/era01_model_rapor_v02.json` (v01: `era01_model_rapor.json`) | Üretici raporu: kat, doğrama ve çatı değerleri (makine okunur) |
+| `kaynak/era01_model_rapor_v03.json` (v02: `..._v02.json`, v01: `era01_model_rapor.json`) | Üretici raporu: kat, doğrama ve çatı değerleri (makine okunur) |
 
 Kontrol PNG'leri modelle aynı geometri verisinden üretildi (bulut aracı sahne başına görüntü vermiyor). SketchUp'taki görünüm `..._sketchup-onizleme_v01.png` ile doğrulandı.
+
+## v03 değişiklikleri (DENETÇİ tur 2)
+| Madde | Yapılan |
+|---|---|
+| U-v2-1 | Otopark yarmasının tabanı garaj tabanıyla aynı kotta: **167.15** (`ARAZI_YARMA_TABAN_167.15`). Dış zemin artık içeriden yüksek değil. Yarma şeridinde 166.00 üstündeki kademeler boşaltıldı, taban 166.00–167.15 arası tek kütle. Rampa duvarları ve cephe kaplamasıyla çakışmıyor |
+| U-v2-2 | Belge düzeltmeleri: "Modellenmeyenler" listesinden korkuluk ve rampa yarması çıkarıldı. D 1. kat kapalı kısmı 10.55 m |
 
 ## v02 değişiklikleri (DENETÇİ tur 1)
 | Madde | Yapılan |
@@ -55,7 +63,7 @@ Kontrol PNG'leri modelle aynı geometri verisinden üretildi (bulut aracı sahne
 | A | 1BK+Z+1N = 3 | 172.95 (subasman +1.20 = 174.15) | 20.00 × 18.00 m, x 2138–4138, y 2510–4310 | 0° | Bodrum 20×18 (havuz, spa, salon); zemin ve 1. kat güney yarıda 20×8.50; zemin katın kuzeyi bodrum üstü teras |
 | B | 2BK+Z = 3 | 174.15 | 20.00 × 12.30 m, x 4738–6738, y 1955–3185 | 0° | 2. bodrum otopark 20×20.45 (ZK izinin 8.15 m kuzeyine taşar); 1. bodrum batıda A'ya, doğuda C'ye uzanır (teknik hacimler, koridorlar) |
 | C | 1BK+Z = 2 | 174.36 | 7.50 × 18.00 m, x 7338–8088, y 1955–3755 | 90° | Plan çiziminde sol uç = güney (giriş) |
-| D | 1BK+Z+1N = 3 | 167.25 | 12.30 × 17.70 m, döndürülmüş dikdörtgen | 66.35° | Zeminde 2 daire; bodrum kuzey yarıda (9.15 m); 1. kat güney 2/3 (10.75 m), kuzeyi teras |
+| D | 1BK+Z+1N = 3 | 167.25 | 12.30 × 17.70 m, döndürülmüş dikdörtgen | 66.35° | Zeminde 2 daire; bodrum kuzey yarıda (9.15 m); 1. kat güney kısımda (10.55 m), kuzeyi teras |
 
 Plan yönleri giriş okları ve vaziyetteki "BLOK GİRİŞİ / DAİRE GİRİŞİ" yazılarıyla eşleştirildi. D bloğun konumu vaziyet poligonunun köşelerinden (8050, 4778) ve uzun kenar yönünden (710, 1621) hesaplandı.
 
@@ -147,7 +155,7 @@ Model kuralı (v02): çatının **üst yüzü** saçak ucunda saçak kotunda, ma
 - **Kademeli (teraslı)**, smooth yok. Parsel sınırı içinde (vaziyet planı `0_IFC_Parsel Sınırı`).
 - Kontrol noktaları: vaziyet planındaki parsel köşe, yol ve proje kotları (79 nokta) + her bloğun 1.40 m dışında, 2.50 m aralıklı, en yakın "tesviye" kotunu alan halka noktaları (138 nokta). Ters mesafe ağırlıklı yüzey, 1 m ızgara.
 - Kademe sınırları v02'de sadeleştirildi (1.5 m kapama/açma, 1.5 m sadeleştirme). 29 kademe cismi, 626 yüzey.
-- B otopark girişinin önünde yarma: 167.25 kademesinin üstü 4.60 m genişliğinde, kuzeye 14.85 m boşaltıldı. Yanlar arazi kademe yüzleri.
+- B otopark girişinin önünde yarma (v03): 4.60 m genişliğinde, kuzeye 14.85 m; tabanı 167.15 (garaj tabanıyla aynı). Yanlar arazi kademe yüzleri.
 - Kademeler: 161, 162, 163, **164.25**, 165, 166, **167.25**, 168, 169, **170.15**, **170.36**, 171, 172, **172.95**, **174.15**, **174.36**, 175, 176, 177 (kalın: blok tesviye kotları). Taban 160.00.
 - Blok çevresindeki tesviyeler (DXF): A güney/doğu/batı 172.95, kuzey 170.15 (bodrum açık); B çevresi 174.15 (iki bodrum gömülü); C güney/doğu/batı 174.36, kuzey 170.36; D güney/batı 167.25, kuzey/doğu 164.25 (bodrum açık); D 1. kat girişi güneyde 170.75.
 - Arazi, her kademenin kot aralığına giren katların izinde boşaltıldı (bloklar toprağa gömülü oturur; toprak altı bodrumlar ve B2'nin kuzey kısmı toprakla örtülü).
@@ -225,16 +233,16 @@ M_TASIYICI #6E6E6E, M_DIS_DUVAR #A6A6A6, M_IC_DUVAR #D0D0D0, M_CEPHE_KAPLAMA #E6
 Perspektif K (model kamerası), Aksonometrik KB (paralel), Kus bakisi GD, KAT_B2 ustten, KAT_B1 ustten, KAT_00 ustten, KAT_01 ustten (paralel; üstteki kat tag'leri + KAT_CATI + TAVAN + ARAZI gizli). Stil: ARCHITECTURAL_EXTERIOR. North Angle 338.71°.
 
 ## Model istatistiği
-| | v02 | v01 |
-|---|---|---|
-| Yaprak grup | 486 (+ 149 bileşen örneği, 52 tanım) | 475 (+ 146, 46 tanım) |
-| Toplam yüzey / kenar (örnekler açılmış) | 7 608 yüzey, 19 156 kenar | 7 641 / 19 335 |
-| Blok başına yüzey | A 2 491, B 1 840, C 808, D 1 843, arazi 626 | A 2 347, B 1 755, C 808, D 1 923, arazi 808 |
-| Katı (solid) kontrolü | Tüm gruplar katı. Yalnız doğrama cam yüzeyleri tek yüzey (beklenen) | aynı |
-| Dosya boyutu | 611.8 KB | 608.8 KB |
+| | v03 | v02 | v01 |
+|---|---|---|---|
+| Yaprak grup | 487 (+ 149 bileşen örneği, 52 tanım) | 486 (+ 149, 52) | 475 (+ 146, 46 tanım) |
+| Toplam yüzey / kenar (örnekler açılmış) | 7 622 yüzey, 19 192 kenar | 7 608 / 19 156 | 7 641 / 19 335 |
+| Blok başına yüzey | A 2 491, B 1 840, C 808, D 1 843, arazi 640 | arazi 626 | A 2 347, B 1 755, C 808, D 1 923, arazi 808 |
+| Katı (solid) kontrolü | Tüm gruplar katı. Yalnız doğrama cam yüzeyleri tek yüzey (beklenen) | aynı | aynı |
+| Dosya boyutu | 613.8 KB | 611.8 KB | 608.8 KB |
 
 ## Çizimle çelişkiler ve varsayımlar
-1. **D blok çatı kotu:** çatı planı başlığı "ÇATI KATI +3.50 (170.75)". Kesitler saçak +7.00 (174.25), parapet +7.50, mahya +7.82 veriyor. +3.50, zemin kat üstündeki **kuzey teras** (1. kat seviyesi) kotu. Model: teras +3.50, kırma çatı +7.00/+7.82, 1. kat yalnız güney 10.75 m.
+1. **D blok çatı kotu:** çatı planı başlığı "ÇATI KATI +3.50 (170.75)". Kesitler saçak +7.00 (174.25), parapet +7.50, mahya +7.82 veriyor. +3.50, zemin kat üstündeki **kuzey teras** (1. kat seviyesi) kotu. Model: teras +3.50, kırma çatı +7.00/+7.82, 1. kat yalnız güney 10.55 m.
 2. **E-F adlandırması:** "E-F" blokları D bloğun planları. B bloğun bodrum brüt/net alanları DXF'te "D BLOK_B1/B2_BRUT ALAN" ve "A_B1_NET ALAN" adlarıyla duruyor. Konumlarına göre B blok olarak kullanıldı.
 3. **A kesit yazım hatası:** "−3.30 (169.95)" (−3.30 + 172.95 = 169.65). Modeli etkilemiyor (temel altı).
 4. **B GR1 görünüşü** A bloğa ait bir cepheyi gösteriyor (900×630 camlı cephe, 1. kat pencereleri; B tek katlı). Kullanılmadı. B pencereleri plan etiketleri ve GR2-GR4'ten.
@@ -246,9 +254,9 @@ Perspektif K (model kamerası), Aksonometrik KB (paralel), Kus bakisi GD, KAT_B2
 10. A P-01 (900×630) zemin kattan 1. kat üst kasasına kadar tek parça. 1. kat döşeme kenarı camın arkasından geçiyor (görünüşteki ara bant ile uyumlu).
 11. Atlanan doğramalar: C ZK P-20 (etiket 260, çizim 77 cm, balkon köşesi) ve P-22 (740, balkon camlaması, cephe çizgisinde değil); B B1 P-15 (240×90, toprak altı koridor, dış çizgiye oturmuyor). C ZK BALKON iç mahal gibi modellendi.
 12. A 1. kat "KAT BAHÇESİ" açık avlu (v02). Batı kenarındaki 375 cm'lik etiketsiz cam 280 cm kabul edildi.
-13. B 2. bodrumun kuzey kısmı (8.15 m) toprak altında, üstü yalnız taşıyıcı döşeme (kaplama ve korkuluk yok). B 1. bodrumun batı ve doğu uzantılarının üstü ZK kotunda teras + cam korkuluk. Otopark girişi v02'de: garaj kapısı boşluğu + yarma. Rampa eğimi ve kapı ayrıntısı DXF'ten birebir alınmadı (basit yarma, 167.25 kademesi).
+13. B 2. bodrumun kuzey kısmı (8.15 m) toprak altında, üstü yalnız taşıyıcı döşeme (kaplama ve korkuluk yok). B 1. bodrumun batı ve doğu uzantılarının üstü ZK kotunda teras + cam korkuluk. Otopark girişi: garaj kapısı boşluğu + yarma, yarma tabanı 167.15 (v03). Y şeklindeki rampa eğimi modellenmedi (düz yarma, DENETÇİ kabul etti).
 14. Teras korkulukları 110 cm, 4 cm cam panel (v02, DENETÇİ sorusu 5 kararı). D çatı parapeti 20 cm dolu, +7.50 (DXF parapet kotu).
-15. Modellenmeyenler: iç kapılar ve iç kapı boşlukları (iç duvarlar sürekli), mobilya, korkuluk, dış merdivenler, istinat ve bahçe duvarları, rampalar, havuz çukuru, asansör, bacalar (+8.80 / +7.60 "parapet" etiketleri), saçak oluğu.
+15. Modellenmeyenler: iç kapılar ve iç kapı boşlukları (iç duvarlar sürekli), mobilya, dış merdivenler, istinat ve bahçe duvarları (B otopark rampa duvarları hariç), eğimli rampalar (otopark girişi düz yarma olarak var), havuz çukuru, asansör, bacalar (+8.80 / +7.60 "parapet" etiketleri), saçak oluğu.
 16. Merdivenler basitleştirilmiş basamaklı kütle (tek kol ya da U, 20 cm döşemeli), bir üst kata. Gerçek kol düzeni DXF'ten birebir alınmadı.
 17. SALON+MUTFAK mahalleri (A B1, C ZK) kuru grupta (v02).
 18. Arazi yaklaşık: ters mesafe ağırlıklı yüzey + 1 m kademe. Vaziyet ve vaziyet kesitlerindeki kotlarla ±0.5 m mertebesinde uyumlu. Parsel dışı (yollar, komşular) yok.
@@ -257,5 +265,5 @@ Perspektif K (model kamerası), Aksonometrik KB (paralel), Kus bakisi GD, KAT_B2
 
 ## Açık sorular (önerilen varsayımla)
 v01 soruları 1, 2, 4, 5 ve 6 ŞEF/DENETÇİ kararıyla kapandı: standart cephe kaplaması, D çatı yorumu, açık avlu, SALON+MUTFAK kuru, arazi parsel içi. Kalan:
-1. B otopark rampası: yarma 167.25'te düz bırakıldı. DXF'teki Y şeklindeki rampa eğimleri (%14.4–%14.8) modelde istenir mi? **Öneri:** hayır, kademeli arazi yeterli.
-2. A avlusunun batısındaki 375 cm'lik etiketsiz doğrama 280 cm kabul edildi. **Öneri:** böyle kalsın.
+1. B otopark rampası: yarma 167.15'te düz. DXF'teki Y şeklindeki rampa eğimleri (%14.4–%14.8) modelde istenir mi? **Öneri:** hayır (DENETÇİ varsayımı kabul etti).
+2. A avlusunun batısındaki 375 cm'lik etiketsiz doğrama 280 cm kabul edildi (DXF'te etiket yok). Kullanıcıya teslimde açık konu. **Öneri:** böyle kalsın.

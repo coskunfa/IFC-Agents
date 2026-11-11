@@ -676,7 +676,7 @@ for L in lv:
         add("ARAZI", f"ARAZI_KADEME_{L:.2f}_{nter:02d}", "M_ARAZI", plan_prism(p, zc(prev), zc(L)))
     prev_reg = reg if not reg.is_empty else prev_reg
     prev = L
-yt = YARMA.intersection(PARCEL)
+yt = site_xf("B", unary_union([box(800, 835, 1200, 1046), box(770, 1046, 1230, 2300)])).intersection(PARCEL)  # cephe kaplamasi ve rampa duvarlariyla cakismaz
 add("ARAZI", "ARAZI_YARMA_TABAN_167.15", "M_ARAZI", plan_prism(yt, zc(166.00), zc(167.15)))
 report["arazi"] = {"kademeler_m": lv, "taban_m": base, "nokta": len(pts), "tesviye_halka_noktasi": len(ring_pts),
                    "grid_cm": GS, "z_min": round(zmin, 2), "z_max": round(zmax, 2), "kademe_cismi": nter}
