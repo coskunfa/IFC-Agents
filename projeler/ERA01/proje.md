@@ -3,7 +3,7 @@
 - **Proje kodu**: ERA01
 - **Tür / konum / alan**: Çok bloklu konut sitesi (A, B, C, D bloklar + DXF'te E-F tanımları), Beykoz antetli uygulama/ruhsat seti; eğimli arazi (kotlar ~164–181 m)
 - **Aşama**: Ruhsat/uygulama seti mevcut → sunum amaçlı model + boyama
-- **Aktif agent'lar**: HACİM, PAFTA, DENETÇİ
+- **Aktif agent'lar**: HACİM, PAFTA, SUNUM (DENETÇİ yalnız kullanıcı isterse)
 - **Model detay seviyesi**: KÜTLE + CEPHE (varsayılan); olabildiğince az çizgi/yüz, hafif model
 - **Boyama stili**: Konsept gri, DNM01'de yapılan tarzda (ofis referansları)
 - **Teslim formatı**: SKP (model + görüntüler), JPEG (boyamalar)
@@ -20,6 +20,7 @@ Kullanıcının hazır proje DXF'inden (00-girdi/ERA01_girdi_proje.dxf):
 ## Girdiler (00-girdi/)
 | Dosya | Açıklama |
 |---|---|
+| render/ERA01_girdi_konsept-01..05 | Kullanıcının konsept renderları (5 adet; 01 ve 03 aynı görselin iki kırpımı). Malzeme, pencere ve çatı dili bunlara yakın olacak. Sunumda geçici görsel; kullanıcı sonra yenileriyle değiştirecek |
 | ERA01_girdi_proje.dxf | Tam proje seti (25 MB, model alanında 4 sıra pafta: A, B, C, D blok sıraları). Her sırada: aplikasyon/vaziyet, vaziyet kesitleri, bodrum/zemin/1. kat/çatı planları, şablon-hesaplar, kesitler, görünüşler. Birim cm kabul (header mm diyor). Planlar çoğunlukla blok (INSERT) olarak. |
 
 ## DXF ilk okuması (ŞEF)
@@ -45,6 +46,8 @@ Kullanıcının hazır proje DXF'inden (00-girdi/ERA01_girdi_proje.dxf):
 | 2026-11-11 | Proje ERA01 – ERA Evi; aktif: HACİM + PAFTA, sonra DENETÇİ | Kullanıcı |
 | 2026-11-11 | Model kesit/görünüşlere göre (kat yükseklikleri, pencereler, çatı, cephe); arazi kademeli olabilir, az çizgi | Kullanıcı |
 | 2026-11-11 | DENETÇİ bundan sonra varsayılan olarak kullanılmayacak (kota tüketimi); tur 3 raporu tamamlanmıştı: TESLİME HAZIR | Kullanıcı |
+| 2026-11-11 | Model v04: konsept renderlara göre revize (malzeme, pencere boyutları, çatılar; DXF'ten farklı olsa da konsepte yakın). Arazi: sınırlar/yollar/kotlar projeden, bahçe ve teraslama konsept tadında | Kullanıcı |
+| 2026-11-11 | SUNUM eklendi: kat planı boyamaları + konsept görsellerle sunum dosyası (görseller sonra kullanıcı tarafından değiştirilecek) | Kullanıcı |
 | 2026-11-11 | Boyama: vaziyet planı + her blok ayrı ayrı tüm katlar, DNM01 tarzı | Kullanıcı |
 
 ## Açık konular
