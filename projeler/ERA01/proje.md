@@ -37,6 +37,7 @@ Kullanıcının hazır proje DXF'inden (00-girdi/ERA01_girdi_proje.dxf):
 - DXF'teki "E-F" blokları D bloğun planları; sitede 4 blok (A, B, C, D).
 - (PAFTA soruları, 5 dk cevapsız → öneriler uygulandı) 1) D blok 1. kat +3.50, çatı +7.00 (174.25); DXF'teki çatı kotu yazımı hatalı. 2) A zemin brüt 170.00 (şemadaki 363.96 terası kapsıyor). 3) Brüt poligonu olmayan katlarda şema "KAT BRÜTÜ": A 1. kat 170.00, C bodrum 135.00, C zemin 135.00. 4) D 1. kat brüt: DENETÇİ'nin DXF tespitine göre (129.77 olası). 5) Vaziyette sert zemin şimdilik çim ağırlıklı; kullanıcı poligon verirse yeniden boyanır.
 - Boyama fontu Carlito (sistemde Calibri yok; metrik eşdeğer).
+- (DENETÇİ soruları, 5 dk cevapsız → öneriler uygulandı) 1) Brüt alanlar terassız kapalı alan. 2) Numara+liste yalnız ad sığmayan yerde. 3) Pafta başlığı "MİMARİ KONSEPT PROJE". 4) Tüm paftalar A3. 5) Teras korkuluğu 110 cm ince korkuluk/cam panel. 6) B çatısı kotlara göre (%21), "%15" yazısı yok sayılır.
 
 ## Kararlar günlüğü
 | Tarih | Karar | Kim söyledi |
