@@ -48,6 +48,7 @@ Kullanıcının hazır proje DXF'inden (00-girdi/ERA01_girdi_proje.dxf):
 | 2026-11-11 | DENETÇİ bundan sonra varsayılan olarak kullanılmayacak (kota tüketimi); tur 3 raporu tamamlanmıştı: TESLİME HAZIR | Kullanıcı |
 | 2026-11-11 | Model v04: konsept renderlara göre revize (malzeme, pencere boyutları, çatılar; DXF'ten farklı olsa da konsepte yakın). Arazi: sınırlar/yollar/kotlar projeden, bahçe ve teraslama konsept tadında | Kullanıcı |
 | 2026-11-11 | SUNUM eklendi: kat planı boyamaları + konsept görsellerle sunum dosyası (görseller sonra kullanıcı tarafından değiştirilecek) | Kullanıcı |
+| 2026-11-11 | METRAJ (DETAY): önerilen 16 kalemin hepsi; duvarlar m², kalınlığa göre ayrı; tüm kalemler Excel. Varsayılanlar: DXF proje pencereleri (konsept v04 değil), tüm boşluklar düşülür + boşluklu toplam da verilir, duvar yüksekliği brüt (döşeme üstü–üst döşeme altı), sıva/boya tavan yüksekliğiyle, yalnız miktar (poz/birim fiyat yok) | Kullanıcı |
 | 2026-11-11 | Boyama: vaziyet planı + her blok ayrı ayrı tüm katlar, DNM01 tarzı | Kullanıcı |
 
 ## Açık konular
