@@ -24,6 +24,11 @@ Kullanıcının tek çizgi eskiz DXF'inden (00-girdi) konsept kat planları çiz
 - Eskiz DXF başlığında birim mm görünüyor ama ölçüler cm (basamak 27, duvar 20) → **cm** kabul edildi.
 
 ## Varsayımlar
+- (5 dk içinde cevapsız, varsayılan uygulandı) Saçak 50 cm, cephe kaplaması dış yüzünden.
+- (cevapsız, varsayılan) Pencere parapet/yükseklik: salon ve mutfak 0/300, ebeveyn 0/300, diğer yatak odaları 90/210, banyo-hol-giyinme 150/150.
+- (cevapsız, varsayılan) Kapı yükseklikleri: iç 220, ana giriş 250.
+- (cevapsız, varsayılan) Tek kesit A-A (merdiven + salon/mutfak).
+- (cevapsız, varsayılan) Bodrum tamamen toprak altı, penceresiz, kaplamasız; arazi ±0.00 düz.
 - Sayfa üstü = kuzey.
 - Pencereler eskizde yok; ÇİZGİ konsept seviyesinde yerleştirir (salon geniş doğrama, mutfak ve yatak odalarına birer pencere, banyolara küçük pencere). Kullanıcı gerekirse değiştirecek.
 
@@ -42,5 +47,4 @@ Kullanıcının tek çizgi eskiz DXF'inden (00-girdi) konsept kat planları çiz
 | 2026-11-11 | ÇİZGİ (v02 + çatı planı + kesit), HACİM (model), PAFTA (2 kat boyama) paralel; sonra DENETÇİ (özellikle tefriş) | Kullanıcı |
 
 ## Açık konular
-- Pencere ve kapı yükseklikleri: kullanıcıya soruldu (varsayılanlarla başlandı).
-- Saçak 50 cm teyidi; kesit hattı; bodrumun tamamen gömülü olup olmadığı.
+- Pencere/kapı yükseklikleri, saçak, kesit, bodrum: 5 dk içinde cevap gelmedi, varsayılanlar uygulandı; kullanıcı sonradan değiştirebilir.
