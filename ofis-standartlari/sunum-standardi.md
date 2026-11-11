@@ -6,7 +6,7 @@ Kaynak: `referans-sunumlar/` klasöründeki örnekler. Yeni örnek geldikçe gü
 ---
 
 ## 0. Font (kullanıcı kararı)
-- Tüm sunum, pafta, diyagram ve tablolarda **tek font: Calibri**. Başlıklar Calibri Bold, gövde Calibri, ince başlıklar Calibri Light.
+- Tüm sunum, pafta, diyagram ve tablolarda **tek font: Calibri**. (AutoCAD çizimleri bu kuralın dışında: orada `IFC_TEXT` / Arial Narrow kalır.) Başlıklar Calibri Bold, gövde Calibri, ince başlıklar Calibri Light.
 - Harf aralıklı başlıklar (`M İ M A R İ   K O N S E P T   P R O J E`) Calibri'de karakter aralığı açılarak yapılır.
 
 ## 1. Logo kuralı (tüm paftalar)
@@ -29,7 +29,7 @@ Kaynak: `referans-sunumlar/` klasöründeki örnekler. Yeni örnek geldikçe gü
 | **A: Konsept gri** | Mimari konsept proje sunumu, işverene tasarım sunumu (IFC'nin kendi sunumu) | `Yavuzselim-sayfalar/s07.jpg`, `s08.jpg` |
 | **B: Dokulu / pazarlama** | Satış broşürü, pazarlama kataloğu, işveren markalı tip daire/villa sayfası | `ref_kat-plani-boyama_SaltHayat-M1-villa.jpg` |
 
-Kullanıcı stili belirtmezse: konsept sunumda **A**, satış/pazarlama işinde **B**. Emin değilsen ŞEF kullanıcıya sorar.
+Kural (kullanıcı onaylı): konsept sunumda **A**, satış/pazarlama işinde **B**. İş türü belirsizse ŞEF kullanıcıya sorar.
 
 ### 2-A. Konsept gri stil
 | Öğe | İşleniş |

@@ -43,6 +43,8 @@ Ad kuralı: `<grup no>_IFC_<Eleman>`. Grup numarası elemanın türünü göster
 - Bloklar katman `0` üzerinde eklenir; blok içindeki elemanlar kendi IFC katmanlarındadır.
 
 ## Yazı ve ölçü stilleri
+Not: Sunumlarda font Calibri'dir; **AutoCAD çizimlerinde ofis stilleri korunur** (kullanıcı kararı).
+
 | Stil | Font | Kullanım |
 |---|---|---|
 | `IFC_TEXT` | Arial Narrow (ARIALN.TTF) | Genel yazılar |
@@ -61,6 +63,10 @@ Ok tipi: eğik çizgi (`_Oblique`). Yazı boyu = 2 mm × ölçek.
 `IFC_KOLTUK 3LU`, `IFC_KOLTUK TEKLI`, `IFC_COFFE TABLE`, `IFC_BAR TABURESI`, `IFC_SAKSI`, `IFC_TREE2`, `IFC_SAND2`, `ARABA_2`, `YK_140` ...
 - Pencereler **dinamik blok**, öznitelikleri: `TİP` (örn. `P-`), `YUKSEKLIK` (örn. `250`).
 - Yeni çizimde önce bu bloklar kullanılır; yoksa aynı katman mantığıyla yeni blok üretilir.
+
+## Vaziyet altlığı
+- Tercih edilen: kullanıcının verdiği halihazır harita / aplikasyon DWG-DXF'i.
+- **Bazen yalnızca PDF gelir.** Bu durumda ÇİZGİ PDF'i (vektörse vektörden, değilse görüntüden) bilinen bir ölçüyle (parsel kenarı, ölçek çubuğu, imar durumundaki ölçü) ölçekleyerek altlık DXF'i çıkarır. Ölçek referansını ve tahmini hata payını `01-cizim/OKUBENI.md` ve `proje.md` → Varsayımlar bölümüne yazar. DENETÇİ bu altlığı "doğrulanmalı" olarak işaretler.
 
 ## Zorunlu içerik
 Duvar, kolon/perde, doğrama, merdiven (yön oku), mahal adı ve alanı, kat başlığı, kotlar, ana ölçü zincirleri.
