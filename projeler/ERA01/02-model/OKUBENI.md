@@ -1,6 +1,6 @@
 # ERA01 ERA Evi: Model klasörü (HACİM)
 
-**Güncel sürüm: v03** (v02 = DENETÇİ tur 1 düzeltmeleri; v03 = tur 2: otopark yarması tabanı 167.15, belge düzeltmeleri). v01 ve v02 dosyaları klasörde duruyor.
+**Güncel sürüm: v04** (konsept renderlara göre revizyon: pencere, çatı, malzeme, bahçe; kullanıcı isteği 2026-11-11). v03 DXF'e sadık son sürümdür. v01–v03 dosyaları klasörde duruyor. Aşağıdaki tablo ve kurallar v03'ü anlatır; v04 farkları hemen altındaki bölümde.
 
 **Seviye:** KÜTLE + CEPHE · **Birim:** cm (kotlar m) · **Kapsam:** A, B, C, D blokları + arazi, tek site modeli
 
@@ -11,7 +11,8 @@ Her blok kendi grubunda (`BLOK_A` ... `BLOK_D`) yerel aks koordinatlarıyla kuru
 ## Dosyalar
 | Dosya | Açıklama |
 |---|---|
-| `ERA01_model_site_v03.skp` | **Güncel** SketchUp modeli (613.8 KB). 4 blok + arazi, 7 kayıtlı sahne, North Angle 338.71° |
+| `ERA01_model_site_v04.skp` | **Güncel (v04, konsept revizyonu)** SketchUp modeli, 611.8 KB, 11 sahne. Görseller `*_v04.png` |
+| `ERA01_model_site_v03.skp` | DXF'e sadık son sürüm. SketchUp modeli (613.8 KB). 4 blok + arazi, 7 kayıtlı sahne, North Angle 338.71° |
 | `ERA01_model_sketchup-onizleme_v03.png`, `ERA01_model_kus-bakisi_v03.png`, `ERA01_model_aksonometrik_v03.png`, `ERA01_model_perspektif_v03.png` | v03 görselleri (kat üstten görünüşleri v02 ile aynı, değişiklik yalnız arazide) |
 | `ERA01_model_site_v02.skp` | v02 modeli (611.8 KB) |
 | `ERA01_model_sketchup-onizleme_v02.png` | SketchUp'ın kendi küçük resmi (model kamerası = "Perspektif K") |
@@ -31,6 +32,81 @@ Her blok kendi grubunda (`BLOK_A` ... `BLOK_D`) yerel aks koordinatlarıyla kuru
 | `kaynak/era01_model_rapor_v03.json` (v02: `..._v02.json`, v01: `era01_model_rapor.json`) | Üretici raporu: kat, doğrama ve çatı değerleri (makine okunur) |
 
 Kontrol PNG'leri modelle aynı geometri verisinden üretildi (bulut aracı sahne başına görüntü vermiyor). SketchUp'taki görünüm `..._sketchup-onizleme_v01.png` ile doğrulandı.
+
+## v04 değişiklikleri (konsept renderlara göre)
+Kaynak: `00-girdi/render/ERA01_girdi_konsept-01..05`. Kütleler, plan izleri, kat kotları, blok konumları, arazi sınırı ve kotları v03 ile aynı (DXF). Değişen: pencere boyutları, çatılar, cephe malzemeleri, D teras pergolası ve taş kulesi, arazi malzemeleri.
+
+### Blok ve görsel eşleştirmesi
+| Görsel | Blok / bakış | Dayanak |
+|---|---|---|
+| Konsept 01 ve 03 (aynı görsel, farklı kırpım) | **D blok**, kuzey sokak cephesinden | Tek 3 katlı ve döndürülmüş blok. Bodrum sokak kotunda açık (kuzey 164.25). Üstte 1. kat terası + pergola (DXF'te 1. katın kuzeyi teras). Arkada yukarıdaki teraslarda alçak çatılı bloklar |
+| Konsept 02 | **Site** kuş bakışı, kuzeyden (alçak taraftan) | Ön planda 2 katlı blok, terasının altındaki taş duvarda havuz açıklığı = A. Arkada tek katlı alçak çatılı bloklar = B ve C. Sol önde otopark girişi ve rampa |
+| Konsept 04 | **B blok** kuzey cephesi ve terası (C de aynı dil) | Tek katlı, 20 m uzun cam cephe ve taş payeler. Taş kaideli teras ve cam korkuluk. Çok düşük eğimli, ahşap saçak altlı çatı |
+| Konsept 05 | **A blok** kuzey cephesi: zemin kat terası altında bodrum havuzu | DXF: A 1. bodrumda HAVUZ, kuzeyi açık (170.15), zemin katın kuzeyi bodrum üstü teras. 2 katlı kütle, uçlarda ahşap kaplama |
+
+ŞEF'in okumasıyla aynı: 4 numaralı görselin B olduğunu seçtim (20 m'lik tek katlı cephe B'de var; C 7.5 m genişliğinde).
+
+### Pencereler (konsept: geniş, kat yüksekliğinde cam, taş payeler)
+- Oturma ve yatma mahallerindeki pencerelerin parapeti kaldırıldı: alt kasa döşemede, üst kasa v03'teki gibi (tavan −17 cm). Kat yüksekliğinde cam (A, B, C ve D 1. kat 273 cm; D bodrum ve zemin 223 cm).
+- Genişlikler DXF genişliğinin 1.6 katı (en az +100 cm) yapıldı. Sınırlar: o mahalin cephe uzunluğu (köşelerden 30 cm), cephedeki kolonlar, komşu pencereyle en az 60 cm taş paye. Genişlik 50 cm katlarına yuvarlandı (az bileşen tipi). Pencerelerin yerleri DXF'teki mahal ve cephe düzeninde kaldı.
+- Islak hacimlerin (banyo, WC, duş, hamam, sauna) pencereleri ve 70×70 / 70×180 küçük pencereler DXF ölçüsünde kaldı. A P-01 (900×630) de değişmedi.
+- Bölme: bileşen kuralı aynı (≥100 cm bölme, 240'tan yüksekte orta kayıt), kasa 5 cm. Koyu gri metal (`M_DOGRAMA_KASA`).
+- Sonuç: 24 doğrama tipi (`DGR_<genişlik>x<yükseklik>`). Ör. A: 270/300/325→300/330→300 × 273; B: 550 × 273 (P-11); C: 650 ve 550 × 273 (bodrum); D 1. kat 350–450 × 273.
+
+### Çatılar
+| Blok | v03 | v04 |
+|---|---|---|
+| A | %15, saçak 110 cm, 20 cm paket | **%10**, saçak **150 cm**, **15 cm** paket. Mahya 181.68 (saçak 181.15 aynı). Avlu boşluğu korundu |
+| B | %21 | **%10**, saçak 150 cm, 15 cm. Mahya 178.42 |
+| C | %18.4 | **%10**, saçak 150 cm, 15 cm. Mahya 178.39 |
+| D | %17, parapet içinde | Aynı (parapet arkasında, sokaktan görünmüyor). 1. kat kuzey terasında **ahşap pergola**: 4 dikme 15×15, 2 kiriş, 13 lata (`PERGOLA_LATA` bileşeni), üst kotu 173.73. Kuzeybatı köşesinde **taş kule** 150×80, 164.15–174.25 (`KULE_TAS_D`) |
+
+Çatı malzemesi: üst ve yan yüzler `M_CATI_METAL` (koyu gri metal), alt yüz (saçak altı) `M_SACAK_ALTI_AHSAP`. Tek katı (solid), yüz malzemesi yön kuralıyla verildi.
+
+### Cephe malzemeleri (kaplama katmanı `CEPHE_KAPLAMA`)
+| Blok / kat | Uzun cepheler | Kısa (uç) cepheler |
+|---|---|---|
+| A bodrum | taş | taş |
+| A zemin, 1. kat | taş (camlar arası payeler) | ahşap dikey kaplama |
+| B tüm katlar | taş | taş |
+| C bodrum | taş | taş |
+| C zemin | ahşap | ahşap |
+| D bodrum, zemin | bej sıva | bej sıva |
+| D 1. kat + kule | taş | taş |
+
+### Malzemeler (yeni, düz renk; `ofis-standartlari/dokular/` boş olduğu için doku yok)
+| Malzeme | Renk | Kullanım |
+|---|---|---|
+| M_CEPHE_TAS | #B8A991 | Kuru taş cephe kaplaması (yatay taş), D kulesi |
+| M_CEPHE_AHSAP | #9C7352 | Dikey ahşap cephe kaplaması |
+| M_CEPHE_SIVA | #D9C8AC | Bej sıva (D bodrum ve zemin) |
+| M_CATI_METAL | #55595D | Koyu gri metal kırma çatı |
+| M_SACAK_ALTI_AHSAP | #7A5538 | Saçak altı ahşap |
+| M_AHSAP | #7A5538 | Pergola |
+| M_ARAZI_BAHCE | #94AD6E | Bahçe setlerinin üst yüzü |
+| M_ISTINAT_TAS | #B3A48E | Kademe yan yüzleri = taş istinat duvarları, otopark yarması duvarları |
+| M_PARKE_TAS | #A8A39B | Otopark yarması tabanı (parke taşı) |
+Diğerleri (`M_DOGRAMA_KASA`, `M_DOGRAMA_CAM`, `M_DOSEME*`, `M_TAVAN`, `M_IC_DUVAR`...) v03 ile aynı. `M_CEPHE_KAPLAMA`, `M_CATI` ve `M_ARAZI` artık kullanılmıyor, modelden temizlendi.
+
+### Arazi
+Kademe geometrisi, sınırlar ve kotlar v03 ile aynı. Kademe üst yüzleri bahçe (yeşil), yan yüzleri taş istinat duvarı. Otopark yarmasının tabanı parke taşı, yan duvarları taş. Bitki, ağaç ve yaya yolları modellenmedi. Renderda kullanıcı bahçe malzemelerini ve bitki kütüphanesini atar.
+
+### Sahneler ve görseller
+Sahneler: Perspektif K, Aksonometrik KB, Kus bakisi GD, **Konsept 1-3 D sokak**, **Konsept 2 site kus** (model kamerası), **Konsept 4 B teras**, **Konsept 5 A havuz**, KAT_B2/B1/00/01 ustten. North Angle 338.71°.
+Görseller (`*_v04.png`): kus-bakisi, aksonometrik, perspektif, konsept-D-sokak, konsept-site-kus, konsept-B-teras, konsept-A-havuz, sketchup-onizleme. Kontrol görselleri modelle aynı veriden ve aynı kameralardan basit gölgelemeyle üretildi (render değil).
+
+### İstatistik (v04)
+493 yaprak grup + 162 bileşen örneği (46 tanım: 24 doğrama, 21 kolon, 1 pergola latası). Toplam 7 842 yüzey, 19 758 kenar (blok başına A 2 498, B 1 870, C 848, D 1 978, arazi 648). Dosya 611.8 KB. Tüm gruplar katı, yalnız cam yüzeyleri tek yüzey.
+
+### v04 varsayımları
+1. Pencere genişletme kuralı (1.6 kat, en az +100 cm, mahal içinde, 60 cm taş paye, 50 cm modül) benim yorumum. Renderlardaki cam bölümleri birebir ölçülemiyor.
+2. Çatı eğimi %10 ve saçak 150 cm, konsept 2, 4 ve 5'ten göz kararı. Saçak kotları DXF'teki gibi; mahyalar düştü.
+3. D bloğun kırma çatısı DXF'teki gibi parapet içinde kaldı. Konsept 1/3'te görünmüyor; değiştirilmedi.
+4. Cephe malzemesi dağılımı (tablo) görsellerden yorum. C bloğun malzemesi görsellerde net değil, ahşap seçildi.
+5. Pergola ve kule ölçüleri görselden oran olarak alındı. Kulenin yeri D'nin kuzeybatı köşesi (sokak tarafı).
+6. Teras korkulukları cam (v02'den). Konsept 1/3'teki D korkuluğu ahşap/ferforje görünüyor ama cam bırakıldı.
+7. Bahçeler: kademeler yeşil, yanları taş duvar. Konseptteki eğrisel set duvarları, bitki grupları ve parke yollar modellenmedi; bunlar render aşamasına bırakıldı.
+8. Malzemeler düz renk. Ofis doku kütüphanesi boş; kullanıcı render malzemesini atayacak.
 
 ## v03 değişiklikleri (DENETÇİ tur 2)
 | Madde | Yapılan |
