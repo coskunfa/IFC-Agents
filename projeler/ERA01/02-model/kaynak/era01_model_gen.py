@@ -1,4 +1,4 @@
-# ERA01 site model spec generator (HACIM). v03: otopark yarmasi tabani 167.15 (U-v2-1). v02: DENETCI tur 1 duzeltmeleri (H3-H7, U10-U13).
+# ERA01 site model spec generator (HACIM). v04: konsept renderlara gore pencere/cati/malzeme/bahce revizyonu. v03: otopark yarmasi tabani 167.15 (U-v2-1). v02: DENETCI tur 1 duzeltmeleri (H3-H7, U10-U13).
 # Input : floors.pkl (era01_model_dxfoku.py ciktisi: kat bazinda brut alan, mahal, kolon, dograma, kapi verisi,
 #         blok yerel aks koordinatlari), terrain points (vaziyet plani kotlari).
 # Output: spec JSON (solids + component defs + instances, cm, site coords) + rapor JSON.
@@ -25,19 +25,32 @@ AVLU = ("BAHCE",)          # acik avlu (kat bahcesi): brut alanda delik
 RAIL_H = 110.0             # teras korkulugu (cam panel)
 RAIL_T = 4.0
 SKIP_TERR = {("B", "B1")}  # toprak altinda kalan cati-teras (B2 kuzey kismi)
-NORTH_ANGLE = 360.0 - 21.29  # SketchUp North Angle (vaziyet +Y den saat yonunde); gercek kuzey +Y nin 21.29 bati
+NORTH_ANGLE = 360.0 - 21.29
+# ---- v04 konsept parametreleri ----
+V4_ROOF_SLOPE = 0.10        # A, B, C: dusuk egimli metal kirma cati (konsept 2, 4, 5)
+V4_EAVE_EXTRA = 40.0        # DXF sacak tasmasina ek (110 -> 150 cm)
+V4_ROOF_T = 15.0            # ince cati profili
+V4_WIN_GROW = 1.6           # pencere genislik carpani (oda cephesi icinde)
+V4_PIER = 60.0              # pencereler arasi en az tas paye
+V4_ROOM_MARGIN = 30.0       # oda kosesine en az mesafe
+WET_KEYS = ("BANYO", "WC", "DUS", "HAMAM", "SAUNA", "LAVABO")
+# cephe malzemesi (blok, kat) -> (uzun kenar, kisa kenar); uzun = plan x yonu
+FACADE = {("A", "B1"): ("M_CEPHE_TAS", "M_CEPHE_TAS"), ("A", "ZK"): ("M_CEPHE_TAS", "M_CEPHE_AHSAP"), ("A", "K1"): ("M_CEPHE_TAS", "M_CEPHE_AHSAP"),
+          ("B", "B2"): ("M_CEPHE_TAS", "M_CEPHE_TAS"), ("B", "B1"): ("M_CEPHE_TAS", "M_CEPHE_TAS"), ("B", "ZK"): ("M_CEPHE_TAS", "M_CEPHE_TAS"),
+          ("C", "B1"): ("M_CEPHE_TAS", "M_CEPHE_TAS"), ("C", "ZK"): ("M_CEPHE_AHSAP", "M_CEPHE_AHSAP"),
+          ("D", "B1"): ("M_CEPHE_SIVA", "M_CEPHE_SIVA"), ("D", "ZK"): ("M_CEPHE_SIVA", "M_CEPHE_SIVA"), ("D", "K1"): ("M_CEPHE_TAS", "M_CEPHE_TAS")}  # SketchUp North Angle (vaziyet +Y den saat yonunde); gercek kuzey +Y nin 21.29 bati
 ISLAK = ("BANYO", "WC", "MUTFAK", "CAMASIR", "HAMAM", "SAUNA", "DUS", "HAVUZ", "LAVABO")
 # Blok kat tablosu (DXF kesitlerinden, m). ceil = tavan alt kotu (asma tavan) ; None -> L+2.90
 BLOCKS = {
     "A": dict(ort=172.95, floors=[("B1", 170.15, 173.05), ("ZK", 174.15, 177.05), ("K1", 177.65, 180.55)],
               sacak=181.15, mahya=181.88, parapet=None,
-              roof_rect=(-110, -860, 2110, 110), rot=0.0, t=(2138.0, 3365.0)),
+              roof_rect=(-150, -900, 2150, 150), rot=0.0, t=(2138.0, 3365.0)),
     "B": dict(ort=174.15, floors=[("B2", 167.15, 169.55), ("B1", 170.15, None), ("ZK", 174.15, 177.05)],
               sacak=177.65, mahya=179.17, parapet=None,
-              roof_rect=(-110, -1340, 2110, 110), rot=0.0, t=(4738.0, 3185.0)),
+              roof_rect=(-150, -1380, 2150, 150), rot=0.0, t=(4738.0, 3185.0)),
     "C": dict(ort=174.36, floors=[("B1", 170.36, 173.26), ("ZK", 174.36, 177.26)],
               sacak=177.86, mahya=178.75, parapet=None,
-              roof_rect=(-110, -860, 1910, 110), rot=90.0, t=(7338.0, 1955.0)),
+              roof_rect=(-150, -900, 1950, 150), rot=90.0, t=(7338.0, 1955.0)),
     "D": dict(ort=167.25, floors=[("B1", 164.25, 166.65), ("ZK", 167.25, 169.65), ("K1", 170.75, 173.65)],
               sacak=174.25, mahya=175.07, parapet=174.75,
               roof_rect=None, roof_size=(965, 1140), rot=None, t=None),
@@ -300,6 +313,84 @@ def win_tags(d, r, maxd=120):
     w = next((float(v) for dd, k, v in near if dd < maxd and k in ("", "GENISLIK") and re.match(r"^\d+$", v)), None)
     return tip, w, h
 
+def room_at(d, pt):
+    for nm, r in d["rooms"]:
+        if r.buffer(1).contains(Point(pt)):
+            return nm, r
+    return None, None
+
+def v4_grow(blk, fl, d, bp, r, z0, z1, Lc, top, ht, tip):
+    """Konsept v04: pencereyi oda cephesi icinde genislet, parapeti kaldir (islak hacim ve kucuk pencereler haric)."""
+    if ht is None or ht < 120 or z1 - z0 > 400:
+        return r, z0, z1, False
+    best = None
+    for e in edges_of(bp):
+        us = [to_edge(e, c)[0] for c in r.exterior.coords]; ws = [to_edge(e, c)[1] for c in r.exterior.coords]
+        if max(us) < -1 or min(us) > e["L"] + 1: continue
+        dw = abs((min(ws) + max(ws)) / 2.0 - T_EXT / 2.0)
+        if best is None or dw < best[0]: best = (dw, e, max(0.0, min(us)), min(e["L"], max(us)))
+    if best is None or best[0] > 60:
+        return r, z0, z1, False
+    _, e, ua, ub = best
+    c = (ua + ub) / 2.0
+    pin = e["a"] + c * e["d"] + 70.0 * e["n_in"]
+    nm, room = room_at(d, (pin[0], pin[1]))
+    if nm is None or any(k in asc(nm) for k in WET_KEYS):
+        return r, z0, z1, False
+    us = [to_edge(e, q)[0] for q in room.exterior.coords]
+    lo, hi = max(0.0, min(us)) + V4_ROOM_MARGIN, min(e["L"], max(us)) - V4_ROOM_MARGIN
+    # kolonlar (cephe seridinde) engel
+    for cp in d["cols"]:
+        cu = [to_edge(e, q)[0] for q in cp.exterior.coords]; cw = [to_edge(e, q)[1] for q in cp.exterior.coords]
+        if min(cw) > T_EXT + 40 or max(cw) < -5: continue
+        if max(cu) <= c: lo = max(lo, max(cu) + 10.0)
+        elif min(cu) >= c: hi = min(hi, min(cu) - 10.0)
+    w0 = ub - ua
+    wn = max(w0 * V4_WIN_GROW, w0 + 100.0)
+    a2, b2 = max(lo, c - wn / 2.0), min(hi, c + wn / 2.0)
+    a2, b2 = min(a2, ua), max(b2, ub)
+    nz0 = Lc
+    return edge_rect(e, a2, b2, 0.0, T_EXT), nz0, top, True
+
+def v4_resolve(openings, fl):
+    """Ayni kenarda genisleyen pencereler arasinda en az V4_PIER tas paye birak."""
+    idx = [i for i, o in enumerate(openings) if o[5] == fl and o[3] == "W"]
+    for i in idx:
+        for j in idx:
+            if i >= j: continue
+            ri, rj = openings[i][0], openings[j][0]
+            if ri.distance(rj) < V4_PIER and ri.buffer(V4_PIER).intersects(rj):
+                inter_z = min(openings[i][2], openings[j][2]) - max(openings[i][1], openings[j][1])
+                if inter_z <= 0: continue
+                # ortadan bol: buyuk olani kucult
+                gap = (ri.union(rj)).minimum_rotated_rectangle
+                ci, cj = ri.centroid, rj.centroid
+                dvec = np.array([cj.x - ci.x, cj.y - ci.y]); L = np.linalg.norm(dvec)
+                if L < 1: continue
+                dvec /= L
+                mid = (np.array([ci.x, ci.y]) + np.array([cj.x, cj.y])) / 2.0
+                cut = Polygon([tuple(mid + dvec * (-V4_PIER/2) + np.array([-dvec[1], dvec[0]]) * 200),
+                               tuple(mid + dvec * (V4_PIER/2) + np.array([-dvec[1], dvec[0]]) * 200),
+                               tuple(mid + dvec * (V4_PIER/2) - np.array([-dvec[1], dvec[0]]) * 200),
+                               tuple(mid + dvec * (-V4_PIER/2) - np.array([-dvec[1], dvec[0]]) * 200)])
+                for k in (i, j):
+                    o = openings[k]
+                    nr = o[0].difference(cut)
+                    nr = max(parts(nr), key=lambda q: q.area) if parts(nr) else o[0]
+                    openings[k] = (box(*nr.bounds), o[1], o[2], o[3], o[4], o[5])
+    # moduler genislik: buyutulen pencereler 50 cm katlarina (ortalanarak) indirilir -> az bilesen tipi
+    for i in idx:
+        o = openings[i]
+        if o[4] is None or o[4][1] is not None: continue
+        x0, y0, x1, y1 = o[0].bounds
+        if (x1 - x0) >= (y1 - y0):
+            w = x1 - x0; wn = max(50.0, math.floor(w / 50.0) * 50.0); cx = (x0 + x1) / 2.0
+            nr = box(cx - wn / 2.0, y0, cx + wn / 2.0, y1)
+        else:
+            w = y1 - y0; wn = max(50.0, math.floor(w / 50.0) * 50.0); cy = (y0 + y1) / 2.0
+            nr = box(x0, cy - wn / 2.0, x1, cy + wn / 2.0)
+        openings[i] = (nr, o[1], o[2], o[3], o[4], o[5])
+
 lift = {}
 TERR_FOOT = []
 for blk, B in BLOCKS.items():
@@ -347,7 +438,9 @@ for blk, B in BLOCKS.items():
                 z0, z1 = max(Lc, top - ht), top
             else:
                 z0, z1 = Lc, Lc + ht - 7.0
-            openings_all.append((r, z0, z1, "W", (tip, wt, ht, Lw), fl))
+            r, z0, z1, grown = v4_grow(blk, fl, d, brut[fl], r, z0, z1, Lc, top, ht, tip)
+            openings_all.append((r, z0, z1, "W", (tip, wt if not grown else None, ht if not grown else None, Lw), fl))
+        v4_resolve(openings_all, fl)
         # dis kapilar: kapi cizgileri dis seridi kesiyorsa
         band = brut[fl].difference(brut[fl].buffer(-30, join_style=2))
         dl = [l for l in d["doors"] if l.intersects(band)]
@@ -407,7 +500,9 @@ for blk, B in BLOCKS.items():
                     ws = [to_edge(e, c)[1] for c in pr.exterior.coords]
                     if min(ws) < 25 and max(ws) > -CEPHE - 25:
                         ops.append((min(us), max(us), z0, z1))
-            elev_panel(f"{root}/CEPHE_KAPLAMA", f"CK_{blk}_{fl}_{k_+1:02d}", "M_CEPHE_KAPLAMA", e, ua, ub, -CEPHE, 0.0, ck_z0, ck_z1, ops)
+            fm = FACADE.get((blk, fl), ("M_CEPHE_KAPLAMA", "M_CEPHE_KAPLAMA"))
+            cmat = fm[0] if abs(e["d"][0]) >= abs(e["d"][1]) else fm[1]
+            elev_panel(f"{root}/CEPHE_KAPLAMA", f"CK_{blk}_{fl}_{k_+1:02d}", cmat, e, ua, ub, -CEPHE, 0.0, ck_z0, ck_z1, ops)
         # --- ic duvarlar = brut - dis serit - mahaller - kolonlar
         inner = bp.buffer(-T_EXT, join_style=2)
         cols = unary_union(d["cols"]).intersection(bp) if d["cols"] else Polygon()
@@ -532,6 +627,10 @@ for blk, B in BLOCKS.items():
         X0, Y0, X1, Y1 = B["roof_rect"]
     # H3: ust yuz sacak ucunda sacak kotunda, mahyada mahya kotunda; paket 20 cm (duseyde)
     zt_e = zc(B["sacak"]); zr = zc(B["mahya"])
+    RT = ROOF_T
+    if blk != "D":   # v04: konsept dusuk egim, ince profil
+        RT = V4_ROOF_T
+        zr = zt_e + V4_ROOF_SLOPE * min(X1 - X0, Y1 - Y0) / 2.0
     W_, Hh = X1 - X0, Y1 - Y0
     half = min(W_, Hh) / 2.0
     slope = (zr - zt_e) / half
@@ -571,16 +670,30 @@ for blk, B in BLOCKS.items():
     for q, pl in pieces:
         rings = [list(q.exterior.coords)[:-1]] + [list(r.coords)[:-1] for r in q.interiors]
         FF.append([[vid(x, y, ztop(pl, x, y)) for x, y in ring] for ring in rings])
-        FF.append([[vid(x, y, ztop(pl, x, y) - ROOF_T) for x, y in reversed(ring)] for ring in rings])
+        FF.append([[vid(x, y, ztop(pl, x, y) - RT) for x, y in reversed(ring)] for ring in rings])
         for ring in rings:
             for i in range(len(ring)):
                 a2, b2 = ring[i], ring[(i+1) % len(ring)]
                 k = tuple(sorted([(round(a2[0], 1), round(a2[1], 1)), (round(b2[0], 1), round(b2[1], 1))]))
                 if edge_use[k] > 1: continue
                 za, zb = ztop(pl, *a2), ztop(pl, *b2)
-                FF.append([[vid(a2[0], a2[1], za - ROOF_T), vid(b2[0], b2[1], zb - ROOF_T), vid(b2[0], b2[1], zb), vid(a2[0], a2[1], za)]])
-    add(f"{root}/CATI", f"CATI_KIRMA_{blk}", "M_CATI", {"v": VV, "f": FF})
-    brep["cati"] = {"tip": "kirma (4 yon)", "sacak_ucu_kotu": B["sacak"], "mahya_kotu": B["mahya"], "egim_yuzde": round(slope*100, 1),
+                FF.append([[vid(a2[0], a2[1], za - RT), vid(b2[0], b2[1], zb - RT), vid(b2[0], b2[1], zb), vid(a2[0], a2[1], za)]])
+    add(f"{root}/CATI", f"CATI_KIRMA_{blk}", "M_CATI_METAL+M_CATI_METAL+M_SACAK_ALTI_AHSAP", {"v": VV, "f": FF})
+    if blk == "D":   # v04 konsept 1/3: 1. kat terasinda ahsap pergola + tas kule
+        pr = f"BLOK_D/D_KAT_01/PERGOLA"
+        zt = zc(170.75)
+        for k_, (px, py) in enumerate([(250, -1215), (870, -1215), (250, -30), (870, -30)]):
+            add(pr, f"PERGOLA_DIREK_{k_+1}", "M_AHSAP", plan_prism(box(px, py, px + 15, py + 15), zt, zt + 255))
+        for k_, py in enumerate([-1215, -30]):
+            add(pr, f"PERGOLA_KIRIS_{k_+1}", "M_AHSAP", plan_prism(box(245, py, 890, py + 15), zt + 255, zt + 280))
+        if "PERGOLA_LATA" not in defs:
+            sl = plan_prism(box(0, 0, 6, 1225), 0, 18); sl["m"] = "M_AHSAP"
+            defs["PERGOLA_LATA"] = {"solids": [sl], "glass": [], "info": {}}
+        for k_ in range(13):
+            insts.append({"p": pr, "n": f"PERGOLA_LATA_{k_+1:02d}", "d": "PERGOLA_LATA", "o": [rnd(262 + k_ * 50), -1222.0, rnd(zt + 280)], "x": (1, 0, 0), "y": (0, 1, 0)})
+        add("BLOK_D/D_KAT_01/CEPHE_KAPLAMA", "KULE_TAS_D", "M_CEPHE_TAS", plan_prism(box(935, -150, 1015, 0), zc(164.15), zc(174.25)))
+        TERR_FOOT.append(("D", box(935, -150, 1015, 0), zc(164.15), zc(174.25)))
+    brep["cati"] = {"tip": "kirma (4 yon)", "sacak_ucu_kotu": B["sacak"], "mahya_kotu": round(Z0 + zr / 100.0, 2), "egim_yuzde": round(slope*100, 1),
                     "sacak_izdusumu_cm": [round(W_), round(Hh)], "parapet_kotu": B["parapet"]}
     brep["ort"] = B["ort"]; brep["rot"] = round(B["rot"], 2); brep["t"] = [round(c, 1) for c in B["t"]]
     report["blocks"][blk] = brep
@@ -673,11 +786,11 @@ for L in lv:
         p = p.simplify(10)
         if p.is_empty or p.area < 2e4: continue
         nter += 1
-        add("ARAZI", f"ARAZI_KADEME_{L:.2f}_{nter:02d}", "M_ARAZI", plan_prism(p, zc(prev), zc(L)))
+        add("ARAZI", f"ARAZI_KADEME_{L:.2f}_{nter:02d}", "M_ARAZI_BAHCE+M_ISTINAT_TAS+M_ISTINAT_TAS", plan_prism(p, zc(prev), zc(L)))
     prev_reg = reg if not reg.is_empty else prev_reg
     prev = L
 yt = site_xf("B", unary_union([box(800, 835, 1200, 1046), box(770, 1046, 1230, 2300)])).intersection(PARCEL)  # cephe kaplamasi ve rampa duvarlariyla cakismaz
-add("ARAZI", "ARAZI_YARMA_TABAN_167.15", "M_ARAZI", plan_prism(yt, zc(166.00), zc(167.15)))
+add("ARAZI", "ARAZI_YARMA_TABAN_167.15", "M_PARKE_TAS+M_ISTINAT_TAS+M_ISTINAT_TAS", plan_prism(yt, zc(166.00), zc(167.15)))
 report["arazi"] = {"kademeler_m": lv, "taban_m": base, "nokta": len(pts), "tesviye_halka_noktasi": len(ring_pts),
                    "grid_cm": GS, "z_min": round(zmin, 2), "z_max": round(zmax, 2), "kademe_cismi": nter}
 spec = {"solids": solids, "defs": defs, "insts": insts,

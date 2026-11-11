@@ -10,7 +10,9 @@ outdir = sys.argv[2]
 cams = json.load(open(sys.argv[3]))
 PAL = {"M_TASIYICI": "#6E6E6E", "M_DIS_DUVAR": "#A6A6A6", "M_IC_DUVAR": "#D0D0D0", "M_CEPHE_KAPLAMA": "#E6E6E6",
        "M_DOSEME": "#8C8C8C", "M_DOSEME_KAPLAMA_KURU": "#F2F2F2", "M_DOSEME_KAPLAMA_ISLAK": "#DADDE0", "M_TAVAN": "#FAFAFA",
-       "M_DOGRAMA_KASA": "#4A4A4A", "M_DOGRAMA_CAM": "#BFC4C8", "M_MERDIVEN": "#BDBDBD", "M_CATI": "#959595", "M_ARAZI": "#C8C8C8"}
+       "M_DOGRAMA_KASA": "#4A4A4A", "M_DOGRAMA_CAM": "#BFC4C8", "M_MERDIVEN": "#BDBDBD", "M_CATI": "#959595", "M_ARAZI": "#C8C8C8",
+       "M_CEPHE_TAS": "#B8A991", "M_CEPHE_AHSAP": "#9C7352", "M_CEPHE_SIVA": "#D9C8AC", "M_CATI_METAL": "#55595D",
+       "M_SACAK_ALTI_AHSAP": "#7A5538", "M_AHSAP": "#7A5538", "M_ARAZI_BAHCE": "#94AD6E", "M_ISTINAT_TAS": "#B3A48E", "M_PARKE_TAS": "#A8A39B"}
 
 items = []
 BX = {}
@@ -52,7 +54,10 @@ for path, m, loops, alpha in items:
     if np.linalg.norm(n) < 1e-9:
         continue
     n /= np.linalg.norm(n)
-    if n[2] < -0.9:
+    if "+" in m:
+        ms = m.split("+")
+        m = ms[0] if n[2] > 0.3 else (ms[2] if n[2] < -0.3 else ms[1])
+    if n[2] < -0.9 and m not in ("M_SACAK_ALTI_AHSAP",):
         continue
     u = o[1] - o[0]; u /= np.linalg.norm(u); v = np.cross(n, u)
     to2 = lambda p: ((p - o[0]) @ u, (p - o[0]) @ v)
@@ -92,6 +97,8 @@ def render(cam, fn):
     x0, x1, y0, y1 = pp[:, 0].min(), pp[:, 0].max(), pp[:, 1].min(), pp[:, 1].max()
     s = min(Wp * 0.9 / (x1 - x0), Hp * 0.86 / (y1 - y0))
     cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+    if persp and "fov" in cam and cam.get("fixed_fov"):
+        s = (Wp / 2.0) / math.tan(math.radians(cam["fov"]) / 2.0); cx = cy = 0.0
     def scr(q):
         return np.stack([Wp/2 + (q[..., 0] - cx) * s, Hp/2 - (q[..., 1] - cy) * s + Hp*0.02, q[..., 2]], -1)
     zbuf = np.full((Hp, Wp), np.inf); img = np.ones((Hp, Wp, 3))

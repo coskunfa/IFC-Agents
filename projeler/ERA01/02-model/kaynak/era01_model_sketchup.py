@@ -1,6 +1,6 @@
 # ERA01 SketchUp kurulum kodu (Trimble SketchUp MCP build_model icinde calisir; import yok).
-# Veri (v03): era01_data_v03.png (kucuk PNG + sonuna eklenmis era01_model_pack.py metni), session_files ile okunur.
-raw = session_files.read_bytes("era01_data_v03.png")
+# Veri (v04): era01_data_v04.png (kucuk PNG + sonuna eklenmis era01_model_pack.py metni), session_files ile okunur.
+raw = session_files.read_bytes("era01_data_v04.png")
 a = raw.find(b"\nERA01DATA\n"); b = raw.find(b"\nERA01END\n")
 lines = raw[a + 11:b].decode("utf-8").split("\n")
 IN = 1.0 / 2.54
@@ -9,7 +9,11 @@ PAL = {"M_TASIYICI": (110, 110, 110, 255), "M_DIS_DUVAR": (166, 166, 166, 255), 
        "M_CEPHE_KAPLAMA": (230, 230, 230, 255), "M_DOSEME": (140, 140, 140, 255), "M_DOSEME_KAPLAMA_KURU": (242, 242, 242, 255),
        "M_DOSEME_KAPLAMA_ISLAK": (218, 221, 224, 255), "M_TAVAN": (250, 250, 250, 255), "M_DOGRAMA_KASA": (74, 74, 74, 255),
        "M_DOGRAMA_CAM": (200, 205, 210, 102), "M_MERDIVEN": (189, 189, 189, 255), "M_CATI": (149, 149, 149, 255),
-       "M_ARAZI": (200, 200, 200, 255)}
+       "M_ARAZI": (200, 200, 200, 255),
+       # v04 konsept malzemeleri (duz renk; doku kutuphanesi bos)
+       "M_CEPHE_TAS": (184, 169, 145, 255), "M_CEPHE_AHSAP": (156, 115, 82, 255), "M_CEPHE_SIVA": (217, 200, 172, 255),
+       "M_CATI_METAL": (85, 89, 93, 255), "M_SACAK_ALTI_AHSAP": (122, 85, 56, 255), "M_AHSAP": (122, 85, 56, 255),
+       "M_ARAZI_BAHCE": (148, 173, 110, 255), "M_ISTINAT_TAS": (179, 164, 142, 255), "M_PARKE_TAS": (168, 163, 155, 255)}
 MAT = {}
 for k, c in PAL.items():
     MAT[k] = get_or_create_material(k, c[0], c[1], c[2], c[3])
@@ -45,7 +49,15 @@ def fill_mesh(ents, vs, fs):
 def leaf(parent_ents, name, mat, vs, fs):
     g = Group(); parent_ents.add_group(g); g.set_name(name)
     fill_mesh(g.get_entities(), vs, fs)
-    apply_material(g, MAT[mat]); g.set_material(MAT[mat])
+    if "+" in mat:   # ust / yan / alt yuz malzemesi (normal yonune gore)
+        ms = mat.split("+")
+        for f in g.get_entities().get_faces():
+            nz = f.get_normal().z
+            m = MAT[ms[0]] if nz > 0.3 else (MAT[ms[2]] if nz < -0.3 else MAT[ms[1]])
+            f.set_front_material(m); f.set_back_material(m)
+        g.set_material(MAT[ms[0]])
+    else:
+        apply_material(g, MAT[mat]); g.set_material(MAT[mat])
     return g
 DEF = {}
 nS = nI = 0; errs = []
