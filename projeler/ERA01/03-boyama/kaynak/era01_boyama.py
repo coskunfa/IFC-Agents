@@ -93,7 +93,7 @@ def sheet_floor(k):
 
 def sheet_block(blok):
     ks = [k for k in KATLAR if k["blok"] == blok]
-    for olcek, txt in ((200, 1.6), (250, 2.0), (300, 2.4)):
+    for olcek, txt in ((150, 1.25), (200, 1.6), (250, 2.0), (300, 2.4)):
         rs = [PL.render_plan(k, olcek, txt, band=True) for k in ks]
         sizes = [plan_mm(r) for r in rs]
         gap = 12
@@ -114,7 +114,7 @@ def sheet_block(blok):
         x += w + gap
         rec(k, r, olcek, "ERA01_boyama_%s-blok-kat-planlari_v01.jpg" % blok)
     north_arrow(c, Wm - 24, 52, 7, rs[0]["north"])
-    scale_bar(c, 15, Hm - 30 - 4, olcek, 10 if olcek <= 250 else 15, 2 if olcek <= 250 else 3)
+    scale_bar(c, Wm - 15 - 62, 78, olcek, {150: 5, 200: 10, 250: 10}.get(olcek, 15), {150: 1, 200: 2, 250: 2}.get(olcek, 3))
     footer(c, Wm, Hm, BLOK_ADI[blok] + " KAT PLANLARI", "1/%d (A3)" % olcek)
     fname = "ERA01_boyama_%s-blok-kat-planlari_v01.jpg" % blok
     size = save_jpg(s, os.path.join(OUT, fname))
@@ -185,12 +185,16 @@ def sheet_vaziyet():
 
 if __name__ == "__main__":
     T0 = time.time()
-    args = set(sys.argv[1:]) or {"vaziyet", "katlar", "bloklar"}
+    args = set(a for a in sys.argv[1:] if not a.startswith("blok=")) or {"vaziyet", "katlar", "bloklar"}
+    SEC = [a.split("=")[1] for a in sys.argv[1:] if a.startswith("blok=")]
+    SEC = SEC[0] if SEC else "ABCD"
     oz = os.path.join(HERE, "era01_ozet.json")
     if os.path.exists(oz):
         OZET.update(json.load(open(oz)))
         for v in OZET.values():
             if isinstance(v, dict) and "dosyalar" in v:
+                if v.get("blok") not in SEC:
+                    continue
                 v["dosyalar"] = [d for d in v["dosyalar"] if not (
                     ("katlar" in args and "blok-kat-planlari" not in d["dosya"]) or
                     ("bloklar" in args and "blok-kat-planlari" in d["dosya"]))]
@@ -198,10 +202,11 @@ if __name__ == "__main__":
         sheet_vaziyet()
     if "katlar" in args:
         for k in KATLAR:
-            OZET.pop(k["kod"], None) if False else None
-            sheet_floor(k)
+            if k["blok"] in SEC:
+                OZET.pop(k["kod"], None)
+                sheet_floor(k)
     if "bloklar" in args:
-        for b in "ABCD":
+        for b in SEC:
             sheet_block(b)
     json.dump(OZET, open(oz, "w"), ensure_ascii=False, indent=1, default=str)
     print("bitti %.1fs" % (time.time() - T0))

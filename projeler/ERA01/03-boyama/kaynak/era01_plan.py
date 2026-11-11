@@ -537,7 +537,8 @@ def render_plan(k, olcek=100, txt=1.0, seed=11, band=True):
     ext_ = sum((r["area_r"] for r in rooms if r["kind"] == "terrace"), Decimal("0.0"))
     brut = None
     if d["brut"]:
-        brut = sum(Polygon(p).area for p in d["brut"]) / 1e4
+        bp = [Polygon(p).buffer(0) for p in d["brut"]]
+        brut = unary_union(bp).area / 1e4
     foot_area = float(foot.sum()) / (S * S) / 1e4
     surf.flush()
     import era01_ortak as _o

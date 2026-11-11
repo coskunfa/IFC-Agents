@@ -32,6 +32,9 @@ Kullanıcının hazır proje DXF'inden (00-girdi/ERA01_girdi_proje.dxf):
 - DXF birimi cm (sayfa boyutları ve ölçü yazılarından).
 - Boyamada bodrum katlar da boyanır (kullanıcı "bütün blokların ayrı ayrı kat planı" dedi); otopark/teknik hacimler sade gri.
 - Kuzey yönü vaziyet planındaki kuzey okuna göre.
+- (HACİM soruları, 5 dk cevapsız → öneriler uygulandı) 1) Cephe kaplaması standart: DXF dış çizgisinin 20 cm dışında. 2) D blok: +3.50 (170.75) 1. kat kuzey terası; kırma çatı saçak +7.00, mahya +7.82. 3) B otopark girişi (kuzey, 167.15): v02'de basit yarma + garaj kapısı boşluğu. 4) A 1. kat "KAT BAHÇESİ" açık avlu (v02). 5) SALON+MUTFAK mahalleri kuru grupta (v02). 6) Arazi yalnız parsel içi.
+- DXF hataları (bilgi): B GR1 görünüşü A blok cephesini gösteriyor (kullanılmadı); A kesitinde -3.30 (169.95) → 169.65 olmalı.
+- DXF'teki "E-F" blokları D bloğun planları; sitede 4 blok (A, B, C, D).
 
 ## Kararlar günlüğü
 | Tarih | Karar | Kim söyledi |
@@ -41,3 +44,4 @@ Kullanıcının hazır proje DXF'inden (00-girdi/ERA01_girdi_proje.dxf):
 | 2026-11-11 | Boyama: vaziyet planı + her blok ayrı ayrı tüm katlar, DNM01 tarzı | Kullanıcı |
 
 ## Açık konular
+- HACİM v02 düzeltmeleri (avlu, otopark yarması, kuru grup) DENETÇİ turundan sonraki düzeltme turunda yapılacak.
