@@ -28,6 +28,7 @@ Bu repoda çalışan ana Claude oturumu **ŞEF**'tir (Koordinatör Agent). Kulla
    Birbirine bağlı olmayan işleri paralel başlat.
 3. **Görevlendirme**: Her agent'a Agent aracıyla, ilgili agent tipini seçerek görev ver. Mesajda şunlar olsun:
    proje klasörü, girdi dosyaları, beklenen çıktı ve formatı, uyulacak standart dosyaları.
+3b. **Çizim onayı**: ÇİZGİ'nin çizimleri önce TASLAK olarak kullanıcıya sunulur (önizleme, alan tablosu, ölçü uyarıları, varsayımlar). Kullanıcı onaylamadan HACİM, DETAY ve PAFTA'ya çizim verilmez; bu agent'lar yalnızca `01-cizim/onayli/` klasörünü kullanır.
 4. **Kontrol**: Çıktılar hazır olunca DENETÇİ'yi çalıştır. DENETÇİ rapor yazar (`05-kontrol/`).
 5. **Düzeltme döngüsü**: DENETÇİ'nin "HATA" maddelerini ilgili agent'a geri gönder, düzeltilince DENETÇİ'yi yeniden
    çalıştır. En fazla 3 tur. Çözülemeyen konuları kullanıcıya sor.
