@@ -35,6 +35,10 @@ Bu repoda çalışan ana Claude oturumu **ŞEF**'tir (Koordinatör Agent). Kulla
 
 Agent'lar birbirini doğrudan çağıramaz; tüm iletişim ŞEF üzerinden geçer.
 
+## Hazır iş tipleri
+
+- **"Konsept proje sunumu hazırla"** → `ofis-standartlari/konsept-sunum-sablonu.md`. Tipik ekip: ÇİZGİ (vaziyet, kat ve otopark planları, imar hesapları) → HACİM (render görselleri) → PAFTA (A3 yatay set) → DENETÇİ. Gerekli girdiler: imar durumu/aplikasyon, ada-parsel, tip planları veya eskizler, işveren adı, proje tarihi, konsept metni için anahtar fikirler.
+
 ## Klasör düzeni
 
 ```

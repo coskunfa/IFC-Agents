@@ -8,6 +8,8 @@ Bu klasör ofisin **kalıcı hafızası**dır. Tüm agent'lar işe başlamadan �
 | `cizim-standardi.md` | ÇİZGİ, DETAY, DENETÇİ |
 | `model-standardi.md` | HACİM, DENETÇİ |
 | `sunum-standardi.md` | PAFTA, DENETÇİ |
+| `konsept-sunum-sablonu.md` | PAFTA, DENETÇİ ("konsept proje sunumu" sayfa sırası) |
+| `sablon-gorseller/` | PAFTA (arka kapak taş duvar eskizi, örnek kapak/atmosfer eskizleri) |
 | `malzeme-kutuphanesi.md` | DETAY, HACİM, PAFTA |
 | `logolar/` | PAFTA (IFC logosu) |
 | `dokular/` | PAFTA (boyama dokuları, üstten mobilya/bitki/araç) |
