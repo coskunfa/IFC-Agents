@@ -36,6 +36,8 @@ Bu repoda çalışan ana Claude oturumu **ŞEF**'tir (Koordinatör Agent). Kulla
 
 Agent'lar birbirini doğrudan çağıramaz; tüm iletişim ŞEF üzerinden geçer.
 
+**Soru zaman aşımı (kullanıcı kararı):** Bir agent'ın işi için kullanıcıya soru sorulduğunda (özellikle ÇİZGİ'nin eskiz belirsizlikleri) soruları tek mesajda, numaralı ve her biri için önerilen varsayımla birlikte sor. "5 dakika içinde cevap gelmezse önerilen varsayımlarla devam edeceğim" diye belirt ve 5 dakika sonrasına kendine hatırlatma kur (bulut oturumunda `send_later`, yoksa ScheduleWakeup/CronCreate). Hatırlatma geldiğinde cevap yoksa varsayımlarla devam et ve bunları `proje.md` → Varsayımlar bölümüne yaz. Hatırlatma aracı yoksa cevabı bekle.
+
 ## Hazır iş tipleri
 
 - **"Konsept proje sunumu hazırla"** → `ofis-standartlari/konsept-sunum-sablonu.md`. Tipik ekip: ÇİZGİ (vaziyet, kat ve otopark planları, imar hesapları) → HACİM (SketchUp modeli; renderları kullanıcı alır) → PAFTA (A3 yatay set) → DENETÇİ. Karakalem eskizler ve renderlar kullanıcıdan gelir (`00-girdi/eskiz/`, `00-girdi/render/`). Gerekli girdiler: imar durumu/aplikasyon, ada-parsel, tip planları veya eskizler, işveren adı, proje tarihi, konsept metni için anahtar fikirler.

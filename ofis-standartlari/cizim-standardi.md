@@ -83,6 +83,12 @@ Ok tipi: eğik çizgi (`_Oblique`). Yazı boyu = 2 mm × ölçek.
 - Tercih edilen: kullanıcının verdiği halihazır harita / aplikasyon DWG-DXF'i.
 - **Bazen yalnızca PDF gelir.** Bu durumda ÇİZGİ PDF'i (vektörse vektörden, değilse görüntüden) bilinen bir ölçüyle (parsel kenarı, ölçek çubuğu, imar durumundaki ölçü) ölçekleyerek altlık DXF'i çıkarır. Ölçek referansını ve tahmini hata payını `01-cizim/OKUBENI.md` ve `proje.md` → Varsayımlar bölümüne yazar. DENETÇİ bu altlığı "doğrulanmalı" olarak işaretler.
 
+## Konsept seviyesi varsayılanları (kullanıcı kararı)
+- Duvar: dış **20 cm**, iç **10 cm** (eskizde aksi belirtilmedikçe).
+- Ölçüler 5 cm'nin katı; küsurat yalnızca kullanıcı onayıyla.
+- Mobilya: IFC bloklarıyla yerleştirilir.
+- PDF: 1/100 A4 → olmazsa 1/100 A3 → olmazsa A4 ölçeksiz + çizgi ölçek.
+
 ## Zorunlu içerik
 Duvar, kolon/perde, doğrama, merdiven (yön oku), mahal adı ve alanı, kat başlığı, kotlar, ana ölçü zincirleri.
 Vaziyette ayrıca kuzey oku, cadde adları, parsel sınırı, bloklar arası mesafeler.
