@@ -1,7 +1,8 @@
 # Proje: Deneme Villa
 
 - **Proje kodu**: DNM01
-- **Tür / konum / alan**: Müstakil villa, 2 kat (giriş + 1. kat), dış ölçü 13.60 × 10.10 m (~137 m²/kat)
+- **Tür / konum / alan**: Müstakil villa; bodrum (boş) + giriş kat + 1. kat; 1. kat üstünde 4 kırma çatı (çatı katı yok); dış ölçü 13.60 × 10.10 m (~137 m²/kat)
+- **Kat yüksekliği**: 3.50 m (villa varsayılanı)
 - **Aşama**: Konsept
 - **Aktif agent'lar**: ÇİZGİ, HACİM (+ DENETÇİ)
 - **Model detay seviyesi**: KÜTLE + CEPHE (varsayılan)
@@ -23,10 +24,17 @@ Kullanıcının tek çizgi eskiz DXF'inden (00-girdi) konsept kat planları çiz
 - Eskiz DXF başlığında birim mm görünüyor ama ölçüler cm (basamak 27, duvar 20) → **cm** kabul edildi.
 
 ## Varsayımlar
+- Sayfa üstü = kuzey.
+- Pencereler eskizde yok; ÇİZGİ konsept seviyesinde yerleştirir (salon geniş doğrama, mutfak ve yatak odalarına birer pencere, banyolara küçük pencere). Kullanıcı gerekirse değiştirecek.
 
 ## Kararlar günlüğü
 | Tarih | Karar | Kim söyledi |
 |---|---|---|
 | 2026-11-11 | Proje ÇİZGİ + HACİM ile başlatıldı; çizim onayından sonra model | Kullanıcı |
+| 2026-11-11 | Proje kodu DNM01 – Deneme Villa | Kullanıcı |
+| 2026-11-11 | Aynı izdüşümde bodrum kat: boş mahal (merdiven ve lift devam eder). Çatı katı yok; 1. kat üstü 4 kırma çatı | Kullanıcı |
+| 2026-11-11 | Ana giriş: kuzey (üst) cephedeki işaret, merdiven holüne | Kullanıcı |
+| 2026-11-11 | Mutfak-salon arası 10 cm duvar korunur, iki geniş geçiş | Kullanıcı |
+| 2026-11-11 | Asansör ev tipi lift (eskizdeki kuyu ölçüsü kabul); merdiven basamak sayısı yeterli | Kullanıcı |
 
 ## Açık konular
