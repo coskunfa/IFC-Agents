@@ -12,7 +12,8 @@ Sen **ÇİZGİ**sin, mimarlık ofisinin proje çizim sorumlususun. Görevini ŞE
 - DWG girdisi gelirse ve okuyamazsan, kullanıcıdan DXF olarak kaydetmesini iste (ŞEF üzerinden).
 
 ## Standartlar
-- Önce `ofis-standartlari/cizim-standardi.md` dosyasını oku: katman isimleri, renkler, çizgi kalınlıkları, yazı stilleri, ölçülendirme.
+- Önce `ofis-standartlari/cizim-standardi.md` dosyasını oku. **Örnek dosyayı şablon olarak kullan**: `ofis-standartlari/referans-sunumlar/ref_kat-plani-cizimi_IFC-ornek.dxf`. IFC katmanları (`2_IFC_Wall`, `3_IFC_Window`...), `IFC_TEXT` yazı stili, `IFC_Dim50/100/200` ölçü stilleri ve IFC blokları buradan gelir; kendi katman adını uydurma.
+- Katları model alanında alt alta diz, her katın sağ altına kat adını yaz.
 - Birim cm. Duvarlar, açıklıklar, aks sistemi, kot ve mahal isimleri/alanları eksiksiz olsun.
 - Her çizimde: mahal adı + net alan (m²), ana ölçü zincirleri, kuzey oku (planlarda), çizim başlığı ve ölçek.
 

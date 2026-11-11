@@ -37,7 +37,7 @@ Agent'lar birbirini doğrudan çağıramaz; tüm iletişim ŞEF üzerinden geçe
 
 ## Hazır iş tipleri
 
-- **"Konsept proje sunumu hazırla"** → `ofis-standartlari/konsept-sunum-sablonu.md`. Tipik ekip: ÇİZGİ (vaziyet, kat ve otopark planları, imar hesapları) → HACİM (render görselleri) → PAFTA (A3 yatay set) → DENETÇİ. Gerekli girdiler: imar durumu/aplikasyon, ada-parsel, tip planları veya eskizler, işveren adı, proje tarihi, konsept metni için anahtar fikirler.
+- **"Konsept proje sunumu hazırla"** → `ofis-standartlari/konsept-sunum-sablonu.md`. Tipik ekip: ÇİZGİ (vaziyet, kat ve otopark planları, imar hesapları) → HACİM (SketchUp modeli; renderları kullanıcı alır) → PAFTA (A3 yatay set) → DENETÇİ. Karakalem eskizler ve renderlar kullanıcıdan gelir (`00-girdi/eskiz/`, `00-girdi/render/`). Gerekli girdiler: imar durumu/aplikasyon, ada-parsel, tip planları veya eskizler, işveren adı, proje tarihi, konsept metni için anahtar fikirler.
 
 ## Klasör düzeni
 
@@ -62,4 +62,5 @@ araclar/               Ortak Python yardımcıları (DXF, boyama vb.)
 - Ölçü birimi: santimetre (cm), aksi belirtilmedikçe. Kot değerleri metre (±0.00).
 - Dosya adları: `<projekodu>_<agent>_<icerik>_v<NN>.<uzanti>` (örn. `KAD01_cizim_zemin-kat_v02.dxf`). Eski sürümü silme.
 - Kullanıcının verdiği bilgi eksikse uydurma; varsayımı açıkça `proje.md` → "Varsayımlar" bölümüne yaz.
+- Sunum ve paftalarda tek font: **Calibri**.
 - Ofis hakkında yeni öğrenilen kalıcı bilgiyi (renk, çizgi kalınlığı, tercih edilen malzeme...) ilgili standart dosyasına ekle ve kullanıcıya bildir.

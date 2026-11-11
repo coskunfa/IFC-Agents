@@ -1,26 +1,67 @@
-# Çizim Standardı  [DOLDURULACAK: ofisin kendi katman standardı]
+# Çizim Standardı (AutoCAD / DXF)
 
-## Birim ve ölçek
-- Birim: cm. Planlar 1/100 ve 1/50, detaylar 1/20, 1/10, 1/5.
+Kaynak: `referans-sunumlar/ref_kat-plani-cizimi_IFC-ornek.dxf` (AutoCAD 2018 formatı, önizleme `..._onizleme.png`).
+ÇİZGİ ve DETAY yeni çizime başlarken **bu dosyanın katman, yazı stili, ölçü stili ve blok tanımlarını şablon olarak kullanır**
+(ezdxf ile dosyayı açıp model alanını boşaltarak, ya da tabloları kopyalayarak). Böylece katman renkleri ve stiller birebir aynı olur.
 
-## Katmanlar (varsayılan)
-| Katman | Renk (ACI) | Kalınlık | İçerik |
-|---|---|---|---|
-| A-AKS | 1 kırmızı | 0.13 | Aks çizgileri (DASHDOT) |
-| A-DUVAR | 7 | 0.50 | Kesilen duvarlar |
-| A-DUVAR-TARAMA | 8 | 0.09 | Duvar taraması |
-| A-KOLON | 7 | 0.50 | Kolon/perde |
-| A-DOGRAMA | 4 cyan | 0.25 | Kapı-pencere |
-| A-MERDIVEN | 3 | 0.25 | Merdiven |
-| A-MOBILYA | 8 | 0.13 | Mobilya, vitrifiye |
-| A-OLCU | 2 sarı | 0.13 | Ölçülendirme |
-| A-YAZI | 7 | 0.18 | Mahal adı, alan, notlar |
-| A-KOT | 6 | 0.18 | Kot işaretleri |
-| A-GORUNEN | 8 | 0.18 | Görünen çizgiler |
+## Birim ve yerleşim
+- Birim: **cm** (90'lık kapı bloğu = 90 birim). Kotlar metre (±0.00).
+- Katlar model alanında **alt alta** dizilir (alttan üste: B1, ZEMİN, 1. KAT...). Katlar arasında boşluk bırakılır, aynı X hizasında.
+- Her katın sağ altında kat adı: `ZEMİN KAT`, `1.KAT`, `B1 KAT` (MTEXT, katman `0_IFC_Stair_Text`, yükseklik 56.25).
+- Halihazır/imar haritası katmanları (`B_*`, `Y_*`, `S_*`, `EĞRİ_*`, `SINIR_*`, `N_*`, `HID_*`, `HAT_*`) haritadan gelir; **değiştirilmez**, vaziyet planında altlık olarak kalır.
 
-## Yazı
-- Font: [DOLDURULACAK] (varsayılan: Arial). Mahal adı 25 cm, alan 18 cm (1/100 için, model ölçeğinde).
-- Mahal etiketi: `MAHAL ADI` / `xx.xx m²`.
+## IFC katman sistemi
+Ad kuralı: `<grup no>_IFC_<Eleman>`. Grup numarası elemanın türünü gösterir.
+
+| Katman | Renk (ACI) | İçerik |
+|---|---|---|
+| `0_IFC_Hatch` | 250 | Genel tarama |
+| `0_IFC_Hatch_Structure` | 251 | Taşıyıcı (betonarme) tarama/dolgu |
+| `0_IFC_Area` | 100 | Mahal alan sınırı poligonları (alan hesabı için) |
+| `0_IFC_Room_Text(No)_50` / `_100` | 12 | Mahal adı / no / alan yazısı (1/50, 1/100) |
+| `0_IFC_Text_Explanation_50` / `_100` | 231 | Açıklama yazıları |
+| `0_IFC_Stair_Text` | 221 | Merdiven yazısı, kat başlıkları |
+| `0_IFC_Window_Text` | 60 | Doğrama etiketleri (blok öznitelikleri) |
+| `0_IFC_Elevation_5` | 252 | Kot işaretleri |
+| `1_IFC_Concrete_Section` | 50 | Kesilen betonarme (kolon, perde) |
+| `1_IFC_Stair` | 210 | Merdiven (çizgi kalınlığı 0.13) |
+| `1_IFC_Stair_Concrete` | 252 | Merdiven betonu (gizli çizgi) |
+| `1_IFC_Door` | 83 | Kapı |
+| `2_IFC_Wall` | 130 | Duvarlar |
+| `2_IFC_Door` | 83 | Kapı (duvar grubu) |
+| `2_IFC_Handrail` | 181 | Korkuluk / küpeşte |
+| `3_IFC_Window` | 136 | Pencere / doğrama |
+| `6_IFC_Furniture` | 35 | Mobilya |
+| `6_IFC_Furniture_WC` | 64 | Vitrifiye |
+| `6_IFC_Furniture_Wetspace` | 64 | Islak hacim donatısı |
+| `6_IFC_Furniture_MKA` | 35 | Alternatif mobilya (dondurulmuş) |
+| `6_IFC_People` | 35 | İnsan figürleri |
+| `6_IFC_Car` | 253 | Araçlar |
+| `7_IFC_Tree` | 88 | Ağaç / peyzaj |
+
+- Çizgi kalınlıkları katmanda **Default**; baskı kalınlığı renk üzerinden **plot style (CTB)** ile verilir.  [DOLDURULACAK: ofis .ctb dosyası]
+- Bloklar katman `0` üzerinde eklenir; blok içindeki elemanlar kendi IFC katmanlarındadır.
+
+## Yazı ve ölçü stilleri
+| Stil | Font | Kullanım |
+|---|---|---|
+| `IFC_TEXT` | Arial Narrow (ARIALN.TTF) | Genel yazılar |
+| `IFC_TEXT_DIM` | romans.shx | Ölçü yazıları |
+
+| Ölçü stili | Yazı/ok boyu | Ölçek |
+|---|---|---|
+| `IFC_Dim50` | 10 | 1/50 |
+| `IFC_Dim100` | 20 | 1/100 |
+| `IFC_Dim200` | 40 | 1/200 |
+| `IFC_Dim200_2` | yazı 80, ok yok | 1/200 büyük yazı |
+Ok tipi: eğik çizgi (`_Oblique`). Yazı boyu = 2 mm × ölçek.
+
+## Blok kütüphanesi (örnek dosyada mevcut)
+`IFC_DOOR_90`, `IFC_SURGU KAPI_80`, `BALKON KAPI_90`, `IFC_KLOZET`, `IFC_VITRA_DOLAPLI LAVABO_53X60`, `IFC_EVYE_1.5`,
+`IFC_KOLTUK 3LU`, `IFC_KOLTUK TEKLI`, `IFC_COFFE TABLE`, `IFC_BAR TABURESI`, `IFC_SAKSI`, `IFC_TREE2`, `IFC_SAND2`, `ARABA_2`, `YK_140` ...
+- Pencereler **dinamik blok**, öznitelikleri: `TİP` (örn. `P-`), `YUKSEKLIK` (örn. `250`).
+- Yeni çizimde önce bu bloklar kullanılır; yoksa aynı katman mantığıyla yeni blok üretilir.
 
 ## Zorunlu içerik
-Kuzey oku, ölçek, çizim başlığı, aks balonları, kesit işaretleri, kotlar.
+Duvar, kolon/perde, doğrama, merdiven (yön oku), mahal adı ve alanı, kat başlığı, kotlar, ana ölçü zincirleri.
+Vaziyette ayrıca kuzey oku, cadde adları, parsel sınırı, bloklar arası mesafeler.

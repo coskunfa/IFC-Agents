@@ -5,6 +5,10 @@ Kaynak: `referans-sunumlar/` klasöründeki örnekler. Yeni örnek geldikçe gü
 
 ---
 
+## 0. Font (kullanıcı kararı)
+- Tüm sunum, pafta, diyagram ve tablolarda **tek font: Calibri**. Başlıklar Calibri Bold, gövde Calibri, ince başlıklar Calibri Light.
+- Harf aralıklı başlıklar (`M İ M A R İ   K O N S E P T   P R O J E`) Calibri'de karakter aralığı açılarak yapılır.
+
 ## 1. Logo kuralı (tüm paftalar)
 
 - Sağ üst köşede logo bloğu; solunda sayfa kenar boşluğundan logoya kadar uzanan **ince yatay çizgi** (koyu gri, ~1 pt).
@@ -75,7 +79,7 @@ Kullanıcı notu: *"Kat planı boyamasının bitmiş hali bunun gibi olmasını 
 - Dikey (portre) A serisi oranı (1:1.414). Referans: 1414×2000 px. Baskı için A3 dikey (tahmin).
 - Beyaz zemin, geniş kenar boşlukları. Bir sayfada birden fazla kat planı kademeli yerleşebilir
   (biri sol üstte, diğeri sağ altta; mahal listeleri boş kalan köşelerde).
-- Font (tahmin): ince/regular grotesk sans-serif (Franklin Gothic Book / Libre Franklin benzeri).  [DOLDURULACAK: kesin font]
+- Font: **Calibri** (bkz. §0).
 
 ---
 
