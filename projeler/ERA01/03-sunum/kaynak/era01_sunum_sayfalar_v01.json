@@ -1,0 +1,164 @@
+[
+ [
+  1,
+  "KAPAK",
+  "Konsept görsel (sol 2/3, sağ kenarı beyaza eriyen), işveren / proje adı / tarih",
+  "G01 kapak: 290 × 200 mm (1.45 : 1)"
+ ],
+ [
+  2,
+  "İÇİNDEKİLER",
+  "Dikey başlık + bölüm listesi",
+  "-"
+ ],
+ [
+  3,
+  "PROJE BİLGİLERİ",
+  "Proje alanı görsel yer tutucusu, proje bilgileri, konsept metni [DOLDURULACAK]",
+  "G00 proje alanı (yer tutucu): 290 × 225 mm (1.29 : 1)"
+ ],
+ [
+  4,
+  "VAZİYET PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_vaziyet_v02.jpg",
+  "-"
+ ],
+ [
+  5,
+  "SİTE GÖRSELİ (KUŞ BAKIŞI)",
+  "Sayfa genişliğinde görsel bandı",
+  "G02 site: 420 × 193.5 mm (2.17 : 1)"
+ ],
+ [
+  6,
+  "A BLOK: GÖRSEL",
+  "Blok görseli + 1BK+Z+1N = 3 KAT, toplam kapalı alan 677.04 m²",
+  "G03 A blok: 420 × 193.5 mm (2.17 : 1)"
+ ],
+ [
+  7,
+  "A BLOK: KAT PLANLARI (TOPLU)",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_A-blok-kat-planlari_v03.jpg",
+  "-"
+ ],
+ [
+  8,
+  "A BLOK: 1. BODRUM KAT PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_A-blok-1-bodrum_v02.jpg",
+  "-"
+ ],
+ [
+  9,
+  "A BLOK: ZEMİN KAT PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_A-blok-zemin-kat_v02.jpg",
+  "-"
+ ],
+ [
+  10,
+  "A BLOK: 1. KAT PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_A-blok-1-kat_v03.jpg",
+  "-"
+ ],
+ [
+  11,
+  "B BLOK: GÖRSEL",
+  "Blok görseli + 2BK+Z = 3 KAT, toplam kapalı alan 954.12 m²",
+  "G04 B blok: 420 × 193.5 mm (2.17 : 1)"
+ ],
+ [
+  12,
+  "B BLOK: KAT PLANLARI (TOPLU)",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_B-blok-kat-planlari_v02.jpg",
+  "-"
+ ],
+ [
+  13,
+  "B BLOK: 2. BODRUM KAT PLANI (OTOPARK)",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_B-blok-2-bodrum_v02.jpg",
+  "-"
+ ],
+ [
+  14,
+  "B BLOK: 1. BODRUM KAT PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_B-blok-1-bodrum_v02.jpg",
+  "-"
+ ],
+ [
+  15,
+  "B BLOK: ZEMİN KAT PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_B-blok-zemin-kat_v02.jpg",
+  "-"
+ ],
+ [
+  16,
+  "C BLOK: GÖRSEL",
+  "Blok görseli + 1BK+Z = 2 KAT, toplam kapalı alan 270.00 m²",
+  "G05 C blok: 420 × 193.5 mm (2.17 : 1)"
+ ],
+ [
+  17,
+  "C BLOK: KAT PLANLARI (TOPLU)",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_C-blok-kat-planlari_v02.jpg",
+  "-"
+ ],
+ [
+  18,
+  "C BLOK: 1. BODRUM KAT PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_C-blok-1-bodrum_v02.jpg",
+  "-"
+ ],
+ [
+  19,
+  "C BLOK: ZEMİN KAT PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_C-blok-zemin-kat_v02.jpg",
+  "-"
+ ],
+ [
+  20,
+  "D BLOK: GÖRSEL",
+  "Blok görseli + 1BK+Z+1N = 3 KAT, toplam kapalı alan 460.02 m²",
+  "G06 D blok: 420 × 193.5 mm (2.17 : 1)"
+ ],
+ [
+  21,
+  "D BLOK: KAT PLANLARI (TOPLU)",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_D-blok-kat-planlari_v03.jpg",
+  "-"
+ ],
+ [
+  22,
+  "D BLOK: 1. BODRUM KAT PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_D-blok-1-bodrum_v02.jpg",
+  "-"
+ ],
+ [
+  23,
+  "D BLOK: ZEMİN KAT PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_D-blok-zemin-kat_v02.jpg",
+  "-"
+ ],
+ [
+  24,
+  "D BLOK: 1. KAT PLANI",
+  "Pafta (PAFTA): 03-boyama/ERA01_boyama_D-blok-1-kat_v02.jpg",
+  "-"
+ ],
+ [
+  25,
+  "ALAN TABLOSU",
+  "Blok/kat net, açık ve brüt alanları; blok toplamları, genel toplam, zemin altı/üstü özeti",
+  "-"
+ ],
+ [
+  26,
+  "ATMOSFER ESKİZİ",
+  "Tam sayfa karakalem eskiz (yer tutucu)",
+  "G07 eskiz (yer tutucu): 420 × 297 mm (tam sayfa)"
+ ],
+ [
+  27,
+  "ARKA KAPAK",
+  "Taş duvar eskizi, IFC logosu, iletişim (ofis sabit sayfası)",
+  "-"
+ ]
+]

@@ -1,0 +1,176 @@
+[
+ {
+  "file": "kus-bakisi.png",
+  "name": "Kus bakisi GD",
+  "eye": [
+   17000,
+   -5500,
+   9000
+  ],
+  "target": [
+   6000,
+   4200,
+   900
+  ],
+  "persp": true,
+  "title": "ERA01 - Kus bakisi (guneydogu)",
+  "w": 16,
+  "h": 10
+ },
+ {
+  "file": "aksonometrik.png",
+  "name": "Aksonometrik KB",
+  "eye": [
+   -42000,
+   47400,
+   49300
+  ],
+  "target": [
+   6000,
+   4200,
+   900
+  ],
+  "persp": true,
+  "title": "ERA01 - Aksonometrik (kuzeybati, alcak taraf)",
+  "w": 16,
+  "h": 10,
+  "not": "render icin uzak goz noktali perspektif (paralel izdusume yakin); SketchUp sahnesi paralel",
+  "edge_tol": 25
+ },
+ {
+  "file": "perspektif.png",
+  "name": "Perspektif K",
+  "eye": [
+   9500,
+   13500,
+   2600
+  ],
+  "target": [
+   6000,
+   3500,
+   900
+  ],
+  "persp": true,
+  "title": "ERA01 - Perspektif (kuzeyden)",
+  "w": 16,
+  "h": 10
+ },
+ {
+  "file": "kat-b2.png",
+  "name": "KAT_B2 ustten",
+  "eye": [
+   6000,
+   4300,
+   9000
+  ],
+  "target": [
+   6000,
+   4300,
+   0
+  ],
+  "up": [
+   0,
+   1,
+   0
+  ],
+  "persp": false,
+  "hide": [
+   "KAT_B1",
+   "KAT_00",
+   "KAT_01",
+   "KAT_CATI",
+   "TAVAN",
+   "ARAZI"
+  ],
+  "title": "B blok 2. bodrum (-7.00) ustten",
+  "w": 16,
+  "h": 11
+ },
+ {
+  "file": "kat-b1.png",
+  "name": "KAT_B1 ustten",
+  "eye": [
+   6000,
+   4300,
+   9000
+  ],
+  "target": [
+   6000,
+   4300,
+   0
+  ],
+  "up": [
+   0,
+   1,
+   0
+  ],
+  "persp": false,
+  "hide": [
+   "KAT_00",
+   "KAT_01",
+   "KAT_CATI",
+   "TAVAN",
+   "ARAZI"
+  ],
+  "title": "1. bodrum katlar ustten (A, B, C, D)",
+  "w": 16,
+  "h": 11
+ },
+ {
+  "file": "kat-00.png",
+  "name": "KAT_00 ustten",
+  "eye": [
+   6000,
+   4300,
+   9000
+  ],
+  "target": [
+   6000,
+   4300,
+   0
+  ],
+  "up": [
+   0,
+   1,
+   0
+  ],
+  "persp": false,
+  "hide": [
+   "KAT_01",
+   "KAT_CATI",
+   "TAVAN",
+   "ARAZI"
+  ],
+  "title": "Zemin katlar ustten",
+  "w": 16,
+  "h": 11
+ },
+ {
+  "file": "kat-01.png",
+  "name": "KAT_01 ustten",
+  "eye": [
+   6000,
+   4300,
+   9000
+  ],
+  "target": [
+   6000,
+   4300,
+   0
+  ],
+  "up": [
+   0,
+   1,
+   0
+  ],
+  "persp": false,
+  "hide": [
+   "KAT_CATI",
+   "TAVAN",
+   "ARAZI"
+  ],
+  "title": "1. katlar (A, D) ustten",
+  "w": 16,
+  "h": 11
+ }
+]

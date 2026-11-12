@@ -18,7 +18,7 @@ Kaynak: `referans-sunumlar/` klasöründeki örnekler. Yeni örnek geldikçe gü
 - **Konsept proje sunumlarında** (IFC'nin kendi sunumu) düzen farklıdır: IFC logosu sol altta, işveren adı sol üstte yazı olarak. Bkz. `konsept-sunum-sablonu.md`.
 - Referans dosyalardaki **Salt Hayat logosu yalnızca o projeye aittir**; başka projede asla kullanılmaz.
   Referansı stil örneği olarak kullan, logoyu ve proje adını taşıma.
-- İşveren logosu proje klasöründe `00-girdi/logo/` altında beklenir; yoksa ŞEF kullanıcıya sorar.
+- İşveren logosu proje klasöründe `01-girdi/logo/` altında beklenir; yoksa ŞEF kullanıcıya sorar.
 
 ---
 
@@ -46,7 +46,7 @@ Kural (kullanıcı onaylı): konsept sunumda **A**, satış/pazarlama işinde **
 
 ### Boyama yöntemi (ofis pratiği)
 - Ofis boyamaları **PowerPoint üzerinde** yapıyor: mahal dolgularında **gradyan dolgu**, yumuşak gölge, saydamlık ve doku dolguları.
-- PAFTA da aynı etkiyi verir: düz dolgu yerine hafif gradyan (aynı rengin %5–10 açık/koyu tonları arasında), objelerin altında yumuşak gölge (bulanık, %20–30 opak, hafif aşağı-sağa kayık), saydam doku katmanları.
+- GRAFİKER da aynı etkiyi verir: düz dolgu yerine hafif gradyan (aynı rengin %5–10 açık/koyu tonları arasında), objelerin altında yumuşak gölge (bulanık, %20–30 opak, hafif aşağı-sağa kayık), saydam doku katmanları.
 - Çıktı PPTX olacaksa boyama nesneleri mümkün olduğunca **düzenlenebilir PowerPoint şekli** olarak kalır (gradyan dolgulu şekiller); tümüyle tek bir resme gömülmez. Böylece ofis üzerinde düzeltme yapabilir.
 
 ### 2-B. Dokulu / pazarlama stili
@@ -93,7 +93,7 @@ Kullanıcı notu: *"Kat planı boyamasının bitmiş hali bunun gibi olmasını 
 Referans: `referans-sunumlar/ref_vaziyet-plani-boyama_SaltHayat-site.jpg`
 
 ### Grafik dil: render tabanlı kuş bakışı
-- Zemin görseli: **3D render kuş bakışı** (HACİM modeli + render) ya da fotogerçekçi doku montajı. Yoğun çevre bağlamı
+- Zemin görseli: **3D render kuş bakışı** (MODELCİ modeli + render) ya da fotogerçekçi doku montajı. Yoğun çevre bağlamı
   (orman, arazi) gösterilir; kenarlara doğru **koyu vinyet** ile odak proje alanında kalır.
 - Yapılar gri çatılı, gölgeli; havuzlar turkuaz; yollar açık bej/gri; parsel sınırları ince yeşil çit/bitki.
 

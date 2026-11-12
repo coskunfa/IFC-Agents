@@ -1,19 +1,19 @@
 # Ofis Standartları
 
-Bu klasör ofisin **kalıcı hafızası**dır. Tüm agent'lar işe başlamadan önce burayı okur.
-İçerik zamanla kullanıcının verdiği bilgilerle doldurulacaktır. Şu an `[DOLDURULACAK]` yazan yerler varsayılan değerdir.
+Bu klasör ofisin **kalıcı hafızası**dır. Üstünde `ANAYASA.md` vardır; standartlar anayasaya aykırı olamaz.
+`[DOLDURULACAK]` = kullanıcı henüz karar vermedi · `(öneri)` = onay bekleyen değer.
 
 | Dosya | Kim kullanır |
 |---|---|
-| `cizim-standardi.md` | ÇİZGİ, DETAY, DENETÇİ |
-| `model-standardi.md` | HACİM, DENETÇİ |
-| `sunum-standardi.md` | PAFTA, SUNUM, DENETÇİ |
-| `tefris-kurallari.md` | PAFTA, DENETÇİ (mahal işlevleri, mobilya ölçüleri) |
-| `konsept-sunum-sablonu.md` | SUNUM, DENETÇİ ("konsept proje sunumu" sayfa sırası) |
-| `sablon-gorseller/` | PAFTA (arka kapak taş duvar eskizi, örnek kapak/atmosfer eskizleri) |
-| `malzeme-kutuphanesi.md` | DETAY, HACİM, PAFTA |
-| `logolar/` | PAFTA (IFC logosu) |
-| `dokular/` | PAFTA (boyama dokuları, üstten mobilya/bitki/araç) |
-| `referans-sunumlar/` | PAFTA, DENETÇİ (önceki projelerden örnek boyama, diyagram, pafta, model görüntüsü) |
+| `mekan-standartlari.md` | ANALİZ, PROJECİ, GRAFİKER, HESAPÇI, DENETÇİ (proje tipine göre mahal alanları, tefriş, otopark, kat yükseklikleri, alan tanımları) |
+| `cizim-standardi.md` | PROJECİ, HESAPÇI, DENETÇİ |
+| `model-standardi.md` | MODELCİ, DENETÇİ (M1/M2/M3, A0/A1/A2) |
+| `sunum-standardi.md` | GRAFİKER, SUNUM, DENETÇİ |
+| `konsept-sunum-sablonu.md` | SUNUM, DENETÇİ |
+| `malzeme-kutuphanesi.md` | HESAPÇI, MODELCİ, GRAFİKER |
+| `cad/` | PROJECİ (CTB çizgi kalınlıkları) |
+| `logolar/`, `dokular/`, `sablon-gorseller/` | GRAFİKER, SUNUM |
+| `referans-sunumlar/` | GRAFİKER, SUNUM, DENETÇİ |
+| `fontlar/` | GRAFİKER, SUNUM (kullanıcı Calibri dosyalarını buraya koyar) |
 
 **Referans dosyası eklerken**, dosya adına ne olduğunu yazın: `ref_kat-plani-boyama_ProjeX.pdf`, `ref_diyagram_sirkulasyon.png` gibi.

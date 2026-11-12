@@ -1,0 +1,1104 @@
+{
+ "blocks": {
+  "A": {
+   "kat": [
+    {
+     "kat": "B1",
+     "kot": 170.15,
+     "ust_kat_kotu": 174.15,
+     "kat_yuksekligi_cm": 400,
+     "tavan_kotu": 173.05,
+     "net_yukseklik_cm": 290,
+     "brut_m2": 362.0,
+     "mahal": 11,
+     "merdiven": {
+      "riht": 17.4,
+      "adet": 23,
+      "kol": 1
+     }
+    },
+    {
+     "kat": "ZK",
+     "kot": 174.15,
+     "ust_kat_kotu": 177.65,
+     "kat_yuksekligi_cm": 350,
+     "tavan_kotu": 177.05,
+     "net_yukseklik_cm": 290,
+     "brut_m2": 170.0,
+     "mahal": 15,
+     "merdiven": {
+      "riht": 17.5,
+      "adet": 20,
+      "kol": 1
+     }
+    },
+    {
+     "kat": "K1",
+     "kot": 177.65,
+     "ust_kat_kotu": 181.02,
+     "kat_yuksekligi_cm": 337,
+     "tavan_kotu": 180.55,
+     "net_yukseklik_cm": 290,
+     "brut_m2": 145.0,
+     "mahal": 10,
+     "merdiven": null
+    }
+   ],
+   "dograma": [
+    {
+     "kat": "B1",
+     "tip": "P-02",
+     "bilesen": "DGR_500x273",
+     "genislik": 500,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.15,
+     "ust_kot": 172.88
+    },
+    {
+     "kat": "B1",
+     "tip": "P-02",
+     "bilesen": "DGR_450x273",
+     "genislik": 450,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.15,
+     "ust_kot": 172.88
+    },
+    {
+     "kat": "B1",
+     "tip": "P-03",
+     "bilesen": "DGR_350x273",
+     "genislik": 350,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.15,
+     "ust_kot": 172.88
+    },
+    {
+     "kat": "B1",
+     "tip": "P-03",
+     "bilesen": "DGR_300x273",
+     "genislik": 300,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.15,
+     "ust_kot": 172.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-08",
+     "bilesen": "DGR_70x70",
+     "genislik": 70,
+     "yukseklik": 70,
+     "parapet_cm": 203,
+     "ust_cm": 273,
+     "alt_kot": 176.18,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-08",
+     "bilesen": "DGR_70x70",
+     "genislik": 70,
+     "yukseklik": 70,
+     "parapet_cm": 203,
+     "ust_cm": 273,
+     "alt_kot": 176.18,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-04",
+     "bilesen": "DGR_300x273",
+     "genislik": 300,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-01",
+     "bilesen": "DGR_900x630",
+     "genislik": 900,
+     "yukseklik": 623,
+     "parapet_cm": 0,
+     "ust_cm": 623,
+     "alt_kot": 174.15,
+     "ust_kot": 180.38
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-08",
+     "bilesen": "DGR_70x70",
+     "genislik": 70,
+     "yukseklik": 70,
+     "parapet_cm": 203,
+     "ust_cm": 273,
+     "alt_kot": 176.18,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-04",
+     "bilesen": "DGR_250x273",
+     "genislik": 250,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-04",
+     "bilesen": "DGR_250x273",
+     "genislik": 250,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-08",
+     "bilesen": "DGR_70x70",
+     "genislik": 70,
+     "yukseklik": 70,
+     "parapet_cm": 203,
+     "ust_cm": 273,
+     "alt_kot": 176.18,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-08",
+     "bilesen": "DGR_70x70",
+     "genislik": 70,
+     "yukseklik": 70,
+     "parapet_cm": 203,
+     "ust_cm": 273,
+     "alt_kot": 176.18,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-04",
+     "bilesen": "DGR_300x273",
+     "genislik": 300,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "K1",
+     "tip": "P-08",
+     "bilesen": "DGR_70x70",
+     "genislik": 70,
+     "yukseklik": 70,
+     "parapet_cm": 203,
+     "ust_cm": 273,
+     "alt_kot": 179.68,
+     "ust_kot": 180.38
+    },
+    {
+     "kat": "K1",
+     "tip": "P-08",
+     "bilesen": "DGR_70x70",
+     "genislik": 70,
+     "yukseklik": 70,
+     "parapet_cm": 203,
+     "ust_cm": 273,
+     "alt_kot": 179.68,
+     "ust_kot": 180.38
+    },
+    {
+     "kat": "K1",
+     "tip": "P-05",
+     "bilesen": "DGR_200x273",
+     "genislik": 200,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 177.65,
+     "ust_kot": 180.38
+    },
+    {
+     "kat": "K1",
+     "tip": "P-07",
+     "bilesen": "DGR_250x273",
+     "genislik": 250,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 177.65,
+     "ust_kot": 180.38
+    },
+    {
+     "kat": "K1",
+     "tip": "P-ETIKETSIZ",
+     "bilesen": "DGR_300x273",
+     "genislik": 300,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 177.65,
+     "ust_kot": 180.38
+    },
+    {
+     "kat": "K1",
+     "tip": "P-04",
+     "bilesen": "DGR_300x273",
+     "genislik": 300,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 177.65,
+     "ust_kot": 180.38
+    },
+    {
+     "kat": "K1",
+     "tip": "P-10",
+     "bilesen": "DGR_250x273",
+     "genislik": 250,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 177.65,
+     "ust_kot": 180.38
+    },
+    {
+     "kat": "K1",
+     "tip": "P-06",
+     "bilesen": "DGR_451x170",
+     "genislik": 451,
+     "yukseklik": 170,
+     "parapet_cm": 103,
+     "ust_cm": 273,
+     "alt_kot": 178.68,
+     "ust_kot": 180.38
+    },
+    {
+     "kat": "K1",
+     "tip": "P-08",
+     "bilesen": "DGR_70x70",
+     "genislik": 70,
+     "yukseklik": 70,
+     "parapet_cm": 203,
+     "ust_cm": 273,
+     "alt_kot": 179.68,
+     "ust_kot": 180.38
+    },
+    {
+     "kat": "K1",
+     "tip": "P-04",
+     "bilesen": "DGR_300x273",
+     "genislik": 300,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 177.65,
+     "ust_kot": 180.38
+    }
+   ],
+   "uyari": [
+    "K1: etiketsiz dograma 280 kabul edildi [1020, -415, 1030, -40]"
+   ],
+   "cati": {
+    "tip": "kirma (4 yon)",
+    "sacak_ucu_kotu": 181.15,
+    "mahya_kotu": 181.68,
+    "egim_yuzde": 10.0,
+    "sacak_izdusumu_cm": [
+     2300,
+     1050
+    ],
+    "parapet_kotu": null
+   },
+   "ort": 172.95,
+   "rot": 0.0,
+   "t": [
+    2138.0,
+    3365.0
+   ]
+  },
+  "B": {
+   "kat": [
+    {
+     "kat": "B2",
+     "kot": 167.15,
+     "ust_kat_kotu": 170.15,
+     "kat_yuksekligi_cm": 300,
+     "tavan_kotu": 169.55,
+     "net_yukseklik_cm": 240,
+     "brut_m2": 409.0,
+     "mahal": 5,
+     "merdiven": {
+      "riht": 17.6,
+      "adet": 17,
+      "kol": 1
+     }
+    },
+    {
+     "kat": "B1",
+     "kot": 170.15,
+     "ust_kat_kotu": 174.15,
+     "kat_yuksekligi_cm": 400,
+     "tavan_kotu": 173.05,
+     "net_yukseklik_cm": 290,
+     "brut_m2": 301.7,
+     "mahal": 12,
+     "merdiven": {
+      "riht": 17.4,
+      "adet": 23,
+      "kol": 2
+     }
+    },
+    {
+     "kat": "ZK",
+     "kot": 174.15,
+     "ust_kat_kotu": 177.52,
+     "kat_yuksekligi_cm": 337,
+     "tavan_kotu": 177.05,
+     "net_yukseklik_cm": 290,
+     "brut_m2": 243.4,
+     "mahal": 8,
+     "merdiven": null
+    }
+   ],
+   "dograma": [
+    {
+     "kat": "B2",
+     "tip": "GARAJ",
+     "bilesen": "DGR_GARAJ_400x230",
+     "genislik": 400,
+     "yukseklik": 230,
+     "parapet_cm": 0,
+     "ust_cm": 230,
+     "alt_kot": 167.15,
+     "ust_kot": 169.45
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-12",
+     "bilesen": "DGR_250x273",
+     "genislik": 250,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-14",
+     "bilesen": "DGR_100x273",
+     "genislik": 100,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-13",
+     "bilesen": "DGR_100x273",
+     "genislik": 100,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-12",
+     "bilesen": "DGR_300x273",
+     "genislik": 300,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-12",
+     "bilesen": "DGR_300x273",
+     "genislik": 300,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-11",
+     "bilesen": "DGR_550x273",
+     "genislik": 550,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-11",
+     "bilesen": "DGR_550x273",
+     "genislik": 550,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-11",
+     "bilesen": "DGR_550x273",
+     "genislik": 550,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-14",
+     "bilesen": "DGR_150x273",
+     "genislik": 150,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-13",
+     "bilesen": "DGR_150x273",
+     "genislik": 150,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.15,
+     "ust_kot": 176.88
+    }
+   ],
+   "uyari": [],
+   "cati": {
+    "tip": "kirma (4 yon)",
+    "sacak_ucu_kotu": 177.65,
+    "mahya_kotu": 178.42,
+    "egim_yuzde": 10.0,
+    "sacak_izdusumu_cm": [
+     2300,
+     1530
+    ],
+    "parapet_kotu": null
+   },
+   "ort": 174.15,
+   "rot": 0.0,
+   "t": [
+    4738.0,
+    3185.0
+   ]
+  },
+  "C": {
+   "kat": [
+    {
+     "kat": "B1",
+     "kot": 170.36,
+     "ust_kat_kotu": 174.36,
+     "kat_yuksekligi_cm": 400,
+     "tavan_kotu": 173.26,
+     "net_yukseklik_cm": 290,
+     "brut_m2": 135.0,
+     "mahal": 5,
+     "merdiven": {
+      "riht": 17.4,
+      "adet": 23,
+      "kol": 2
+     }
+    },
+    {
+     "kat": "ZK",
+     "kot": 174.36,
+     "ust_kat_kotu": 177.73,
+     "kat_yuksekligi_cm": 337,
+     "tavan_kotu": 177.26,
+     "net_yukseklik_cm": 290,
+     "brut_m2": 135.0,
+     "mahal": 5,
+     "merdiven": null
+    }
+   ],
+   "dograma": [
+    {
+     "kat": "B1",
+     "tip": "P-17",
+     "bilesen": "DGR_550x273",
+     "genislik": 550,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.36,
+     "ust_kot": 173.09
+    },
+    {
+     "kat": "B1",
+     "tip": "P-16",
+     "bilesen": "DGR_650x273",
+     "genislik": 650,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.36,
+     "ust_kot": 173.09
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-04",
+     "bilesen": "DGR_300x273",
+     "genislik": 300,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.36,
+     "ust_kot": 177.09
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-21",
+     "bilesen": "DGR_450x273",
+     "genislik": 450,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.36,
+     "ust_kot": 177.09
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-14",
+     "bilesen": "DGR_200x273",
+     "genislik": 200,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.36,
+     "ust_kot": 177.09
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-18",
+     "bilesen": "DGR_400x273",
+     "genislik": 400,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.36,
+     "ust_kot": 177.09
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-21",
+     "bilesen": "DGR_450x273",
+     "genislik": 450,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 174.36,
+     "ust_kot": 177.09
+    }
+   ],
+   "uyari": [
+    "ZK: P-20 etiket genisligi 260, cizim 77: atlandi"
+   ],
+   "cati": {
+    "tip": "kirma (4 yon)",
+    "sacak_ucu_kotu": 177.86,
+    "mahya_kotu": 178.39,
+    "egim_yuzde": 10.0,
+    "sacak_izdusumu_cm": [
+     2100,
+     1050
+    ],
+    "parapet_kotu": null
+   },
+   "ort": 174.36,
+   "rot": 90.0,
+   "t": [
+    7338.0,
+    1955.0
+   ]
+  },
+  "D": {
+   "kat": [
+    {
+     "kat": "B1",
+     "kot": 164.25,
+     "ust_kat_kotu": 167.25,
+     "kat_yuksekligi_cm": 300,
+     "tavan_kotu": 166.65,
+     "net_yukseklik_cm": 240,
+     "brut_m2": 112.5,
+     "mahal": 9,
+     "merdiven": null
+    },
+    {
+     "kat": "ZK",
+     "kot": 167.25,
+     "ust_kat_kotu": 170.75,
+     "kat_yuksekligi_cm": 350,
+     "tavan_kotu": 169.65,
+     "net_yukseklik_cm": 240,
+     "brut_m2": 217.7,
+     "mahal": 18,
+     "merdiven": null
+    },
+    {
+     "kat": "K1",
+     "kot": 170.75,
+     "ust_kat_kotu": 174.05,
+     "kat_yuksekligi_cm": 330,
+     "tavan_kotu": 173.65,
+     "net_yukseklik_cm": 290,
+     "brut_m2": 129.8,
+     "mahal": 8,
+     "merdiven": null
+    }
+   ],
+   "dograma": [
+    {
+     "kat": "B1",
+     "tip": "P-28",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 164.25,
+     "ust_kot": 166.48
+    },
+    {
+     "kat": "B1",
+     "tip": "P-28",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 164.25,
+     "ust_kot": 166.48
+    },
+    {
+     "kat": "B1",
+     "tip": "P-28",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 164.25,
+     "ust_kot": 166.48
+    },
+    {
+     "kat": "B1",
+     "tip": "P-28",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 164.25,
+     "ust_kot": 166.48
+    },
+    {
+     "kat": "B1",
+     "tip": "P-27",
+     "bilesen": "DGR_250x223",
+     "genislik": 250,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 164.25,
+     "ust_kot": 166.48
+    },
+    {
+     "kat": "B1",
+     "tip": "P-27",
+     "bilesen": "DGR_300x223",
+     "genislik": 300,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 164.25,
+     "ust_kot": 166.48
+    },
+    {
+     "kat": "B1",
+     "tip": "P-25",
+     "bilesen": "DGR_350x223",
+     "genislik": 350,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 164.25,
+     "ust_kot": 166.48
+    },
+    {
+     "kat": "B1",
+     "tip": "KAPI",
+     "bilesen": "DGR_KAPI_106x223",
+     "genislik": 106,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 164.25,
+     "ust_kot": 166.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-28",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-28",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-29",
+     "bilesen": "DGR_150x223",
+     "genislik": 150,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-26",
+     "bilesen": "DGR_300x223",
+     "genislik": 300,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-31",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-28",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-31",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-31",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-31",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-30",
+     "bilesen": "DGR_250x223",
+     "genislik": 250,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-32",
+     "bilesen": "DGR_100x223",
+     "genislik": 100,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-30",
+     "bilesen": "DGR_200x223",
+     "genislik": 200,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-30",
+     "bilesen": "DGR_250x223",
+     "genislik": 250,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "P-33",
+     "bilesen": "DGR_70x180",
+     "genislik": 70,
+     "yukseklik": 180,
+     "parapet_cm": 43,
+     "ust_cm": 223,
+     "alt_kot": 167.68,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "KAPI",
+     "bilesen": "DGR_KAPI_106x223",
+     "genislik": 106,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "ZK",
+     "tip": "KAPI",
+     "bilesen": "DGR_KAPI_106x223",
+     "genislik": 106,
+     "yukseklik": 223,
+     "parapet_cm": 0,
+     "ust_cm": 223,
+     "alt_kot": 167.25,
+     "ust_kot": 169.48
+    },
+    {
+     "kat": "K1",
+     "tip": "P-28",
+     "bilesen": "DGR_200x273",
+     "genislik": 200,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.75,
+     "ust_kot": 173.48
+    },
+    {
+     "kat": "K1",
+     "tip": "P-08",
+     "bilesen": "DGR_70x70",
+     "genislik": 70,
+     "yukseklik": 70,
+     "parapet_cm": 203,
+     "ust_cm": 273,
+     "alt_kot": 172.78,
+     "ust_kot": 173.48
+    },
+    {
+     "kat": "K1",
+     "tip": "P-26",
+     "bilesen": "DGR_350x273",
+     "genislik": 350,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.75,
+     "ust_kot": 173.48
+    },
+    {
+     "kat": "K1",
+     "tip": "P-08",
+     "bilesen": "DGR_70x70",
+     "genislik": 70,
+     "yukseklik": 70,
+     "parapet_cm": 203,
+     "ust_cm": 273,
+     "alt_kot": 172.78,
+     "ust_kot": 173.48
+    },
+    {
+     "kat": "K1",
+     "tip": "P-03",
+     "bilesen": "DGR_300x273",
+     "genislik": 300,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.75,
+     "ust_kot": 173.48
+    },
+    {
+     "kat": "K1",
+     "tip": "P-24",
+     "bilesen": "DGR_200x273",
+     "genislik": 200,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.75,
+     "ust_kot": 173.48
+    },
+    {
+     "kat": "K1",
+     "tip": "P-23",
+     "bilesen": "DGR_400x273",
+     "genislik": 400,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.75,
+     "ust_kot": 173.48
+    },
+    {
+     "kat": "K1",
+     "tip": "P-26",
+     "bilesen": "DGR_350x273",
+     "genislik": 350,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.75,
+     "ust_kot": 173.48
+    },
+    {
+     "kat": "K1",
+     "tip": "KAPI",
+     "bilesen": "DGR_KAPI_106x273",
+     "genislik": 106,
+     "yukseklik": 273,
+     "parapet_cm": 0,
+     "ust_cm": 273,
+     "alt_kot": 170.75,
+     "ust_kot": 173.48
+    }
+   ],
+   "uyari": [],
+   "cati": {
+    "tip": "kirma (4 yon)",
+    "sacak_ucu_kotu": 174.25,
+    "mahya_kotu": 175.07,
+    "egim_yuzde": 17.0,
+    "sacak_izdusumu_cm": [
+     965,
+     1140
+    ],
+    "parapet_kotu": 174.75
+   },
+   "ort": 167.25,
+   "rot": 66.35,
+   "t": [
+    8393.0,
+    5561.2
+   ]
+  }
+ },
+ "warnings": [],
+ "arazi": {
+  "kademeler_m": [
+   161.0,
+   162.0,
+   163.0,
+   164.25,
+   165.0,
+   166.0,
+   167.25,
+   168.0,
+   169.0,
+   170.15,
+   170.36,
+   171.0,
+   172.0,
+   172.95,
+   174.15,
+   174.36,
+   175.0,
+   176.0,
+   177.0,
+   178.0,
+   179.0,
+   180.0
+  ],
+  "taban_m": 160.0,
+  "nokta": 79,
+  "tesviye_halka_noktasi": 138,
+  "grid_cm": 100.0,
+  "z_min": 161.09,
+  "z_max": 180.15,
+  "kademe_cismi": 29
+ }
+}
